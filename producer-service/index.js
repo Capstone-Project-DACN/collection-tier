@@ -10,7 +10,7 @@ const PORT = +process.env.PRODUCER_SERVICE_PORT || 3001
 app.use(express.json())
 
 // Kafka connect
-kafkaHelper.connect()
+kafkaHelper.singleToneConnect()
 
 // Initialize the cron job
 cron.init()

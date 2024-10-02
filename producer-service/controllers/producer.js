@@ -36,6 +36,8 @@ const transferData = async () => {
     const type = data?.type
     if (!publishStrategies[type]) {
         publishError(type)
+    } else {
+        await publishStrategies[type](data)
     }
 }
 

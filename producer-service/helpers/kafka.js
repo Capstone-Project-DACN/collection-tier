@@ -9,6 +9,7 @@ const kafkaClient = new Kafka({
 })
 
 const producer = kafkaClient.producer()
+let isConnected = false
 
 const connect = async () => {
     try {
@@ -28,7 +29,22 @@ const disconnect = async () => {
     }
 }
 
+const singleToneConnect = async () => {
+    if (!isConnected) {
+        try {
+            await producer.connect()
+            isConnected = true
+            console.log(`[${debugTag}] Producer connected successfully`)
+        } catch (error) {
+            isConnected = false
+            console.error(`[${debugTag}] Failed to connect producer:`, error?.message || error)
+        }
+    }
+}
+
 const publishMsg = async (topic, data) => {
+    await singleToneConnect()
+
     const msgs = [
         data
     ]
@@ -46,6 +62,7 @@ const publishMsg = async (topic, data) => {
 
 module.exports = {
     connect,
+    singleToneConnect,
     disconnect,
     publishMsg
 }
