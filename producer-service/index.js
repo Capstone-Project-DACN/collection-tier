@@ -1,12 +1,16 @@
 require('dotenv').config()
 const express = require('express')
 const cron = require('./helpers/cron_job')
+const kafkaHelper = require('./helpers/kafka')
 
 const app = express()
 const PORT = +process.env.PRODUCER_SERVICE_PORT || 3001
 
 // Middleware
 app.use(express.json())
+
+// Kafka connect
+kafkaHelper.connect()
 
 // Initialize the cron job
 cron.init()

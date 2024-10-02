@@ -1,6 +1,5 @@
 const { CronJob } = require('cron')
-const producerHelper = require('./producer')
-const dataCtrl = require('../controllers/dataController')
+const producerCtrl = require('../controllers/producer')
 
 const CRON_TAG = {
     TRANSFER_DATA: 'TRANSFER_DATA'
@@ -23,8 +22,7 @@ function init() {
 
 function start() {
     cronJob1.start()
-    
-    console.log('Cron job is running')
+    console.log('---------Cron job is running')
 }
 
 // Function to fetch data and push to Kafka with proper error handling
@@ -33,18 +31,12 @@ const transferData = async () => {
 
     transferDataIsRunning = true
     try {
-        const data = await dataCtrl.getData()
-        if (data) {
-            producerHelper.pushDatatoMQ(data)
-        } else {
-            throw Error('No data fetched from source')
-        }
+        await producerCtrl.transferData()
     } catch (error) {
-        console.error(`${CRON_TAG.TRANSFER_DATA} ------Error during data fetch or push:`, error)
-        transferDataIsRunning = false
+        console.error(`${CRON_TAG.TRANSFER_DATA} ------Error during data fetch or push:`, error?.message || error)
     }
-
     console.log(`${CRON_TAG.TRANSFER_DATA} ------ended at: ${Date.now()}`)
+    transferDataIsRunning = false
 }
 
 module.exports = {
