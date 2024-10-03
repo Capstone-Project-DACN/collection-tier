@@ -1,14 +1,29 @@
 const { Kafka } = require('kafkajs')
-const { KAFKA_CLIENT_ID, KAFKA_BROKERS } = require('../config')
+const { 
+    KAFKA_CLIENT_ID,
+    KAFKA_BROKERS,
+    REQUEST_TIMEOUT,
+    CONNECTION_TIMEOUT,
+    ALLOW_AUTO_TOPIC_CREATION,
+    TRANSACTION_TIMEOUT
+} = require('../config')
+const { v4 : uuidv4 } = require('uuid')
 
 const debugTag = 'KAFKA'
 
 const kafkaClient = new Kafka({
     clientId: KAFKA_CLIENT_ID,
-    brokers: KAFKA_BROKERS
+    brokers: KAFKA_BROKERS,
+    requestTimeout: REQUEST_TIMEOUT,
+    connectionTimeout: CONNECTION_TIMEOUT,
+    allowAutoTopicCreation: ALLOW_AUTO_TOPIC_CREATION === 1
 })
 
-const producer = kafkaClient.producer()
+const producer = kafkaClient.producer({
+    allowAutoTopicCreation: ALLOW_AUTO_TOPIC_CREATION === 1,
+    transactionalId: `producer-${uuidv4()}`,
+    transactionTimeout: TRANSACTION_TIMEOUT
+})
 let isConnected = false
 
 const connect = async () => {
@@ -45,14 +60,16 @@ const singleToneConnect = async () => {
 const publishMsg = async (topic, data) => {
     await singleToneConnect()
 
+    const formattedData = (typeof data === 'object') ? JSON.stringify(data) : String(data)
     const msgs = [
-        data
+        { key: uuidv4(), value: formattedData }
     ]
 
     try {
         await producer.send({
             topic,
-            messages: msgs
+            messages: msgs,
+            timeout: REQUEST_TIMEOUT
         })
         console.log(`[${debugTag}] Publish ${msgs.length} messages to topic ${topic} successfully!`)
     } catch (error) {

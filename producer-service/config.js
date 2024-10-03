@@ -14,10 +14,18 @@ const KAFKA_CLIENT_ID = process.env.KAFKA_CLIENT_ID
 
 const kafkaBrokers = process.env.KAFKA_BROKERS
 const KAFKA_BROKERS = kafkaBrokers ? kafkaBrokers.split(',') : []
+const REQUEST_TIMEOUT = +process.env.REQUEST_TIMEOUT
+const CONNECTION_TIMEOUT = +process.env.CONNECTION_TIMEOUT
+const ALLOW_AUTO_TOPIC_CREATION = +process.env.ALLOW_AUTO_TOPIC_CREATION
+const TRANSACTION_TIMEOUT = +process.env.TRANSACTION_TIMEOUT
 
 module.exports = {
     TOPIC,
     DATA_TYPE,
     KAFKA_CLIENT_ID,
-    KAFKA_BROKERS
+    KAFKA_BROKERS,
+    REQUEST_TIMEOUT,
+    CONNECTION_TIMEOUT,
+    ALLOW_AUTO_TOPIC_CREATION,
+    TRANSACTION_TIMEOUT
 }
