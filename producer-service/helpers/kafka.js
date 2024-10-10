@@ -60,10 +60,12 @@ const singleToneConnect = async () => {
 const publishMsg = async (topic, data) => {
     await singleToneConnect()
 
-    const formattedData = (typeof data === 'object') ? JSON.stringify(data) : String(data)
-    const msgs = [
-        { key: uuidv4(), value: formattedData }
-    ]
+    const dataArray = Array.isArray(data) ? data : [data]
+
+    const msgs = dataArray.map(item => ({
+        key: uuidv4(),
+        value: (typeof item === 'object') ? JSON.stringify(item) : String(item)
+    }))
 
     try {
         await producer.send({

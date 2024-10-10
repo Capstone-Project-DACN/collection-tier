@@ -27,20 +27,56 @@ const publishStrategies = {
 
 }
 
-const transferData = async () => {
-    const data = await dataHelper.getData()
-    if (!data) {
-        throw new Error('Fetch no data from source')
-    }
-
-    const type = data?.type
-    if (!publishStrategies[type]) {
-        publishError(type)
-    } else {
-        await publishStrategies[type](data)
+const isDataExist = (data, type) => {
+    if (!data || !Object.keys(data).length) {
+        throw new Error(`Fetch no data ${type || 'random'} from source!`)
     }
 }
 
+const publishDataProcess = async (data) => {
+    const batchPromises = []
+    for (const [type, list_data] of Object.entries(data)) {
+        if (!publishStrategies[type]) {
+            publishError(type)
+        } else {
+            batchPromises.push(publishStrategies[type](list_data))
+        }
+    }
+
+    await Promise.all(batchPromises)
+}
+
+const transferRandomData = async () => {
+    const data = await dataHelper.getData()
+
+    isDataExist(data)
+    publishDataProcess(data)
+}
+
+const transferHouseholdData = async () => {
+    const data = await dataHelper.getData(config.DATA_TYPE_V2.household, 4)
+
+    isDataExist(data)
+    publishDataProcess(data)
+}
+
+const transferAreaData = async () => {
+    const data = await dataHelper.getData(config.DATA_TYPE_V2.area, 4)
+
+    isDataExist(data)
+    publishDataProcess(data)
+}
+
+const transferAnomalyData = async () => {
+    const data = await dataHelper.getData(config.DATA_TYPE_V2.area, 4)
+
+    isDataExist(data)
+    publishDataProcess(data)
+}
+
 module.exports = {
-    transferData
+    transferRandomData,
+    transferHouseholdData,
+    transferAreaData,
+    transferAnomalyData
 }

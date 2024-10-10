@@ -1,7 +1,8 @@
 const faker = require('faker')
+const randomHelper = require('./random')
 
 const generateRandomHouseholdData = () => {
-    const household_id = faker.datatype.uuid()
+    const household_id = randomHelper.getRandomInt(1, 1000)
     const timestamp = new Date().toISOString()
     const electricity_usage_kwh = parseFloat(faker.finance.amount(0, 500, 2))
     const voltage = faker.datatype.number({ min: 220, max: 240 })

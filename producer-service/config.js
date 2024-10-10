@@ -10,6 +10,12 @@ const DATA_TYPE = {
     anomaly: 'AnomalyData'
 }
 
+const DATA_TYPE_V2 = {
+    household: 'household',
+    area: 'area',
+    anomaly: 'anomaly'
+}
+
 const KAFKA_CLIENT_ID = process.env.KAFKA_CLIENT_ID
 
 const kafkaBrokers = process.env.KAFKA_BROKERS
@@ -22,6 +28,7 @@ const TRANSACTION_TIMEOUT = +process.env.TRANSACTION_TIMEOUT
 module.exports = {
     TOPIC,
     DATA_TYPE,
+    DATA_TYPE_V2,
     KAFKA_CLIENT_ID,
     KAFKA_BROKERS,
     REQUEST_TIMEOUT,
