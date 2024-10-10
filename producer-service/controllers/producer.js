@@ -46,29 +46,29 @@ const publishDataProcess = async (data) => {
     await Promise.all(batchPromises)
 }
 
-const transferRandomData = async () => {
-    const data = await dataHelper.getData()
+const transferRandomData = async (batch_size) => {
+    const data = await dataHelper.getData(null, batch_size)
 
     isDataExist(data)
     publishDataProcess(data)
 }
 
-const transferHouseholdData = async () => {
-    const data = await dataHelper.getData(config.DATA_TYPE_V2.household, 4)
+const transferHouseholdData = async (batch_size) => {
+    const data = await dataHelper.getData(config.DATA_TYPE_V2.household, batch_size)
 
     isDataExist(data)
     publishDataProcess(data)
 }
 
-const transferAreaData = async () => {
-    const data = await dataHelper.getData(config.DATA_TYPE_V2.area, 4)
+const transferAreaData = async (batch_size) => {
+    const data = await dataHelper.getData(config.DATA_TYPE_V2.area, batch_size)
 
     isDataExist(data)
     publishDataProcess(data)
 }
 
-const transferAnomalyData = async () => {
-    const data = await dataHelper.getData(config.DATA_TYPE_V2.area, 4)
+const transferAnomalyData = async (batch_size) => {
+    const data = await dataHelper.getData(config.DATA_TYPE_V2.area, batch_size)
 
     isDataExist(data)
     publishDataProcess(data)
