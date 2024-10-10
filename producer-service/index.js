@@ -27,7 +27,8 @@ app.get('/', (req, res) => {
     res.send('Welcome to the Cron Job Express App!')
 })
 
-app.get('/view', dataViewerCtrl.view)
+app.get('/view/time-series', dataViewerCtrl.viewTimeSeries)
+app.get('/view/histogram', dataViewerCtrl.viewHistogram)
 
 // Start the Express server
 app.listen(PORT, () => {
