@@ -45,7 +45,13 @@ function start() {
 
 function initTimeSlot(TAG) {
     currentCronJob1Slot = 0
-    batchSizesCronJob1 = generateBatchSizes(TIME_GAUSSIAN.TOTAL_SLOTS, BATCH_SIZE_GAUSSIAN.MEAN, BATCH_SIZE_GAUSSIAN.STD_DEV)
+    batchSizesCronJob1 = generateBatchSizes(
+        TIME_GAUSSIAN.TOTAL_SLOTS,
+        BATCH_SIZE_GAUSSIAN.MEAN,
+        BATCH_SIZE_GAUSSIAN.STD_DEV,
+        BATCH_SIZE_GAUSSIAN.MIN,
+        BATCH_SIZE_GAUSSIAN.MAX
+    )
     console.log(`${TAG} Start sending all batches`)
 }
 

@@ -5,10 +5,14 @@ const gaussianRandom = (mean, standardDeviation) => {
     return Math.sqrt(-2.0 * Math.log(u)) * Math.cos(2.0 * Math.PI * v) * standardDeviation + mean
 }
 
-const generateBatchSizes = (totalSlots, mean, stdDev) => {
+const generateBatchSizes = (totalSlots, mean, stdDev, min, max) => {
     const batchSizes = []
     for (let i = 0; i < totalSlots; i++) {
-        const batchSize = Math.max(1, Math.round(gaussianRandom(mean, stdDev)))
+        let batchSize
+        do {
+            batchSize = Math.round(gaussianRandom(mean, stdDev))
+        } while (batchSize < min || batchSize > max)
+            
         batchSizes.push(batchSize)
     }
     return batchSizes
