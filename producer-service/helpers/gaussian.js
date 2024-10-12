@@ -7,12 +7,17 @@ const gaussianRandom = (mean, standardDeviation) => {
 
 const generateBatchSizes = (totalSlots, mean, stdDev, min, max) => {
     const batchSizes = []
+    const midPoint = Math.floor(totalSlots / 2)
+    const variance = stdDev * stdDev
+
     for (let i = 0; i < totalSlots; i++) {
-        let batchSize
-        do {
-            batchSize = Math.round(gaussianRandom(mean, stdDev))
-        } while (batchSize < min || batchSize > max)
-            
+        const x = i - midPoint
+        const bellValue = Math.exp(-x * x / (2 * variance)) * mean
+
+        let batchSize = bellValue
+        batchSize = Math.round(batchSize * max)
+        batchSize = Math.max(min, batchSize)
+
         batchSizes.push(batchSize)
     }
     return batchSizes
@@ -21,4 +26,4 @@ const generateBatchSizes = (totalSlots, mean, stdDev, min, max) => {
 module.exports = {
     gaussianRandom,
     generateBatchSizes
-}
+};

@@ -21,7 +21,7 @@
         const batchSizes = <%= JSON.stringify(batchSizes) %>; // Embed server data
         const ctx = document.getElementById('batchSizeChart').getContext('2d');
         const batchSizeChart = new Chart(ctx, {
-            type: 'line',
+            type: 'bar',
             data: {
                 labels: batchSizes.map((_, index) => `Batch ${index + 1}`),
                 datasets: [{
