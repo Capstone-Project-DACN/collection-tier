@@ -39,9 +39,11 @@ const BATCH_SIZE = {
     MAX: 70
 }
 const DISTRIBUTIONS = {
-    BELL_CURVE: 'bell_curve'
+    BELL_CURVE: 'bell_curve',
+    UNIFORM: 'uniform',
+    LINEAR: 'linear'
 }
-const RANDOM_ORDER = true
+const RANDOM_ORDER = false
 
 module.exports = {
     TOPIC,
