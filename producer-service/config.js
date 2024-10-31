@@ -39,9 +39,9 @@ const BATCH_SIZE = {
     MAX: 70
 }
 const DISTRIBUTIONS = {
-    BELL_CURVE: 'bell_curve',
-    UNIFORM: 'uniform',
-    LINEAR: 'linear'
+    BELL_CURVE: 'Bell Curve',
+    UNIFORM: 'Uniform',
+    LINEAR: 'Linear'
 }
 const RANDOM_ORDER = false
 

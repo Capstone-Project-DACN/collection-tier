@@ -23,6 +23,7 @@ let transferAnomalyDataIsRunning = false
 
 let cronJob1
 let batchSizesCronJob1 = new BatchSizeManager()
+let distributionCronJob1 = DISTRIBUTIONS.BELL_CURVE
 
 function init() {
 
@@ -37,9 +38,10 @@ function init() {
             BATCH_SIZE.STD_DEV,
             BATCH_SIZE.MIN,
             BATCH_SIZE.MAX,
-            DISTRIBUTIONS.BELL_CURVE,
+            distributionCronJob1,
             RANDOM_ORDER
-        ]
+        ],
+        distributionCronJob1
     )
     cronJob1 = new CronJob(process.env.cron_time_1, async () => {
 
@@ -52,9 +54,10 @@ function init() {
                     BATCH_SIZE.STD_DEV,
                     BATCH_SIZE.MIN,
                     BATCH_SIZE.MAX,
-                    DISTRIBUTIONS.BELL_CURVE,
+                    distributionCronJob1,
                     RANDOM_ORDER
-                ]
+                ],
+                distributionCronJob1
             )
             const batch_size = batchSizesCronJob1.getCurrentBatchSize()
             const current_slot = batchSizesCronJob1.getCurrentSlot()
@@ -75,7 +78,10 @@ function start() {
 }
 
 function getBatchSize() {
-    return batchSizesCronJob1.getBatchSizes()
+    return {
+        batchSizes: batchSizesCronJob1.getBatchSizes(),
+        distribution: batchSizesCronJob1.getDistribution()
+    }
 }
 
 // Function to fetch data and push to Kafka with proper error handling

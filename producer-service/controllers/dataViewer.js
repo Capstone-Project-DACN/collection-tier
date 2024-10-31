@@ -1,13 +1,13 @@
 const { getBatchSize } = require('../helpers/cron_job')
 
 const viewTimeSeries = async (req, res) => {
-    const batchSizes = getBatchSize()
-    res.render('time-series', { batchSizes })
+    const { batchSizes, distribution } = getBatchSize()
+    res.render('time-series', { batchSizes, distribution })
 }
 
 const viewHistogram = async (req, res) => {
 
-    const batchSizes = getBatchSize()
+    const { batchSizes, distribution } = getBatchSize()
     const numberOfBins = batchSizes.length
 
     const minBatchSize = Math.min(...batchSizes)
@@ -28,7 +28,7 @@ const viewHistogram = async (req, res) => {
         binLabels.push([Math.round(binStart), Math.round(binEnd)])
     }
 
-    res.render('histogram', { binLabels, bins })
+    res.render('histogram', { binLabels, bins, distribution })
 }
 
 module.exports = {

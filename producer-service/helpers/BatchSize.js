@@ -3,11 +3,13 @@ class BatchSizeManager {
     constructor() {
         this.currentSlot = 0
         this.batchSizes = []
+        this.distribution = ''
     }
 
-    initTimeSlot = (TAG, generateBatchSizes, args = []) => {
+    initTimeSlot = (TAG, generateBatchSizes, args = [], distribution = '') => {
         this.currentSlot = 0
         this.batchSizes = generateBatchSizes(...args)
+        this.distribution = distribution
         console.log(`${TAG} Start sending all batches`)
     }
 
@@ -27,11 +29,15 @@ class BatchSizeManager {
         return this.batchSizes[this.currentSlot]
     }
 
-    resetIfEndofTimeSlot = async (TAG, generateBatchSizes, args = []) => {
+    getDistribution = () => {
+        return `${this.distribution} Distribution` || 'Unknown Distribution'
+    }
+
+    resetIfEndofTimeSlot = async (TAG, generateBatchSizes, args = [], distribution = '') => {
         if (this.currentSlot >= this.batchSizes.length) {
             console.log(`${TAG} Finished sending all batches`)
     
-            this.initTimeSlot(TAG, generateBatchSizes, args = [])
+            this.initTimeSlot(TAG, generateBatchSizes, args = [], distribution = '')
         }
     }
 }
