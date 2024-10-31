@@ -1,8 +1,14 @@
 const { CronJob } = require('cron')
 const producerCtrl = require('../controllers/producer')
-const { generateBatchSizes } = require('./gaussian')
+const { generateBatchSizes } = require('./distribution')
+const { BatchSizeManager } = require('./BatchSize')
 const utils = require('./utils')
-const { TIME_GAUSSIAN, BATCH_SIZE_GAUSSIAN } = require('../config')
+const {
+    TIME,
+    BATCH_SIZE,
+    DISTRIBUTIONS,
+    RANDOM_ORDER
+} = require('../config')
 
 const CRON_TAG = {
     TRANSFER_RANDOM_DATA: 'TRANSFER_RANDOM_DATA',
@@ -16,24 +22,49 @@ let transferAreaDataIsRunning = false
 let transferAnomalyDataIsRunning = false
 
 let cronJob1
-let currentCronJob1Slot = 0
-let batchSizesCronJob1 = []
+let batchSizesCronJob1 = new BatchSizeManager()
 
 function init() {
 
     console.log('Initializing cron job...')
     
-    initTimeSlot('CRON_JOB_1')
+    batchSizesCronJob1.initTimeSlot(
+        'CRON_JOB_1',
+        generateBatchSizes,
+        [
+            TIME.TOTAL_SLOTS,
+            BATCH_SIZE.MEAN,
+            BATCH_SIZE.STD_DEV,
+            BATCH_SIZE.MIN,
+            BATCH_SIZE.MAX,
+            DISTRIBUTIONS.BELL_CURVE,
+            RANDOM_ORDER
+        ]
+    )
     cronJob1 = new CronJob(process.env.cron_time_1, async () => {
-            await resetIfEndofTimeSlot('CRON_JOB_1')
-            const batch_size = batchSizesCronJob1[currentCronJob1Slot]
 
-            // await transferRandomData(batch_size, currentCronJob1Slot)
-            await transferHouseholdData(batch_size, currentCronJob1Slot)
-            // await transferAreaData(batch_size, currentCronJob1Slot)
-            // await transferAnomalyData(batch_size, currentCronJob1Slot)
+            await batchSizesCronJob1.resetIfEndofTimeSlot(
+                'CRON_JOB_1',
+                generateBatchSizes,
+                [
+                    TIME.TOTAL_SLOTS,
+                    BATCH_SIZE.MEAN,
+                    BATCH_SIZE.STD_DEV,
+                    BATCH_SIZE.MIN,
+                    BATCH_SIZE.MAX,
+                    DISTRIBUTIONS.BELL_CURVE,
+                    RANDOM_ORDER
+                ]
+            )
+            const batch_size = batchSizesCronJob1.getCurrentBatchSize()
+            const current_slot = batchSizesCronJob1.getCurrentSlot()
 
-            updateTimeSlot()
+            // await transferRandomData(batch_size, current_slot)
+            await transferHouseholdData(batch_size, current_slot)
+            // await transferAreaData(batch_size, current_slot)
+            // await transferAnomalyData(batch_size, current_slot)
+
+            batchSizesCronJob1.updateTimeSlot()
 
     }, null, false)
 }
@@ -43,32 +74,8 @@ function start() {
     console.log('---------Cron job is running')
 }
 
-function initTimeSlot(TAG) {
-    currentCronJob1Slot = 0
-    batchSizesCronJob1 = generateBatchSizes(
-        TIME_GAUSSIAN.TOTAL_SLOTS,
-        BATCH_SIZE_GAUSSIAN.MEAN,
-        BATCH_SIZE_GAUSSIAN.STD_DEV,
-        BATCH_SIZE_GAUSSIAN.MIN,
-        BATCH_SIZE_GAUSSIAN.MAX
-    )
-    console.log(`${TAG} Start sending all batches`)
-}
-
-function updateTimeSlot() {
-    currentCronJob1Slot++
-}
-
 function getBatchSize() {
-    return batchSizesCronJob1
-}
-
-async function resetIfEndofTimeSlot(TAG) {
-    if (currentCronJob1Slot >= TIME_GAUSSIAN.TOTAL_SLOTS) {
-        console.log(`${TAG} Finished sending all batches`)
-
-        initTimeSlot(TAG)
-    }
+    return batchSizesCronJob1.getBatchSizes()
 }
 
 // Function to fetch data and push to Kafka with proper error handling
