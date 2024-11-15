@@ -1,7 +1,9 @@
 const { Kafka } = require('kafkajs')
 const { 
     KAFKA_CLIENT_ID,
-    KAFKA_BROKERS,
+    BOOTSTRAP_SERVER,
+    KAFKA_API_KEY,
+    KAFKA_API_SECRET,
     REQUEST_TIMEOUT,
     CONNECTION_TIMEOUT,
     ALLOW_AUTO_TOPIC_CREATION,
@@ -13,7 +15,13 @@ const debugTag = 'KAFKA'
 
 const kafkaClient = new Kafka({
     clientId: KAFKA_CLIENT_ID,
-    brokers: KAFKA_BROKERS,
+    brokers: [BOOTSTRAP_SERVER],
+    sasl: {
+        mechanism: 'plain',
+        username: KAFKA_API_KEY,
+        password: KAFKA_API_SECRET
+    },
+    ssl: true,
     requestTimeout: REQUEST_TIMEOUT,
     connectionTimeout: CONNECTION_TIMEOUT,
     allowAutoTopicCreation: ALLOW_AUTO_TOPIC_CREATION === 1
@@ -79,9 +87,19 @@ const publishMsg = async (topic, data) => {
     }
 }
 
+const getMetadata = async () => {
+    try {
+        const metadata = await kafkaClient.admin().fetchTopicMetadata()
+        console.log(`[${debugTag}] Kafka Metadata:`, metadata)
+    } catch (error) {
+        console.error(`[${debugTag}] Failed to fetch metadata:`, error?.message || error)
+    }
+}
+
 module.exports = {
     connect,
     singleToneConnect,
     disconnect,
-    publishMsg
+    publishMsg,
+    getMetadata
 }

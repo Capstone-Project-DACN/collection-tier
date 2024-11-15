@@ -1,5 +1,5 @@
 const TOPIC = {
-    HOUSEHOLD_DATA : 'household_data',
+    HOUSEHOLD_DATA : 'household_topic',
     AREA_DATA: 'area_data',
     ANOMALY_DATA: 'anomaly_data'
 }
@@ -17,9 +17,9 @@ const DATA_TYPE_V2 = {
 }
 
 const KAFKA_CLIENT_ID = process.env.KAFKA_CLIENT_ID
-
-const kafkaBrokers = process.env.KAFKA_BROKERS
-const KAFKA_BROKERS = kafkaBrokers ? kafkaBrokers.split(',') : []
+const BOOTSTRAP_SERVER= process.env.BOOTSTRAP_SERVER
+const KAFKA_API_KEY= process.env.KAFKA_API_KEY
+const KAFKA_API_SECRET= process.env.KAFKA_API_SECRET
 const REQUEST_TIMEOUT = +process.env.REQUEST_TIMEOUT
 const CONNECTION_TIMEOUT = +process.env.CONNECTION_TIMEOUT
 const ALLOW_AUTO_TOPIC_CREATION = +process.env.ALLOW_AUTO_TOPIC_CREATION
@@ -56,7 +56,9 @@ module.exports = {
     DATA_TYPE,
     DATA_TYPE_V2,
     KAFKA_CLIENT_ID,
-    KAFKA_BROKERS,
+    BOOTSTRAP_SERVER,
+    KAFKA_API_KEY,
+    KAFKA_API_SECRET,
     REQUEST_TIMEOUT,
     CONNECTION_TIMEOUT,
     ALLOW_AUTO_TOPIC_CREATION,
