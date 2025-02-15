@@ -1,15 +1,11 @@
 const { BloomFilter, CountingBloomFilter, ScalableBloomFilter } = require("bloom-filters")
 const { logPerformance } = require("../utils/logger")
 const { SIZE, NUMBER_OF_HASHES } = require('../configs/generalConfig')
-const { ERROR_RATE, RATIO } = require('../configs/scalableBloomFilterConfig')
+const { SCALE_SIZE, ERROR_RATE, RATIO } = require('../configs/scalableBloomFilterConfig')
 
 const traditionalBF = new BloomFilter(SIZE, NUMBER_OF_HASHES)
 const countingBF = new CountingBloomFilter(SIZE, NUMBER_OF_HASHES)
-const scalableBF = new ScalableBloomFilter({
-    initialSize: SIZE,
-    errorRate: ERROR_RATE,
-    ratio: RATIO
-})
+const scalableBF = new ScalableBloomFilter()
 
 const devices = new Set()  // Track actual devices for false positive analysis
 
