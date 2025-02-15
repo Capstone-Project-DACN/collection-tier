@@ -9,16 +9,19 @@ const scalableBF = new ScalableBloomFilter()
 
 const devices = new Set()  // Track actual devices for false positive analysis
 
-const addDevice = (deviceId) => {
+const addDevice = async (deviceId) => {
     logPerformance("Adding device", deviceId)
 
-    traditionalBF.add(deviceId)
-    countingBF.add(deviceId)
-    scalableBF.add(deviceId)
+    await Promise.all([
+        traditionalBF.add(deviceId),
+        countingBF.add(deviceId),
+        scalableBF.add(deviceId),
+    ])
+    
     devices.add(deviceId)
 }
 
-const checkDevice = (deviceId) => {
+const checkDevice = async (deviceId) => {
     const result = {
         traditional: traditionalBF.has(deviceId),
         counting: countingBF.has(deviceId),
@@ -29,7 +32,7 @@ const checkDevice = (deviceId) => {
     return result
 }
 
-const removeDevice = (deviceId) => {
+const removeDevice = async (deviceId) => {
     // traditionalBF.remove(deviceId)
     countingBF.remove(deviceId)
     // scalableBF.remove(deviceId)
@@ -38,20 +41,31 @@ const removeDevice = (deviceId) => {
     logPerformance("Removed device", deviceId)
 }
 
-const addMultipleDevices = (start, end, prefix) => {
+const addMultipleDevices = async (start, end, prefix) => {
     logPerformance('Adding multiple devices', {
         amount: end - start + 1,
         startId: `${prefix}-${start}`,
         endId: `${prefix}-${end}`
     })
     
+    const batchSize = 1000
+    let promises = []
     for (let i = start; i <= end; i++) {
         const deviceId = `${prefix}-${i}`
-        addDevice(deviceId)
+        promises.push(addDevice(deviceId))
+        
+        if (promises.length >= batchSize) {
+            await Promise.all(promises)
+            promises = []
+        }
+    }
+    
+    if (promises.length > 0) {
+        await Promise.all(promises)
     }
 }
 
-const getCurrentFalsePositiveRates = () => {
+const getCurrentFalsePositiveRates = async () => {
     const result = {
         traditional: traditionalBF.rate(),
         counting: countingBF.rate(),
