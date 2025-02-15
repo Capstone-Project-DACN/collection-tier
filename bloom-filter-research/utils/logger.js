@@ -1,8 +1,13 @@
-const fs = require("fs");
-const path = require("path");
+const fs = require("fs")
+const path = require("path")
 const { getTimestamp } = require("./time")
 
-const logFile = path.join(__dirname, `../logs/performance ${getTimestamp()}.log`)
+const logsDir = path.join(__dirname, "../logs")
+if (!fs.existsSync(logsDir)) {
+    fs.mkdirSync(logsDir, { recursive: true })
+}
+
+const logFile = path.join(logsDir, `performance ${getTimestamp()}.log`)
 
 function logPerformance(action, data) {
     const logEntry = `[${new Date().toISOString()}] ${action}: ${JSON.stringify(data)}\n`
@@ -13,4 +18,4 @@ function logPerformance(action, data) {
     }
 }
 
-module.exports = { logPerformance };
+module.exports = { logPerformance }
