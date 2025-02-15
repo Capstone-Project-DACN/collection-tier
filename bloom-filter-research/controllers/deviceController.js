@@ -24,13 +24,6 @@ const addMultipleDevices = (req, res) => {
         return res.status(400).json({ error: "Start and end must be integers, and start must be less than or equal to end" })
     }
 
-    // Ensure no overlap with existing devices
-    for (let i = start; i <= end; i++) {
-        if (bloomService.checkDevice(`${prefix}-${i}`).actual) {
-            return res.status(400).json({ error: `Device range overlaps with existing devices: ${prefix}-${i}` })
-        }
-    }
-
     bloomService.addMultipleDevices(start, end, prefix)
     res.json({ message: `Devices ${prefix}-${start} to ${prefix}-${end} added successfully` })
 }
