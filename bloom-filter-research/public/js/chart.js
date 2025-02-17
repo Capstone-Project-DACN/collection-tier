@@ -27,10 +27,20 @@ async function updateGraph() {
                     title: { display: true, text: "False Positive Rate" },
                     ticks: { callback: value => {
                         if (value < 0.01) return value.toExponential(1)
-                        return Number(value.toPrecision(2))
+                        return Number(value.toPrecision(25))
                     }}
                 },
                 x: { title: { display: true, text: "Number of Elements" } }
+            },
+            plugins: {
+                tooltip: {
+                    callbacks: {
+                        label: context => {
+                            let value = context.raw
+                            return value < 0.01 ? value.toExponential(2) : value.toPrecision(25) // Fix tooltip display
+                        }
+                    }
+                }
             }
         }
     })
