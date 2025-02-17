@@ -3,9 +3,9 @@ const { logPerformance } = require("../utils/logger")
 const { SIZE, NUMBER_OF_HASHES, STEP_SIZE } = require('../configs/generalConfig')
 const { SCALE_SIZE, ERROR_RATE, RATIO } = require('../configs/scalableBloomFilterConfig')
 
-const traditionalBF = new BloomFilter(SIZE, NUMBER_OF_HASHES)
-const countingBF = new CountingBloomFilter(SIZE, NUMBER_OF_HASHES)
-const scalableBF = new ScalableBloomFilter()
+let traditionalBF = new BloomFilter(SIZE, NUMBER_OF_HASHES)
+let countingBF = new CountingBloomFilter(SIZE, NUMBER_OF_HASHES)
+let scalableBF = new ScalableBloomFilter()
 
 const devices = new Set()  // Track actual devices for false positive analysis
 let graphData = {
@@ -24,6 +24,22 @@ const updateGraphData = () => {
     }
 }
 
+const resetAll = async () => {
+    logPerformance("Reset all devices's data", null)
+
+    traditionalBF = new BloomFilter(SIZE, NUMBER_OF_HASHES)
+    countingBF = new CountingBloomFilter(SIZE, NUMBER_OF_HASHES)
+    scalableBF = new ScalableBloomFilter()
+
+    devices.clear()
+
+    graphData = {
+        xAxis: [],
+        traditional: [],
+        counting: [],
+        scalable: []
+    }
+}
 
 const addDevice = async (deviceId) => {
     logPerformance("Adding device", deviceId)
@@ -99,5 +115,6 @@ module.exports = {
     removeDevice,
     addMultipleDevices,
     getCurrentFalsePositiveRates,
-    getCurrentGraphData
+    getCurrentGraphData,
+    resetAll
 }

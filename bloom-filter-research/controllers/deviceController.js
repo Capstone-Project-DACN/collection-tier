@@ -38,11 +38,17 @@ const getCurrentGraphData = async (req, res) => {
     res.json(result)
 }
 
+const resetAll = async (req, res) => {
+    await bloomService.resetAll()
+    res.json({ message: "Reset all data successfully!" })
+}
+
 module.exports = {
     addDevice,
     checkDevice,
     removeDevice,
     addMultipleDevices,
     getCurrentFalsePositiveRates,
-    getCurrentGraphData
+    getCurrentGraphData,
+    resetAll
 }

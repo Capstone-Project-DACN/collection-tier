@@ -15,14 +15,15 @@ async function fetchData(url, method = "GET", body = null) {
     }
 }
 
-async function handleDeviceAction(action) {
+async function handleDeviceAction(action, checkParams = true) {
     const deviceId = document.getElementById("deviceId").value.trim()
-    if (!deviceId) return alert("Please enter a device ID.")
+    if (!deviceId && checkParams === true) return alert("Please enter a device ID.")
 
     const apiEndpoints = {
         add: "/api/devices/add",
         remove: "/api/devices/remove",
-        check: `/api/devices/check/${deviceId}`
+        check: `/api/devices/check/${deviceId}`,
+        reset: '/api/devices/reset'
     }
 
     const method = action === "check" ? "GET" : "POST"

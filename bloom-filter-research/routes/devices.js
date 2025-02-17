@@ -8,5 +8,6 @@ router.post("/remove", deviceController.removeDevice)
 router.post("/add-multiple", deviceController.addMultipleDevices)
 router.get("/false-positive", deviceController.getCurrentFalsePositiveRates)
 router.get('/graph-data', deviceController.getCurrentGraphData)
+router.post('/reset', deviceController.resetAll)
 
 module.exports = router
