@@ -1,6 +1,6 @@
 const { BloomFilter, CountingBloomFilter, ScalableBloomFilter } = require("bloom-filters")
 const { logPerformance } = require("../utils/logger")
-const { SIZE, NUMBER_OF_HASHES } = require('../configs/generalConfig')
+const { SIZE, NUMBER_OF_HASHES, STEP_SIZE } = require('../configs/generalConfig')
 const { SCALE_SIZE, ERROR_RATE, RATIO } = require('../configs/scalableBloomFilterConfig')
 
 const traditionalBF = new BloomFilter(SIZE, NUMBER_OF_HASHES)
@@ -8,6 +8,22 @@ const countingBF = new CountingBloomFilter(SIZE, NUMBER_OF_HASHES)
 const scalableBF = new ScalableBloomFilter()
 
 const devices = new Set()  // Track actual devices for false positive analysis
+let graphData = {
+    xAxis: [],
+    traditional: [],
+    counting: [],
+    scalable: []
+}
+
+const updateGraphData = () => {
+    if (devices.size % STEP_SIZE === 0) {
+        graphData.xAxis.push(devices.size)
+        graphData.traditional.push(traditionalBF.rate())
+        graphData.counting.push(countingBF.rate())
+        graphData.scalable.push(scalableBF.rate())
+    }
+}
+
 
 const addDevice = async (deviceId) => {
     logPerformance("Adding device", deviceId)
@@ -15,10 +31,11 @@ const addDevice = async (deviceId) => {
     await Promise.all([
         traditionalBF.add(deviceId),
         countingBF.add(deviceId),
-        scalableBF.add(deviceId),
+        scalableBF.add(deviceId)
     ])
     
     devices.add(deviceId)
+    updateGraphData()
 }
 
 const checkDevice = async (deviceId) => {
@@ -54,14 +71,10 @@ const addMultipleDevices = async (start, end, prefix) => {
         const deviceId = `${prefix}-${i}`
         promises.push(addDevice(deviceId))
         
-        if (promises.length >= batchSize) {
+        if (promises.length >= batchSize || i == end) {
             await Promise.all(promises)
             promises = []
         }
-    }
-    
-    if (promises.length > 0) {
-        await Promise.all(promises)
     }
 }
 
@@ -75,10 +88,16 @@ const getCurrentFalsePositiveRates = async () => {
     return result
 }
 
+const getCurrentGraphData = async () => {
+    logPerformance('Current Graph Data', graphData)
+    return graphData
+}
+
 module.exports = {
     addDevice,
     checkDevice,
     removeDevice,
     addMultipleDevices,
-    getCurrentFalsePositiveRates
+    getCurrentFalsePositiveRates,
+    getCurrentGraphData
 }

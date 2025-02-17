@@ -33,10 +33,16 @@ const getCurrentFalsePositiveRates = async (req, res) => {
     res.json(result)
 }
 
+const getCurrentGraphData = async (req, res) => {
+    const result = await bloomService.getCurrentGraphData()
+    res.json(result)
+}
+
 module.exports = {
     addDevice,
     checkDevice,
     removeDevice,
     addMultipleDevices,
-    getCurrentFalsePositiveRates
+    getCurrentFalsePositiveRates,
+    getCurrentGraphData
 }

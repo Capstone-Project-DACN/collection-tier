@@ -4,111 +4,49 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bloom Filter Management</title>
+    <link rel="stylesheet" href="./css/chart.css">
     <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        async function addDevice() {
-            const deviceId = document.getElementById("deviceId").value
-            if (!deviceId) return alert("Please enter a device ID.")
-
-            const response = await fetch("/api/devices/add", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ deviceId })
-            })
-
-            const result = await response.json()
-            alert(result.message)
-        }
-
-        async function removeDevice() {
-            const deviceId = document.getElementById("deviceId").value
-            if (!deviceId) return alert("Please enter a device ID.")
-
-            const response = await fetch("/api/devices/remove", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ deviceId })
-            })
-
-            const result = await response.json()
-            alert(result.message)
-        }
-
-        async function checkDevice() {
-            const deviceId = document.getElementById("deviceId").value
-            if (!deviceId) return alert("Please enter a device ID.")
-
-            const response = await fetch(`/api/devices/check/${deviceId}`)
-            const result = await response.json()
-
-            document.getElementById("checkResult").innerText = `
-                Traditional: ${result.traditional}, 
-                Counting: ${result.counting}, 
-                Scalable: ${result.scalable}, 
-                Actual: ${result.actual}
-            `
-        }
-
-        async function addMultipleDevices() {
-            const start = parseInt(document.getElementById("startRange").value)
-            const end = parseInt(document.getElementById("endRange").value)
-            const prefix = document.getElementById("prefix").value.trim()
-
-            if (!prefix || isNaN(start) || isNaN(end) || start > end) {
-                return alert("Please enter a valid prefix and number range (start ≤ end).")
-            }
-
-            const response = await fetch("/api/devices/add-multiple", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ start, end, prefix })
-            })
-
-            const result = await response.json()
-            alert(result.message)
-        }
-
-        async function checkFalsePositives() {
-            const response = await fetch('/api/devices/false-positive')
-            const result = await response.json()
-
-            document.getElementById("falsePositiveRate").innerHTML = `
-                <strong>False Positive Rates:</strong><br>
-                Traditional: ${result.traditional}<br>
-                Counting: ${result.counting}<br>
-                Scalable: ${result.scalable}
-            `
-        }
-    </script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="./js/main.js" defer></script>
+    <script src="./js/chart.js" defer></script>
+    
 </head>
 <body class="bg-gray-100 flex justify-center items-center min-h-screen">
-    <div class="bg-white shadow-lg rounded-lg p-6 w-96 text-center">
-        <h1 class="text-2xl font-bold mb-4">Bloom Filter Management</h1>
+    <div class="flex space-x-8">
+        <div class="bg-white shadow-lg rounded-lg p-6 w-96 text-center">
+            <h1 class="text-2xl font-bold mb-4">Bloom Filter Management</h1>
+            <input type="text" id="deviceId" placeholder="Enter Device ID" class="border rounded p-2 w-full mb-2">
+            <button onclick="handleDeviceAction('add')" class="bg-blue-500 text-white p-2 rounded w-full mb-2">Add Device</button>
+            <button onclick="handleDeviceAction('remove')" class="bg-red-500 text-white p-2 rounded w-full mb-2">Remove Device</button>
+            <button onclick="handleDeviceAction('check')" class="bg-green-500 text-white p-2 rounded w-full mb-2">Check Device</button>
+            <p id="checkResult" class="text-gray-700 mt-2">Device status will appear here.</p>
+            <hr class="my-4">
+            <h2 class="text-xl font-bold mb-2">Add Multiple Devices</h2>
+            <input type="text" id="prefix" placeholder="Prefix (e.g., device)" class="border rounded p-2 w-full mb-2">
+            <input type="number" id="startRange" placeholder="Start ID" class="border rounded p-2 w-full mb-2">
+            <input type="number" id="endRange" placeholder="End ID" class="border rounded p-2 w-full mb-2">
+            <button onclick="addMultipleDevices()" class="bg-indigo-500 text-white p-2 rounded w-full mb-2">Add Multiple Devices</button>
+            <hr class="my-4">
+            <button onclick="checkFalsePositives()" class="bg-purple-500 text-white p-2 rounded w-full">Check False Positives</button>
+            <p id="falsePositiveRate" class="text-gray-700 mt-2">False positive rate will be displayed here.</p>
+        </div>
+        <div class="bg-white shadow-lg rounded-lg p-6 w-96 text-center">
+            <h2 class="text-2xl font-bold mb-4">False Positive Rate Chart</h2>
+            <canvas id="falsePositiveChart"></canvas>
+            <button onclick="openChartModal()" class="bg-gray-500 text-white p-2 rounded w-full mt-4">Expand</button>
+            <button onclick="updateGraph()" class="bg-blue-500 text-white p-2 rounded w-full mt-2">Reload</button>
+        </div>
+    </div>
 
-        <input type="text" id="deviceId" placeholder="Enter Device ID" 
-            class="border rounded p-2 w-full mb-2">
-
-        <button onclick="addDevice()" class="bg-blue-500 text-white p-2 rounded w-full mb-2">Add Device</button>
-        <button onclick="removeDevice()" class="bg-red-500 text-white p-2 rounded w-full mb-2">Remove Device</button>
-        <button onclick="checkDevice()" class="bg-green-500 text-white p-2 rounded w-full mb-2">Check Device</button>
-
-        <p id="checkResult" class="text-gray-700 mt-2">Device status will appear here.</p>
-
-        <hr class="my-4">
-
-        <h2 class="text-xl font-bold mb-2">Add Multiple Devices</h2>
-        <input type="text" id="prefix" placeholder="Prefix (e.g., device)" 
-            class="border rounded p-2 w-full mb-2">
-        <input type="number" id="startRange" placeholder="Start ID" 
-            class="border rounded p-2 w-full mb-2">
-        <input type="number" id="endRange" placeholder="End ID" 
-            class="border rounded p-2 w-full mb-2">
-        <button onclick="addMultipleDevices()" class="bg-indigo-500 text-white p-2 rounded w-full mb-2">Add Multiple Devices</button>
-
-        <hr class="my-4">
-
-        <button onclick="checkFalsePositives()" class="bg-purple-500 text-white p-2 rounded w-full">Check False Positives</button>
-        <p id="falsePositiveRate" class="text-gray-700 mt-2">False positive rate will be displayed here.</p>
+    <!-- Chart Modal -->
+    <div id="chartModal" style="display: none;">
+        <div id="chartContainer">
+            <canvas id="modalChart"></canvas>
+            <div class="flex justify-between mt-4">
+                <button onclick="updateGraph()" class="bg-blue-500 text-white p-2 rounded">Reload</button>
+                <button onclick="closeChartModal()" class="bg-red-500 text-white p-2 rounded">Close</button>
+            </div>
+        </div>
     </div>
 </body>
 </html>
