@@ -16,12 +16,12 @@ const debugTag = 'KAFKA'
 const kafkaClient = new Kafka({
     clientId: KAFKA_CLIENT_ID,
     brokers: [BOOTSTRAP_SERVER],
-    sasl: {
-        mechanism: 'plain',
-        username: KAFKA_API_KEY,
-        password: KAFKA_API_SECRET
-    },
-    ssl: true,
+    // sasl: {
+    //     mechanism: 'plain',
+    //     username: KAFKA_API_KEY,
+    //     password: KAFKA_API_SECRET
+    // },
+    // ssl: true,
     requestTimeout: REQUEST_TIMEOUT,
     connectionTimeout: CONNECTION_TIMEOUT,
     allowAutoTopicCreation: ALLOW_AUTO_TOPIC_CREATION === 1
