@@ -1,5 +1,6 @@
 const faker = require('faker')
 const randomHelper = require('./random')
+const { DATA_TYPE } = require('./config')
 
 const generateRandomAnomalyData = () => {
     const household_id = randomHelper.getRandomInt(1, 1000)
@@ -11,7 +12,7 @@ const generateRandomAnomalyData = () => {
     const description = faker.lorem.sentence()
 
     return Promise.resolve({
-        type: 'AnomalyData',
+        type: DATA_TYPE.anomaly,
         household_id,
         timestamp,
         electricity_usage_kwh,
