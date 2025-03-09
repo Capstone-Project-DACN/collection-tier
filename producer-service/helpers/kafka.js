@@ -65,13 +65,13 @@ const singleToneConnect = async () => {
     }
 }
 
-const publishMsg = async (topic, data) => {
+const publishMsg = async (topic, data, extractKey) => {
     await singleToneConnect()
 
     const dataArray = Array.isArray(data) ? data : [data]
 
     const msgs = dataArray.map(item => ({
-        key: item?.value?.district || 'district-unknown',
+        key: extractKey(item),
         value: (typeof item === 'object') ? JSON.stringify(item) : String(item)
     }))
 

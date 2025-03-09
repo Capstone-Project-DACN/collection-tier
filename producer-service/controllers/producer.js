@@ -4,15 +4,15 @@ const config = require('../config')
 const debugTag = 'PRODUCER'
 
 const publishHouseHoldData = async (data) => {
-    await kafkaHelper.publishMsg(config.TOPIC.HOUSEHOLD_DATA, data)
+    await kafkaHelper.publishMsg(config.TOPIC.HOUSEHOLD_DATA, data, (item) => item?.location?.district || 'district-unknown')
 }
 
 const publishAreaData = async (data) => {
-    await kafkaHelper.publishMsg(config.TOPIC.AREA_DATA, data)
+    await kafkaHelper.publishMsg(config.TOPIC.AREA_DATA, data, (item) => item?.district || 'district-unknown')
 }
 
 const publishAnomalyData = async (data) => {
-    await kafkaHelper.publishMsg(config.TOPIC.ANOMALY_DATA, data)
+    await kafkaHelper.publishMsg(config.TOPIC.ANOMALY_DATA, data, (item) => item?.location?.district || 'district-unknown')
 }
 
 const publishError = (type) => {
