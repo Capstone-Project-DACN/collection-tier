@@ -3,6 +3,7 @@ const randomHelper = require('./random')
 const { DATA_TYPE } = require('./config')
 
 const generateRandomAnomalyData = () => {
+    const device_id = `${ALLOWED_DEVICE_ID.PREFIX}-${randomHelper.getRandomInt(ALLOWED_DEVICE_ID.START, ALLOWED_DEVICE_ID.END)}`
     const household_id = randomHelper.getRandomInt(1, 1000)
     const timestamp = new Date().toISOString()
     const electricity_usage_kwh = parseFloat(faker.finance.amount(0, 500, 2))
@@ -13,6 +14,7 @@ const generateRandomAnomalyData = () => {
 
     return Promise.resolve({
         type: DATA_TYPE.anomaly,
+        device_id,
         household_id,
         timestamp,
         electricity_usage_kwh,

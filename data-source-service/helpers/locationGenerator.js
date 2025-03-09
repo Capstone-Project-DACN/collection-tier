@@ -1,10 +1,12 @@
 const { ALLOWED_LOCATIONS } = require('./config')
+const { getRandomInt } = require('./random')
 
-function generateRandomCityAndDistrict() {
+
+function generateRandomLocation() {
 
   if (!ALLOWED_LOCATIONS || ALLOWED_LOCATIONS.length === 0) {
     console.error('No allowed locations defined in the config')
-    return { city: undefined, district: undefined }
+    return { city: undefined, district: undefined, ward: undefined }
   }
 
   const randomCityIndex = Math.floor(Math.random() * ALLOWED_LOCATIONS.length)
@@ -13,10 +15,15 @@ function generateRandomCityAndDistrict() {
 
   const randomDistrictIndex = Math.floor(Math.random() * allowedDistrictsForCity.length)
   const randomDistrict = allowedDistrictsForCity[randomDistrictIndex]
+  const randomWard = generateWard()
 
-  return { city: randomCity, district: randomDistrict }
+  return { city: randomCity, district: randomDistrict, ward: randomWard }
+}
+
+function generateWard() {
+  return `Phuong ${getRandomInt(1, 15)}`
 }
 
 module.exports = {
-  generateRandomCityAndDistrict
+  generateRandomLocation
 }

@@ -1,11 +1,11 @@
 const faker = require('faker')
 const locationGenerator = require('./locationGenerator')
-const { DATA_TYPE } = require('./config')
+const { DATA_TYPE, ALLOWED_DEVICE_ID } = require('./config')
 
 const generateRandomAreaData = () => {
+    const device_id = `${ALLOWED_DEVICE_ID.PREFIX}-${randomHelper.getRandomInt(ALLOWED_DEVICE_ID.START, ALLOWED_DEVICE_ID.END)}`
     const timestamp = new Date().toISOString()
-    const ward = faker.address.ward()
-    const { city, district } = locationGenerator.generateRandomCityAndDistrict()
+    const { city, district, ward } = locationGenerator.generateRandomLocation()
     const total_electricity_usage_kwh = parseFloat(faker.finance.amount(5000, 10000, 2))
     const average_electricity_usage_kwh = parseFloat(faker.finance.amount(100, 500, 2))
     const max_electricity_usage_kwh = parseFloat(faker.finance.amount(500, 1000, 2))
@@ -13,6 +13,7 @@ const generateRandomAreaData = () => {
 
     return Promise.resolve({
         type: DATA_TYPE.area,
+        device_id,
         timestamp,
         ward,
         district,

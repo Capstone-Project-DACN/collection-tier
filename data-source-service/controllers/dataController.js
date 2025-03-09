@@ -36,7 +36,6 @@ const createData = async (req, res) => {
     console.log('Generated Random Data:', batchResult.length)
 
     const groupedBatchResult = groupedData(batchResult)
-    console.log(groupedBatchResult)
     return res.status(200).json(groupedBatchResult)
 }
 
@@ -52,7 +51,6 @@ const createHouseholdData = async (req, res) => {
     const groupedBatchResult = {
         [DATA_TYPE.household]: batchResult 
     }
-    console.log(groupedBatchResult)
     return res.status(200).json(groupedBatchResult)
 }
 
@@ -68,7 +66,6 @@ const createAreaData = async (req, res) => {
     const groupedBatchResult = {
         [DATA_TYPE.area]: batchResult 
     }
-    console.log(groupedBatchResult)
     return res.status(200).json(groupedBatchResult)
 }
 
@@ -84,7 +81,6 @@ const createAnomalyData = async (req, res) => {
     const groupedBatchResult = {
         [DATA_TYPE.anomaly]: batchResult 
     }
-    console.log(groupedBatchResult)
     return res.status(200).json(groupedBatchResult)
 }
 

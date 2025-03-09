@@ -22,7 +22,14 @@ const ALLOWED_LOCATIONS = [
     }
 ]
 
+const ALLOWED_DEVICE_ID = {
+    START: 0,
+    END: 1000,
+    PREFIX: 'id'
+}
+
 module.exports = {
     DATA_TYPE,
-    ALLOWED_LOCATIONS
+    ALLOWED_LOCATIONS,
+    ALLOWED_DEVICE_ID
 }
