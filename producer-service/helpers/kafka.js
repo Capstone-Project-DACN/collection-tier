@@ -71,7 +71,7 @@ const publishMsg = async (topic, data) => {
     const dataArray = Array.isArray(data) ? data : [data]
 
     const msgs = dataArray.map(item => ({
-        key: uuidv4(),
+        key: item?.value?.district || 'district-unknown',
         value: (typeof item === 'object') ? JSON.stringify(item) : String(item)
     }))
 
