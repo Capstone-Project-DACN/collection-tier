@@ -1,6 +1,6 @@
 const faker = require('faker')
-const randomHelper = require('./random')
-const { DATA_TYPE } = require('./config')
+const randomHelper = require('../utils/RandomUtils')
+const { DATA_TYPE, ALLOWED_DEVICE_ID } = require('../configs/DataConfig')
 
 const generateRandomAnomalyData = () => {
     const device_id = `${ALLOWED_DEVICE_ID.PREFIX}-${randomHelper.getRandomInt(ALLOWED_DEVICE_ID.START, ALLOWED_DEVICE_ID.END)}`

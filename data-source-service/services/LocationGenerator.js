@@ -1,6 +1,5 @@
-const { ALLOWED_LOCATIONS } = require('./config')
-const { getRandomInt } = require('./random')
-
+const { ALLOWED_LOCATIONS } = require('../configs/DataConfig')
+const { getRandomInt } = require('../utils/RandomUtils')
 
 function generateRandomLocation() {
 

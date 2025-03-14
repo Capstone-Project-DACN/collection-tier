@@ -1,43 +1,11 @@
-const { generateRandomHouseholdData } = require('../helpers/household')
-const { generateRandomAreaData } = require('../helpers/area')
-const { generateRandomAnomalyData } = require('../helpers/anomaly')
-const { DATA_TYPE } = require('../helpers/config')
+const { generateRandomHouseholdData } = require('../models/household')
+const { generateRandomAreaData } = require('../models/area')
+const { generateRandomAnomalyData } = require('../models/anomaly')
+const { DATA_TYPE } = require('../configs/DataConfig')
+const { TOPIC, PRODUCER_IDS } = require('../configs/KafkaConfig')
+const kafkaProducerManager = require('../services/KafkaProducer')
 
-const randomDataGenerator = () => {
-    const dataGenerators = [
-        generateRandomHouseholdData,
-        generateRandomAreaData,
-        generateRandomAnomalyData
-    ]
-    const randomIndex = Math.floor(Math.random() * dataGenerators.length)
-    return dataGenerators[randomIndex]()
-}
-
-const groupedData = (batchResult) => {
-    const groupedData = batchResult.reduce((acc, data) => {
-        const type = data.type || 'Unknown'
-        if (!acc[type]) {
-            acc[type] = []
-        }
-        acc[type].push(data)
-        return acc
-    }, {})
-
-    return groupedData
-}
-
-const createData = async (req, res) => {
-    const batchSize = Number(req.query.batch_size) || 1
-    const batchData = []
-    for (let i = 0; i < batchSize; i++) {
-        batchData.push(randomDataGenerator())
-    }
-    const batchResult = await Promise.all(batchData)
-    console.log('Generated Random Data:', batchResult.length)
-
-    const groupedBatchResult = groupedData(batchResult)
-    return res.status(200).json(groupedBatchResult)
-}
+const TAG = 'dataController'
 
 const createHouseholdData = async (req, res) => {
     const batchSize = Number(req.query.batch_size) || 1
@@ -46,7 +14,10 @@ const createHouseholdData = async (req, res) => {
         batchData.push(generateRandomHouseholdData())
     }
     const batchResult = await Promise.all(batchData)
-    console.log('Generated Household Data:', batchResult.length)
+    console.log(`[${TAG}] Generated Household Data:`, batchResult.length)
+
+    // Publish messages to Kafka
+    kafkaProducerManager.publishMsg(PRODUCER_IDS[TOPIC.HOUSEHOLD_DATA], TOPIC.HOUSEHOLD_DATA, batchResult, null)
 
     const groupedBatchResult = {
         [DATA_TYPE.household]: batchResult 
@@ -61,7 +32,10 @@ const createAreaData = async (req, res) => {
         batchData.push(generateRandomAreaData())
     }
     const batchResult = await Promise.all(batchData)
-    console.log('Generated Area Data:', batchResult.length)
+    console.log(`[${TAG}] Generated Area Data:`, batchResult.length)
+
+    // Publish messages to Kafka
+    kafkaProducerManager.publishMsg(PRODUCER_IDS[TOPIC.AREA_DATA], TOPIC.AREA_DATA, batchResult, null)
 
     const groupedBatchResult = {
         [DATA_TYPE.area]: batchResult 
@@ -76,7 +50,10 @@ const createAnomalyData = async (req, res) => {
         batchData.push(generateRandomAnomalyData())
     }
     const batchResult = await Promise.all(batchData)
-    console.log('Generated Anomaly Data:', batchResult.length)
+    console.log(`[${TAG}] Generated Anomaly Data:`, batchResult.length)
+
+    // Publish messages to Kafka
+    kafkaProducerManager.publishMsg(PRODUCER_IDS[TOPIC.ANOMALY_DATA], TOPIC.ANOMALY_DATA, batchResult, null)
 
     const groupedBatchResult = {
         [DATA_TYPE.anomaly]: batchResult 
@@ -85,7 +62,6 @@ const createAnomalyData = async (req, res) => {
 }
 
 module.exports = {
-    createData,
     createHouseholdData,
     createAreaData,
     createAnomalyData

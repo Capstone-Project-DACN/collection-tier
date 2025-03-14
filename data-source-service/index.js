@@ -6,8 +6,7 @@ const dataCtrl = require('./controllers/dataController')
 const app = express()
 const port = +process.env.DATA_SOURCE_SERVICE_PORT || 3000
 
-// Route to generate and return GPS data
-app.get('/data/random', dataCtrl.createData)
+// Route to generate and return electric data
 app.get('/data/household', dataCtrl.createHouseholdData)
 app.get('/data/area', dataCtrl.createAreaData)
 app.get('/data/anomaly', dataCtrl.createAnomalyData)

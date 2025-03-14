@@ -1,8 +1,7 @@
 const faker = require('faker')
-const randomHelper = require('./random')
-const locationGenerator = require('./locationGenerator')
-const { DATA_TYPE, ALLOWED_DEVICE_ID } = require('./config')
-
+const randomHelper = require('../utils/RandomUtils')
+const locationGenerator = require('../services/LocationGenerator')
+const { DATA_TYPE, ALLOWED_DEVICE_ID } = require('../configs/DataConfig')
 
 const generateRandomHouseholdData = () => {
     const device_id = `${ALLOWED_DEVICE_ID.PREFIX}-${randomHelper.getRandomInt(ALLOWED_DEVICE_ID.START, ALLOWED_DEVICE_ID.END)}`
