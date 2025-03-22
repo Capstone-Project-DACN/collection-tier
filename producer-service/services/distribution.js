@@ -1,4 +1,4 @@
-const { DISTRIBUTIONS, BATCH_SIZE } = require('../config')
+const { DISTRIBUTIONS, BATCH_SIZE } = require('../configs/distributionConfig')
 
 const generateBatchSizes = (totalSlots, mean, stdDev, min, max, distribution, randomOrder) => {
     let batchSizes = []

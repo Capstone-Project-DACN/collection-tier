@@ -1,7 +1,7 @@
-const { getBatchSize } = require('../helpers/cron_job')
+const cronConsumerHouseHoldHandler = require('../jobs/cronConsumerHouseHoldHandler')
 
 const viewTimeSeries = async (req, res) => {
-    const { batchSizes, distribution } = getBatchSize()
+    const { batchSizes, distribution } = cronConsumerHouseHoldHandler.getBatchSize()
     res.render('time-series', { batchSizes, distribution })
 }
 

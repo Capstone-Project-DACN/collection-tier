@@ -1,0 +1,10 @@
+const TIME = {
+    TOTAL_DURATION: 200,
+    INTERVAL: 2,
+}
+
+TIME.TOTAL_SLOTS = TIME.TOTAL_DURATION / TIME.INTERVAL
+
+module.exports = {
+    TIME
+}

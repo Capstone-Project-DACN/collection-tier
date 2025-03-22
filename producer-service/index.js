@@ -1,7 +1,5 @@
 require('dotenv').config()
 const express = require('express')
-const cron = require('./helpers/cron_job')
-const kafkaHelper = require('./helpers/kafka')
 const dataViewerCtrl = require('./controllers/dataViewer')
 const path = require('path')
 
@@ -14,13 +12,6 @@ app.use(express.static(path.join(__dirname, 'public')))
 
 // Middleware
 app.use(express.json())
-
-// Kafka connect
-kafkaHelper.singleToneConnect()
-
-// Initialize the cron job
-cron.init()
-cron.start()
 
 // Define a simple route
 app.get('/', (req, res) => {
