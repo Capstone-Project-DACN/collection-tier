@@ -27,7 +27,7 @@ class BaseConsumer {
         this.kafka = null
         this.consumer = null
         this.isRunning = false
-        this.logLevel = config.debug || false ? logLevel.DEBUG : logLevel.INFO
+        this.logLevel = config.debug? logLevel.DEBUG : logLevel.INFO
         this.logger = null
         this.batch = config.batch || false
     }
@@ -45,9 +45,8 @@ class BaseConsumer {
                 ...this.consumerConfig,
             })
 
-            this.logger = this.kafka.logger({
-                logLevel: this.logLevel,
-            })
+            this.logger = this.kafka.logger()
+            this.logger.setLogLevel(this.logLevel)
 
             await this.consumer.connect()
 

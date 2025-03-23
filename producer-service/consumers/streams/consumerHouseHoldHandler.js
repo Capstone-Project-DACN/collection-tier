@@ -33,7 +33,7 @@ class ConsumerHouseHoldHandler extends BaseConsumer {
                 connectionTimeout: CONNECTION_TIMEOUT,
                 allowAutoTopicCreation: ALLOW_AUTO_TOPIC_CREATION === 1
             },
-            debug: true,
+            debug: false,
             ...config,
         }
         super(defaultConfig)
@@ -42,7 +42,7 @@ class ConsumerHouseHoldHandler extends BaseConsumer {
     async handleMessage({ topic, partition, message }) {
         try {
             const messageValue = message.value.toString()
-            this.logger.debug(`Received message: Topic: ${topic}, Partition: ${partition}, Offset: ${message.offset}, Value: ${messageValue}`)
+            this.logger.info(`Received message: Topic: ${topic}, Partition: ${partition}, Offset: ${message.offset}, Value: ${messageValue}`)
             
             const parsedMessage = JSON.parse(messageValue)
             await dataTransferService.transferHouseholdData([parsedMessage])
