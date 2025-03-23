@@ -1,6 +1,7 @@
 const { TOPIC, PRODUCER_IDS } = require("../configs/kafkaConfig")
 const { DATA_TYPE } = require("../configs/dataConfig")
 const kafkaProducerManager = require("./KafkaProducerManager")
+const bloomService = require('./redis')
 
 const debugTag = 'DataTransferService'
 
@@ -66,9 +67,32 @@ class DataTransferService {
         await Promise.all(batchPromises)
     }
 
+    async filterAndUpdateStatusValidDevices(data) {
+        const filteredData = {}
+    
+        for (const [type, list_data] of Object.entries(data)) {
+            const checks = list_data.map(async item => {
+                const deviceId = item?.device_id
+                if (!deviceId) return null
+    
+                const exists = await bloomService.checkDevice(deviceId)
+                if (!exists) return null
+    
+                await bloomService.updateLastSeen(deviceId)
+                return item
+            })
+    
+            const results = await Promise.all(checks)
+            filteredData[type] = results.filter(Boolean)
+        }
+    
+        return filteredData
+    }
+
     async transferData(data, type) {
         this.isDataExist(data, type)
-        await this.publishDataProcess(data)
+        const filteredData = await this.filterAndUpdateStatusValidDevices(data)
+        await this.publishDataProcess(filteredData)
     }
 
     async transferHouseholdData(data) {
