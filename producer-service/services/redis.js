@@ -8,6 +8,7 @@ const {
     INACTIVE_TIME,
     FALSE_POSITIVE_COUNTER
 } = require('../configs/redisConfig')
+const timeUtils = require('../utils/timeUtils')
 
 const redisClient = Redis.createClient({
     host: REDIS_HOST,
@@ -82,7 +83,7 @@ async function updateLastSeen(deviceId) {
     }
 }
 
-async function getInactiveDevices(pageNumber = 1, pageSize = 10, threshold = INACTIVE_TIME) {
+async function getInactiveDevices(pageNumber = 1, pageSize = 10, dateTime = false, threshold = INACTIVE_TIME) {
     try {
         pageNumber = Math.max(1, parseInt(pageNumber))
         pageSize = Math.max(1, parseInt(pageSize))
@@ -91,19 +92,30 @@ async function getInactiveDevices(pageNumber = 1, pageSize = 10, threshold = INA
         const cutoffTime = Date.now() - threshold
 
         // Get a paginated list of inactive devices
-        const inactiveDevices = await redisClient.zrangebyscore(
+        const rawResults = await redisClient.zrangebyscore(
             REDIS_TAG.LAST_SEEN,
             '-inf',
             cutoffTime,
+            'WITHSCORES',
             'LIMIT',
             offset,
             pageSize
         )
 
+        // Process the raw results into structured data
+        const inactiveDevices = []
+        for (let i = 0; i < rawResults.length; i += 2) {
+            inactiveDevices.push({
+                deviceId: rawResults[i],
+                lastSeen: dateTime? timeUtils.msToDateTime(Number(rawResults[i + 1])) : Number(rawResults[i + 1])
+            })
+        }
+
         // Get total inactive device count
         const totalCount = await redisClient.zcount(REDIS_TAG.LAST_SEEN, '-inf', cutoffTime)
 
         return {
+            inactive_thresold: dateTime? timeUtils.formatDuration(threshold) : `${threshold} miliseconds`,
             inactiveDevices,
             pageNumber,
             pageSize,

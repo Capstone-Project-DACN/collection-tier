@@ -59,9 +59,9 @@ const addMultipleDevices = async (req, res) => {
 
 const getInactiveDevices = async (req, res) => {
     try {
-        const { pageNumber = 1, pageSize = 10 } = req.query
+        const { pageNumber = 1, pageSize = 10, dateTime = false } = req.query
 
-        const result = await bloomService.getInactiveDevices(pageNumber, pageSize)
+        const result = await bloomService.getInactiveDevices(pageNumber, pageSize, dateTime === 'true')
 
         res.json(result)
     } catch (error) {
