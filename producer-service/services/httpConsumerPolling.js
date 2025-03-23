@@ -1,9 +1,9 @@
 const axios = require('axios')
 const DATA_SOURCE_SERVICE_URL = process.env.DATA_SOURCE_SERVICE_URL
 const PULL_DATA_URL = `${DATA_SOURCE_SERVICE_URL}/data`
-const { DATA_TYPE_API } = require('../configs/dataConfig')
+const { DATA_TYPE, DATA_TYPE_API } = require('../configs/dataConfig')
 
-const getData = async (type, batch_size) => {
+const getData = async (type, extractType, batch_size) => {
     try {
         const queryParams = {
             batch_size
@@ -14,7 +14,7 @@ const getData = async (type, batch_size) => {
         const response = await axios.get(`${PULL_DATA_URL}/${pathParam}`, { params: queryParams })
         const data = response.data
 
-        return data
+        return data[extractType]
     } catch (error) {
         const status = error.response ? error.response.status : 'Network Error'
         const message = error.response ? error.response.data.message || error.message : error.message
@@ -24,15 +24,15 @@ const getData = async (type, batch_size) => {
 }
 
 const pollHouseholdData = async (batch_size) => {
-    return getData(DATA_TYPE_API.household, batch_size)
+    return getData(DATA_TYPE_API.household, DATA_TYPE.household, batch_size)
 }
 
 const pollAreaData = async (batch_size) => {
-    return getData(DATA_TYPE_API.area, batch_size)
+    return getData(DATA_TYPE_API.area, DATA_TYPE.area, batch_size)
 }
 
 const pollAnomalyData = async (batch_size) => {
-    return getData(DATA_TYPE_API.anomaly, batch_size)
+    return getData(DATA_TYPE_API.anomaly, DATA_TYPE.anomaly, batch_size)
 }
 
 module.exports = {

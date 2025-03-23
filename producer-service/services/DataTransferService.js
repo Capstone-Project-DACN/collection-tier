@@ -7,14 +7,9 @@ const debugTag = 'DataTransferService'
 
 class DataTransferService {
     constructor() {
-        this.publishStrategies = {
-            [DATA_TYPE.household]: this.publishHouseHoldData.bind(this),
-            [DATA_TYPE.area]: this.publishAreaData.bind(this),
-            [DATA_TYPE.anomaly]: this.publishAnomalyData.bind(this),
-        }
     }
 
-    async publishHouseHoldData(data) {
+    async #publishHouseHoldData(data) {
         await kafkaProducerManager.publishMsg(
             PRODUCER_IDS[TOPIC.HOUSEHOLD_DATA],
             TOPIC.HOUSEHOLD_DATA,
@@ -23,7 +18,7 @@ class DataTransferService {
         )
     }
 
-    async publishAreaData(data) {
+    async #publishAreaData(data) {
         await kafkaProducerManager.publishMsg(
             PRODUCER_IDS[TOPIC.AREA_DATA],
             TOPIC.AREA_DATA,
@@ -32,7 +27,7 @@ class DataTransferService {
         )
     }
 
-    async publishAnomalyData(data) {
+    async #publishAnomalyData(data) {
         await kafkaProducerManager.publishMsg(
             PRODUCER_IDS[TOPIC.ANOMALY_DATA],
             TOPIC.ANOMALY_DATA,
@@ -41,70 +36,74 @@ class DataTransferService {
         )
     }
 
-    publishError(type) {
+    #publishError(type) {
         console.error(
             `[${debugTag}] - publishError: Error unknown topic related to data with type=${type}`
         )
         throw new Error(`Error unknown topic related to data with type=${type}`)
     }
 
-    isDataExist(data, type) {
-        if (!data || !Object.keys(data).length) {
-            throw new Error(`Fetch no data ${type || "random"} from source!`)
+    #checkEmptyBatch(data, type) {
+        if (data?.length) {
+            throw new Error(`Poll no valid data ${type} from source!`)
         }
     }
 
-    async publishDataProcess(data) {
-        const batchPromises = []
-        for (const [type, list_data] of Object.entries(data)) {
-            if (!this.publishStrategies[type]) {
-                this.publishError(type)
-            } else {
-                batchPromises.push(this.publishStrategies[type](list_data))
-            }
-        }
+    async #filterValidDevices(data) {
+        const checks = data.map(async item => {
+            const deviceId = item?.device_id
+            if (!deviceId) return null
 
-        await Promise.all(batchPromises)
+            const exists = await bloomService.checkDevice(deviceId)
+            if (!exists) return null
+
+            return item
+        })
+
+        const results = await Promise.all(checks)
+        return results.filter(Boolean)
     }
 
-    async filterAndUpdateStatusValidDevices(data) {
-        const filteredData = {}
-    
-        for (const [type, list_data] of Object.entries(data)) {
-            const checks = list_data.map(async item => {
-                const deviceId = item?.device_id
-                if (!deviceId) return null
-    
-                const exists = await bloomService.checkDevice(deviceId)
-                if (!exists) return null
-    
-                await bloomService.updateLastSeen(deviceId)
-                return item
-            })
-    
-            const results = await Promise.all(checks)
-            filteredData[type] = results.filter(Boolean)
-        }
-    
-        return filteredData
-    }
+    async #updateValidDevices(data) {
+        const updatePromises = data.map(async item => {
+            const deviceId = item?.device_id
+            if (!deviceId) return null
 
-    async transferData(data, type) {
-        this.isDataExist(data, type)
-        const filteredData = await this.filterAndUpdateStatusValidDevices(data)
-        await this.publishDataProcess(filteredData)
+            await bloomService.updateLastSeen(deviceId)
+            return item
+        })
+
+        await Promise.all(updatePromises)
     }
 
     async transferHouseholdData(data) {
-        await this.transferData(data, DATA_TYPE.household)
+        this.#checkEmptyBatch(data, DATA_TYPE.household)
+        const filteredData  = await this.#filterValidDevices(data)
+
+        this.#checkEmptyBatch(filteredData, DATA_TYPE.household)
+        await this.#updateValidDevices(filteredData)
+
+        await this.#publishHouseHoldData(filteredData)
     }
 
     async transferAreaData(data) {
-        await this.transferData(data, DATA_TYPE.area)
+        this.#checkEmptyBatch(data, DATA_TYPE.area)
+        const filteredData  = await this.#filterValidDevices(data)
+
+        this.#checkEmptyBatch(filteredData, DATA_TYPE.area)
+        await this.#updateValidDevices(filteredData)
+
+        await this.#publishAreaData(filteredData)
     }
 
     async transferAnomalyData(data) {
-        await this.transferData(data, DATA_TYPE.anomaly)
+        this.#checkEmptyBatch(data, DATA_TYPE.anomaly)
+        const filteredData  = await this.#filterValidDevices(data)
+        
+        this.#checkEmptyBatch(filteredData, DATA_TYPE.anomaly)
+        await this.#updateValidDevices(filteredData)
+
+        await this.#publishAnomalyData(filteredData)
     }
 }
 
