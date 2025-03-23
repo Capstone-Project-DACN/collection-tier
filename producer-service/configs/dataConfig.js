@@ -10,7 +10,14 @@ const DATA_TYPE_API = {
     anomaly: 'anomaly'
 }
 
+const ALLOWED_DEVICE_ID = {
+    START: 0,
+    END: 1000,
+    PREFIX: 'id'
+}
+
 module.exports = {
     DATA_TYPE,
-    DATA_TYPE_API
+    DATA_TYPE_API,
+    ALLOWED_DEVICE_ID
 }
