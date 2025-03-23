@@ -25,7 +25,7 @@ app.get('/view/histogram', dataViewerCtrl.viewHistogram)
 // Device controller
 app.post('/devices/add', deviceCtrl.addDevice)
 app.post('/devices/check', deviceCtrl.checkDevice)
-app.post('/devices/remove', deviceCtrl.checkDevice)
+app.post('/devices/remove', deviceCtrl.removeDevice)
 app.post('/devices/add-multiple', deviceCtrl.addMultipleDevices)
 app.get('/devices/inactive', deviceCtrl.getInactiveDevices)
 
