@@ -2,6 +2,9 @@ require('dotenv').config()
 const express = require('express')
 const dataViewerCtrl = require('./controllers/dataViewer')
 const deviceCtrl = require('./controllers/deviceController')
+const consumerHouseHoldHandler = require('./consumers/streams/consumerHouseHoldHandler')
+const consumerAreaHandler = require('./consumers/streams/consumerAreaHandler')
+const consumerAnomalyHandler = require('./consumers/streams/consumerAnomalyHandler')
 const path = require('path')
 
 const app = express()
@@ -29,6 +32,11 @@ app.post('/devices/remove', deviceCtrl.removeDevice)
 app.post('/devices/update-status', deviceCtrl.updateStatus)
 app.post('/devices/add-multiple', deviceCtrl.addMultipleDevices)
 app.get('/devices/inactive', deviceCtrl.getInactiveDevices)
+
+// Start Kafka Consumers
+consumerHouseHoldHandler.init()
+consumerAreaHandler.init()
+consumerAnomalyHandler.init()
 
 // Start the Express server
 app.listen(PORT, () => {

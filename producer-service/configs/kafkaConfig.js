@@ -17,6 +17,12 @@ const PRODUCER_IDS = {
     DEFAULT: 'default_producer'
 }
 
+const CONSUMER_GROUP_IDS = {
+    [TOPIC_CONSUMER.HOUSEHOLD_DATA]: 'household-raw-group',
+    [TOPIC_CONSUMER.AREA_DATA]: 'area-raw-group',
+    [TOPIC_CONSUMER.ANOMALY_DATA]: 'anomaly-raw-group',
+}
+
 const KAFKA_CLIENT_ID = process.env.KAFKA_CLIENT_ID
 const BOOTSTRAP_SERVER= process.env.BOOTSTRAP_SERVER
 const KAFKA_API_KEY= process.env.KAFKA_API_KEY
@@ -30,6 +36,7 @@ module.exports = {
     TOPIC,
     TOPIC_CONSUMER,
     PRODUCER_IDS,
+    CONSUMER_GROUP_IDS,
     KAFKA_CLIENT_ID,
     BOOTSTRAP_SERVER,
     KAFKA_API_KEY,
