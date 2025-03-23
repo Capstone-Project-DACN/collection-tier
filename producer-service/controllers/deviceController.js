@@ -41,6 +41,27 @@ const removeDevice = async (req, res) => {
     }
 }
 
+const updateStatus = async (req, res) => {
+    try {
+        const { deviceId } = req.body
+
+        if (!validationUtil.isValidDeviceId(deviceId)) {
+            return res.status(400).json({ error: `Invalid device ID: ${deviceId}. ${validationUtil.getValidDeviceIdFormat()}` })
+        }
+
+        const isExists = await bloomService.checkDevice(deviceId)
+        if (!isExists) {
+            return res.status(404).json({ error: 'Device not found' })
+        }
+
+        await bloomService.updateLastSeen(deviceId)
+        res.json({ message: 'Device updated status successfully' })
+    } catch (error) {
+        console.error(`[${debugTag}] updateStatus error:`, error)
+        res.status(500).json({ error: 'Failed to update status' })
+    }
+}
+
 const addMultipleDevices = async (req, res) => {
     try {
         const { start, end, prefix } = req.body
@@ -74,6 +95,7 @@ module.exports = {
     addDevice,
     checkDevice,
     removeDevice,
+    updateStatus,
     addMultipleDevices,
     getInactiveDevices
 }
