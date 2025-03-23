@@ -44,7 +44,7 @@ class DataTransferService {
     }
 
     #checkEmptyBatch(data, type) {
-        if (data?.length) {
+        if (!data || data.length === 0) {
             throw new Error(`Poll no valid data ${type} from source!`)
         }
     }
