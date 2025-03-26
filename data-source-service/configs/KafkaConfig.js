@@ -22,7 +22,7 @@ const TOPIC = {
     HOUSEHOLD_HCMC_QPN: 'household_HCMC_QPN_raw',
 
     HOUSEHOLD_TDUC_Q2: 'household_TDUC_Q2_raw',
-    HOUSEHOLD_TDUC_Q9: 'household_TDUC_Q9',
+    HOUSEHOLD_TDUC_Q9: 'household_TDUC_Q9_raw',
 
     // AREA
     AREA_HCMC_Q1: 'area_HCMC_Q1_raw',
@@ -42,7 +42,7 @@ const TOPIC = {
     AREA_HCMC_QPN: 'area_HCMC_QPN_raw',
 
     AREA_TDUC_Q2: 'area_TDUC_Q2_raw',
-    AREA_TDUC_Q9: 'area_TDUC_Q9'
+    AREA_TDUC_Q9: 'area_TDUC_Q9_raw'
 }
 
 const PRODUCER_IDS = {
