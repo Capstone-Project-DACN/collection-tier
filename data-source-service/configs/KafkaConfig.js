@@ -1,6 +1,6 @@
 const TOPIC = {
     // DEFAULT TOPIC
-    HOUSEHOLD : 'household_raw',
+    HOUSEHOLD: 'household_raw',
     AREA: 'area_raw',
     ANOMALY: 'anomaly_raw',
 
