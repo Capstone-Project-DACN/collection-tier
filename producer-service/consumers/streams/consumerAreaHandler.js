@@ -3,6 +3,7 @@ const uuidv4 = require('uuid').v4
 const { 
     KAFKA_CLIENT_ID,
     TOPIC_CONSUMER,
+    TOPIC_PRODUCER,
     CONSUMER_GROUP_IDS,
     BOOTSTRAP_SERVER,
     REQUEST_TIMEOUT,
@@ -18,8 +19,29 @@ class ConsumerAreaHandler extends BaseConsumer {
     constructor(config) {
         const defaultConfig = {
             clientId: `${KAFKA_CLIENT_ID}-${uuidv4()}`,
-            groupId: CONSUMER_GROUP_IDS[TOPIC_CONSUMER.AREA_DATA],
-            topics: [TOPIC_CONSUMER.AREA_DATA],
+            groupId: `${KAFKA_CLIENT_ID}-${CONSUMER_GROUP_IDS.AREA}`,
+            topics: [
+                TOPIC_CONSUMER.AREA,
+                
+                TOPIC_CONSUMER.AREA_HCMC_Q1,
+                TOPIC_CONSUMER.AREA_HCMC_Q3,
+                TOPIC_CONSUMER.AREA_HCMC_Q4,
+                TOPIC_CONSUMER.AREA_HCMC_Q5,
+                TOPIC_CONSUMER.AREA_HCMC_Q6,
+                TOPIC_CONSUMER.AREA_HCMC_Q7,
+                TOPIC_CONSUMER.AREA_HCMC_Q8,
+                TOPIC_CONSUMER.AREA_HCMC_Q10,
+                TOPIC_CONSUMER.AREA_HCMC_Q11,
+                TOPIC_CONSUMER.AREA_HCMC_Q12,
+                TOPIC_CONSUMER.AREA_HCMC_QGV,
+                TOPIC_CONSUMER.AREA_HCMC_QTB,
+                TOPIC_CONSUMER.AREA_HCMC_QBTHANH,
+                TOPIC_CONSUMER.AREA_HCMC_QTP,
+                TOPIC_CONSUMER.AREA_HCMC_QPN,
+                
+                TOPIC_CONSUMER.AREA_TDUC_Q2,
+                TOPIC_CONSUMER.AREA_TDUC_Q9
+            ],
             brokers: [BOOTSTRAP_SERVER],
             kafkaConfig: {
                 
@@ -45,7 +67,7 @@ class ConsumerAreaHandler extends BaseConsumer {
             this.logger.info(`Received message: Topic: ${topic}, Partition: ${partition}, Offset: ${message.offset}, Value: ${messageValue}`)
             
             const parsedMessage = JSON.parse(messageValue)
-            await dataTransferService.transferAreaData([parsedMessage])
+            await dataTransferService.transferAreaData([parsedMessage], topic)
 
         } catch (error) {
             this.logger.error('Error processing message:', error)

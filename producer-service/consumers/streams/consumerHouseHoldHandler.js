@@ -3,6 +3,7 @@ const uuidv4 = require('uuid').v4
 const { 
     KAFKA_CLIENT_ID,
     TOPIC_CONSUMER,
+    TOPIC_PRODUCER,
     CONSUMER_GROUP_IDS,
     BOOTSTRAP_SERVER,
     REQUEST_TIMEOUT,
@@ -18,8 +19,29 @@ class ConsumerHouseHoldHandler extends BaseConsumer {
     constructor(config) {
         const defaultConfig = {
             clientId: `${KAFKA_CLIENT_ID}-${uuidv4()}`,
-            groupId: CONSUMER_GROUP_IDS[TOPIC_CONSUMER.HOUSEHOLD_DATA],
-            topics: [TOPIC_CONSUMER.HOUSEHOLD_DATA],
+            groupId: `${KAFKA_CLIENT_ID}-${CONSUMER_GROUP_IDS.HOUSEHOLD}`,
+            topics: [
+                TOPIC_CONSUMER.HOUSEHOLD,
+                
+                TOPIC_CONSUMER.HOUSEHOLD_HCMC_Q1,
+                TOPIC_CONSUMER.HOUSEHOLD_HCMC_Q3,
+                TOPIC_CONSUMER.HOUSEHOLD_HCMC_Q4,
+                TOPIC_CONSUMER.HOUSEHOLD_HCMC_Q5,
+                TOPIC_CONSUMER.HOUSEHOLD_HCMC_Q6,
+                TOPIC_CONSUMER.HOUSEHOLD_HCMC_Q7,
+                TOPIC_CONSUMER.HOUSEHOLD_HCMC_Q8,
+                TOPIC_CONSUMER.HOUSEHOLD_HCMC_Q10,
+                TOPIC_CONSUMER.HOUSEHOLD_HCMC_Q11,
+                TOPIC_CONSUMER.HOUSEHOLD_HCMC_Q12,
+                TOPIC_CONSUMER.HOUSEHOLD_HCMC_QGV,
+                TOPIC_CONSUMER.HOUSEHOLD_HCMC_QTB,
+                TOPIC_CONSUMER.HOUSEHOLD_HCMC_QBTHANH,
+                TOPIC_CONSUMER.HOUSEHOLD_HCMC_QTP,
+                TOPIC_CONSUMER.HOUSEHOLD_HCMC_QPN,
+
+                TOPIC_CONSUMER.HOUSEHOLD_TDUC_Q2,
+                TOPIC_CONSUMER.HOUSEHOLD_TDUC_Q9
+            ],
             brokers: [BOOTSTRAP_SERVER],
             kafkaConfig: {
                 
@@ -45,7 +67,7 @@ class ConsumerHouseHoldHandler extends BaseConsumer {
             this.logger.info(`Received message: Topic: ${topic}, Partition: ${partition}, Offset: ${message.offset}, Value: ${messageValue}`)
             
             const parsedMessage = JSON.parse(messageValue)
-            await dataTransferService.transferHouseholdData([parsedMessage])
+            await dataTransferService.transferHouseholdData([parsedMessage], topic)
 
         } catch (error) {
             this.logger.error('Error processing message:', error)

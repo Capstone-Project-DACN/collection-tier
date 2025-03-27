@@ -66,7 +66,7 @@ const addMultipleDevices = async (req, res) => {
     try {
         const { start, end, prefix } = req.body
 
-        if (validationUtil.isValidDeviceIdFormat(start, end, prefix)) {
+        if (!validationUtil.isValidDeviceIdFormat(start, end, prefix)) {
             return res.status(400).json({ error: `Invalid deviceId format. ${validationUtil.getValidDeviceIdFormat()}` })
         }
 

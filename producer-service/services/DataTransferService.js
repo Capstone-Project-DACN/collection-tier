@@ -1,4 +1,4 @@
-const { TOPIC, PRODUCER_IDS } = require("../configs/kafkaConfig")
+const { PRODUCER_IDS, TOPIC_PRODUCER, TOPIC_CONSUMER } = require("../configs/kafkaConfig")
 const { DATA_TYPE } = require("../configs/dataConfig")
 const kafkaProducerManager = require("./KafkaProducerManager")
 const bloomService = require('./redis')
@@ -9,38 +9,31 @@ class DataTransferService {
     constructor() {
     }
 
-    async #publishHouseHoldData(data) {
+    async #publishHouseHoldData(data, topic = TOPIC_PRODUCER.HOUSEHOLD) {
         await kafkaProducerManager.publishMsg(
-            PRODUCER_IDS[TOPIC.HOUSEHOLD_DATA],
-            TOPIC.HOUSEHOLD_DATA,
+            PRODUCER_IDS.HOUSEHOLD,
+            topic,
             data,
             (item) => item?.location?.district || "district-unknown"
         )
     }
 
-    async #publishAreaData(data) {
+    async #publishAreaData(data, topic = TOPIC_PRODUCER.AREA) {
         await kafkaProducerManager.publishMsg(
-            PRODUCER_IDS[TOPIC.AREA_DATA],
-            TOPIC.AREA_DATA,
+            PRODUCER_IDS.AREA,
+            topic,
             data,
             (item) => item?.district || "district-unknown"
         )
     }
 
-    async #publishAnomalyData(data) {
+    async #publishAnomalyData(data, topic = TOPIC_PRODUCER.ANOMALY) {
         await kafkaProducerManager.publishMsg(
-            PRODUCER_IDS[TOPIC.ANOMALY_DATA],
-            TOPIC.ANOMALY_DATA,
+            PRODUCER_IDS.ANOMALY,
+            topic,
             data,
             (item) => item?.location?.district || "district-unknown"
         )
-    }
-
-    #publishError(type) {
-        console.error(
-            `[${debugTag}] - publishError: Error unknown topic related to data with type=${type}`
-        )
-        throw new Error(`Error unknown topic related to data with type=${type}`)
     }
 
     #checkEmptyBatch(data, type) {
@@ -76,34 +69,48 @@ class DataTransferService {
         await Promise.all(updatePromises)
     }
 
-    async transferHouseholdData(data) {
+    #defineTargetTopic(sourceTopic) {
+        const targetTopic = sourceTopic.split('_raw')[0]
+
+        if (!targetTopic || Object.values(TOPIC_PRODUCER).indexOf(targetTopic) === -1) {
+            console.error(`[${debugTag}] - publishError: Error unknown targetTopic=${targetTopic}`)
+            throw new Error(`Error unknown targetTopic=${targetTopic}`)
+        }
+
+        return targetTopic
+    }
+
+    async transferHouseholdData(data, topic = TOPIC_CONSUMER.HOUSEHOLD) {
         this.#checkEmptyBatch(data, DATA_TYPE.household)
         const filteredData  = await this.#filterValidDevices(data)
 
         this.#checkEmptyBatch(filteredData, DATA_TYPE.household)
         await this.#updateValidDevices(filteredData)
 
-        await this.#publishHouseHoldData(filteredData)
+        const targetTopic = this.#defineTargetTopic(topic)
+        await this.#publishHouseHoldData(filteredData, targetTopic)
     }
 
-    async transferAreaData(data) {
+    async transferAreaData(data, topic = TOPIC_CONSUMER.AREA) {
         this.#checkEmptyBatch(data, DATA_TYPE.area)
         const filteredData  = await this.#filterValidDevices(data)
 
         this.#checkEmptyBatch(filteredData, DATA_TYPE.area)
         await this.#updateValidDevices(filteredData)
 
-        await this.#publishAreaData(filteredData)
+        const targetTopic = this.#defineTargetTopic(topic)
+        await this.#publishAreaData(filteredData, targetTopic)
     }
 
-    async transferAnomalyData(data) {
+    async transferAnomalyData(data, topic = TOPIC_CONSUMER.ANOMALY) {
         this.#checkEmptyBatch(data, DATA_TYPE.anomaly)
         const filteredData  = await this.#filterValidDevices(data)
         
         this.#checkEmptyBatch(filteredData, DATA_TYPE.anomaly)
         await this.#updateValidDevices(filteredData)
 
-        await this.#publishAnomalyData(filteredData)
+        const targetTopic = this.#defineTargetTopic(topic)
+        await this.#publishAnomalyData(filteredData, targetTopic)
     }
 }
 

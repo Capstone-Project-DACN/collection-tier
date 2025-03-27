@@ -18,8 +18,8 @@ class ConsumerAnomalyHandler extends BaseConsumer {
     constructor(config) {
         const defaultConfig = {
             clientId: `${KAFKA_CLIENT_ID}-${uuidv4()}`,
-            groupId: CONSUMER_GROUP_IDS[TOPIC_CONSUMER.ANOMALY_DATA],
-            topics: [TOPIC_CONSUMER.ANOMALY_DATA],
+            groupId: `${KAFKA_CLIENT_ID}-${CONSUMER_GROUP_IDS.ANOMALY}`,
+            topics: [TOPIC_CONSUMER.ANOMALY],
             brokers: [BOOTSTRAP_SERVER],
             kafkaConfig: {
                 
@@ -45,7 +45,7 @@ class ConsumerAnomalyHandler extends BaseConsumer {
             this.logger.info(`Received message: Topic: ${topic}, Partition: ${partition}, Offset: ${message.offset}, Value: ${messageValue}`)
             
             const parsedMessage = JSON.parse(messageValue)
-            await dataTransferService.transferAnomalyData([parsedMessage])
+            await dataTransferService.transferAnomalyData([parsedMessage], topic)
 
         } catch (error) {
             this.logger.error('Error processing message:', error)

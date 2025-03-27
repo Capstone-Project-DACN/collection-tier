@@ -12,8 +12,7 @@ const DATA_TYPE_API = {
 
 const ALLOWED_DEVICE_ID = {
     START: 0,
-    END: 1000,
-    PREFIX: 'id'
+    END: 1000
 }
 
 module.exports = {
