@@ -1,0 +1,137 @@
+{
+	"info": {
+		"_postman_id": "c62c8754-5746-46da-a138-deba340ce2e6",
+		"name": "Data Source Service",
+		"description": "> const ALLOWED_LOCATIONS = \\[  \n{  \ncity_id: 'HCMC',  \ncity: 'Ho Chi Minh City',  \ndistricts: \\[  \n{ district_id: 'Q1', district: 'Quan 1' },  \n{ district_id: 'Q3', district: 'Quan 3' },  \n{ district_id: 'Q4', district: 'Quan 4' },  \n{ district_id: 'Q5', district: 'Quan 5' },  \n{ district_id: 'Q6', district: 'Quan 6' },  \n{ district_id: 'Q7', district: 'Quan 7' },  \n{ district_id: 'Q8', district: 'Quan 8' },  \n{ district_id: 'Q10', district: 'Quan 10' },  \n{ district_id: 'Q11', district: 'Quan 11' },  \n{ district_id: 'Q12', district: 'Quan 12' },  \n{ district_id: 'QGV', district: 'Quan Go Vap' },  \n{ district_id: 'QTB', district: 'Quan Tan Binh' },  \n{ district_id: 'QBTAN', district: 'Quan Binh Tan' },  \n{ district_id: 'QBTHANH', district: 'Quan Binh Thanh' },  \n{ district_id: 'QTP', district: 'Quan Tan Phu' },  \n{ district_id: 'QPN', district: 'Quan Phu Nhuan' },  \n\\],  \n},  \n{  \ncity_id: 'TDUC',  \ncity: 'Thu Duc City',  \ndistricts: \\[  \n{ district_id: 'Q2', district: 'Quan 2' },  \n{ district_id: 'Q9', district: 'Quan 9' },  \n\\],  \n},  \n\\] \n  \n\nconst ALLOWED_DEVICE_ID = {  \nSTART: 0,  \nEND: 1000  \n}",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "29097793"
+	},
+	"item": [
+		{
+			"name": "/data/household",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{schema}}://{{host}}:{{port2}}/data/household?batch_size=1&city_id=HCMC&district_id=Q1&display_data=true",
+					"protocol": "{{schema}}",
+					"host": [
+						"{{host}}"
+					],
+					"port": "{{port2}}",
+					"path": [
+						"data",
+						"household"
+					],
+					"query": [
+						{
+							"key": "batch_size",
+							"value": "1",
+							"description": "Default if null is 1"
+						},
+						{
+							"key": "city_id",
+							"value": "HCMC",
+							"description": "Default if null is null"
+						},
+						{
+							"key": "district_id",
+							"value": "Q1",
+							"description": "Default if null is null"
+						},
+						{
+							"key": "display_data",
+							"value": "true",
+							"description": "true: display sent events; others: no display sent events"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/data/area",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{schema}}://{{host}}:{{port2}}/data/area?batch_size=1&city_id=HCMC&district_id=Q1&display_data=true",
+					"protocol": "{{schema}}",
+					"host": [
+						"{{host}}"
+					],
+					"port": "{{port2}}",
+					"path": [
+						"data",
+						"area"
+					],
+					"query": [
+						{
+							"key": "batch_size",
+							"value": "1",
+							"description": "Default if null is 1"
+						},
+						{
+							"key": "city_id",
+							"value": "HCMC",
+							"description": "Default if null is null"
+						},
+						{
+							"key": "district_id",
+							"value": "Q1",
+							"description": "Default if null is null"
+						},
+						{
+							"key": "display_data",
+							"value": "true",
+							"description": "true: display sent events; others: no display sent events"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/data/anomaly",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{schema}}://{{host}}:{{port2}}/data/anomaly?batch_size=1&city_id=HCMC&district_id=Q3&display_data=true",
+					"protocol": "{{schema}}",
+					"host": [
+						"{{host}}"
+					],
+					"port": "{{port2}}",
+					"path": [
+						"data",
+						"anomaly"
+					],
+					"query": [
+						{
+							"key": "batch_size",
+							"value": "1",
+							"description": "Default if null is 1"
+						},
+						{
+							"key": "city_id",
+							"value": "HCMC",
+							"description": "Default if null is null"
+						},
+						{
+							"key": "district_id",
+							"value": "Q3",
+							"description": "Default if null is null"
+						},
+						{
+							"key": "display_data",
+							"value": "true",
+							"description": "true: display sent events; others: no display sent events"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

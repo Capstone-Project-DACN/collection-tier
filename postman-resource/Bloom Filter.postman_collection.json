@@ -1,0 +1,555 @@
+{
+	"info": {
+		"_postman_id": "c42cc854-3d3e-413a-957d-f773184e58a7",
+		"name": "Bloom Filter",
+		"description": "### DEVICE ID rules\n\n- Household: household-\\-\\-\\[id range\\]\n    \n- Area: area-\\-\n    \n- Anomaly: household-\\-\\-\\[id range\\]",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "29097793"
+	},
+	"item": [
+		{
+			"name": "/devices/add",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"deviceId\": \"household-HCMC-Q1-0\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{schema}}://{{host}}:{{port}}/devices/add",
+					"protocol": "{{schema}}",
+					"host": [
+						"{{host}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"devices",
+						"add"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Example",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"deviceId\": \"id-0\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3001/devices/add",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"devices",
+								"add"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "39"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"27-TMpFxLajHWexoGBuCOzupZzbfUI\""
+						},
+						{
+							"key": "Date",
+							"value": "Sun, 23 Mar 2025 10:42:26 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"message\": \"Device added successfully\"\n}"
+				}
+			]
+		},
+		{
+			"name": "/devices/update-status",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"deviceId\": \"id-2\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{schema}}://{{host}}:{{port}}/devices/update-status",
+					"protocol": "{{schema}}",
+					"host": [
+						"{{host}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"devices",
+						"update-status"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/devices/check",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"deviceId\": \"household-HCMC-Q1-24\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{schema}}://{{host}}:{{port}}/devices/check",
+					"protocol": "{{schema}}",
+					"host": [
+						"{{host}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"devices",
+						"check"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Example",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"deviceId\": \"id-0\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3001/devices/check",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"devices",
+								"check"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "15"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"f-lWSD52foMX4qLT82tweJE091S9Q\""
+						},
+						{
+							"key": "Date",
+							"value": "Sun, 23 Mar 2025 11:17:26 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"exists\": true\n}"
+				}
+			]
+		},
+		{
+			"name": "/devices/remove",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"deviceId\": \"id-0\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{schema}}://{{host}}:{{port}}/devices/remove",
+					"protocol": "{{schema}}",
+					"host": [
+						"{{host}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"devices",
+						"remove"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Example",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"deviceId\": \"id-0\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3001/devices/remove",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"devices",
+								"remove"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "41"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"29-t8rJtRs940y1HuQg3XRXRiqLj/s\""
+						},
+						{
+							"key": "Date",
+							"value": "Sun, 23 Mar 2025 10:43:49 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"message\": \"Device removed successfully\"\n}"
+				}
+			]
+		},
+		{
+			"name": "/devices/inactive",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{schema}}://{{host}}:{{port}}/devices/inactive?pageNumber=1&pageSize=100&dateTime=true",
+					"protocol": "{{schema}}",
+					"host": [
+						"{{host}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"devices",
+						"inactive"
+					],
+					"query": [
+						{
+							"key": "pageNumber",
+							"value": "1",
+							"description": "min = 1"
+						},
+						{
+							"key": "pageSize",
+							"value": "100"
+						},
+						{
+							"key": "dateTime",
+							"value": "true",
+							"description": "true, others ..."
+						}
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Example timestamp",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3001/devices/inactive?pageNumber=1&pageSize=10&dateTime=false",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"devices",
+								"inactive"
+							],
+							"query": [
+								{
+									"key": "pageNumber",
+									"value": "1",
+									"description": "min = 1"
+								},
+								{
+									"key": "pageSize",
+									"value": "10"
+								},
+								{
+									"key": "dateTime",
+									"value": "false",
+									"description": "true, others ..."
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "567"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"237-t5uzuGxrtOWw0Bms2oNXnrApNj4\""
+						},
+						{
+							"key": "Date",
+							"value": "Sun, 23 Mar 2025 10:40:25 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"inactive_thresold\": \"10000 miliseconds\",\n    \"inactiveDevices\": [\n        {\n            \"deviceId\": \"id-0\",\n            \"lastSeen\": 1742724458799\n        },\n        {\n            \"deviceId\": \"id-1\",\n            \"lastSeen\": 1742724481497\n        },\n        {\n            \"deviceId\": \"id-2\",\n            \"lastSeen\": 1742724481497\n        },\n        {\n            \"deviceId\": \"id-3\",\n            \"lastSeen\": 1742724481498\n        },\n        {\n            \"deviceId\": \"id-4\",\n            \"lastSeen\": 1742724481498\n        },\n        {\n            \"deviceId\": \"id-5\",\n            \"lastSeen\": 1742724481499\n        },\n        {\n            \"deviceId\": \"id-6\",\n            \"lastSeen\": 1742724481499\n        },\n        {\n            \"deviceId\": \"id-7\",\n            \"lastSeen\": 1742724481499\n        },\n        {\n            \"deviceId\": \"id-8\",\n            \"lastSeen\": 1742724481500\n        },\n        {\n            \"deviceId\": \"id-10\",\n            \"lastSeen\": 1742724481501\n        }\n    ],\n    \"pageNumber\": 1,\n    \"pageSize\": 10,\n    \"total\": 51,\n    \"totalPages\": 6\n}"
+				},
+				{
+					"name": "Example dateTime",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{schema}}://{{host}}:{{port}}/devices/inactive?pageNumber=1&pageSize=10&dateTime=true",
+							"protocol": "{{schema}}",
+							"host": [
+								"{{host}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"devices",
+								"inactive"
+							],
+							"query": [
+								{
+									"key": "pageNumber",
+									"value": "1",
+									"description": "min = 1"
+								},
+								{
+									"key": "pageSize",
+									"value": "10"
+								},
+								{
+									"key": "dateTime",
+									"value": "true",
+									"description": "true, others ..."
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "718"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"2ce-HEnmGtgHJsHNn50GIjiYMsicjDs\""
+						},
+						{
+							"key": "Date",
+							"value": "Sun, 23 Mar 2025 10:41:55 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"inactive_thresold\": \"0 days, 0 hours, 0 minutes, 10 seconds\",\n    \"inactiveDevices\": [\n        {\n            \"deviceId\": \"id-0\",\n            \"lastSeen\": \"2025-03-23T10:07:38.799Z\"\n        },\n        {\n            \"deviceId\": \"id-1\",\n            \"lastSeen\": \"2025-03-23T10:08:01.497Z\"\n        },\n        {\n            \"deviceId\": \"id-2\",\n            \"lastSeen\": \"2025-03-23T10:08:01.497Z\"\n        },\n        {\n            \"deviceId\": \"id-3\",\n            \"lastSeen\": \"2025-03-23T10:08:01.498Z\"\n        },\n        {\n            \"deviceId\": \"id-4\",\n            \"lastSeen\": \"2025-03-23T10:08:01.498Z\"\n        },\n        {\n            \"deviceId\": \"id-5\",\n            \"lastSeen\": \"2025-03-23T10:08:01.499Z\"\n        },\n        {\n            \"deviceId\": \"id-6\",\n            \"lastSeen\": \"2025-03-23T10:08:01.499Z\"\n        },\n        {\n            \"deviceId\": \"id-7\",\n            \"lastSeen\": \"2025-03-23T10:08:01.499Z\"\n        },\n        {\n            \"deviceId\": \"id-8\",\n            \"lastSeen\": \"2025-03-23T10:08:01.500Z\"\n        },\n        {\n            \"deviceId\": \"id-10\",\n            \"lastSeen\": \"2025-03-23T10:08:01.501Z\"\n        }\n    ],\n    \"pageNumber\": 1,\n    \"pageSize\": 10,\n    \"total\": 51,\n    \"totalPages\": 6\n}"
+				}
+			]
+		},
+		{
+			"name": "/devices/add-multiple",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"start\": 0,\r\n    \"end\": 1000,\r\n    \"prefix\": \"household-HCMC-Q1\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{schema}}://{{host}}:{{port}}/devices/add-multiple",
+					"protocol": "{{schema}}",
+					"host": [
+						"{{host}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"devices",
+						"add-multiple"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
