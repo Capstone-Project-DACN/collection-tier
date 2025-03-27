@@ -102,7 +102,7 @@ services:
       PRODUCER_SERVICE_URL: http://collection-tier-service:3001
 
       CRON_TIME_CONSUMER_HOUSEHOLD: '*/2 * * * * *'
-      CRON_CONSUMER_HOUSEHOLD_ENABLED: 
+      CRON_CONSUMER_HOUSEHOLD_ENABLED: 0
 
       CRON_TIME_CONSUMER_AREA: '*/2 * * * * *'
       CRON_CONSUMER_AREA_ENABLED: 0
