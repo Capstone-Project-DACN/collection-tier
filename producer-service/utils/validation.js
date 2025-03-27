@@ -1,4 +1,4 @@
-const { ALLOWED_DEVICE_ID, DATA_TYPE } = require('../configs/DataConfig')
+const { ALLOWED_DEVICE_ID, DATA_TYPE } = require('../configs/dataConfig')
 
 function isValidDeviceId(deviceId) {
     if (typeof deviceId !== 'string') return false

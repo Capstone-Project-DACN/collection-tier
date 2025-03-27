@@ -81,12 +81,14 @@ services:
       CONNECTION_TIMEOUT: 10000
       ALLOW_AUTO_TOPIC_CREATION: 1
       TRANSACTION_TIMEOUT: 60000
+    depends_on:
+      - kafka
 
   
   collection-tier-service:
     image: hungvo2003vn/collection-tier-service:latest
     pull_policy: if_not_present
-    container_name: producer-service-container
+    container_name: collection-tier-service-container
     ports:
       - "3001:3001"
     restart: unless-stopped
@@ -124,6 +126,9 @@ services:
       REDIS_HOST: redis
       REDIS_PORT: 6379
       INACTIVE_TIME: 10000
+    depends_on:
+      - kafka
+      - redis
 
 
 volumes:
