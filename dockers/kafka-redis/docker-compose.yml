@@ -68,8 +68,6 @@ services:
     ports:
       - "3000:3000"
     restart: unless-stopped
-    env_file:
-      - ./data-source-service/.env
     environment:
       DATA_SOURCE_SERVICE_PORT: 3000
       DATA_SOURCE_SERVICE_DOMAIN: data-source-service
@@ -92,8 +90,6 @@ services:
     ports:
       - "3001:3001"
     restart: unless-stopped
-    env_file:
-      - ./producer-service/.env
     environment:
       DATA_SOURCE_SERVICE_PORT: 3000
       DATA_SOURCE_SERVICE_DOMAIN: data-source-service
