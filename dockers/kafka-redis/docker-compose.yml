@@ -61,6 +61,75 @@ services:
       - kafka
       - zookeeper
 
+  data-source-service:
+    image: hungvo2003vn/data-source-service:latest
+    pull_policy: if_not_present
+    container_name: data-source-service-container
+    ports:
+      - "3000:3000"
+    restart: unless-stopped
+    env_file:
+      - ./data-source-service/.env
+    environment:
+      DATA_SOURCE_SERVICE_PORT: 3000
+      DATA_SOURCE_SERVICE_DOMAIN: data-source-service
+      DATA_SOURCE_SERVICE_URL: http://data-source-service:3000
+      
+      KAFKA_CLIENT_ID: data-source-district-9
+      BOOTSTRAP_SERVER: kafka:29092
+      KAFKA_API_KEY: admin
+      KAFKA_API_SECRET: admin-secret
+      REQUEST_TIMEOUT: 30000
+      CONNECTION_TIMEOUT: 10000
+      ALLOW_AUTO_TOPIC_CREATION: 1
+      TRANSACTION_TIMEOUT: 60000
+
+  
+  collection-tier-service:
+    image: hungvo2003vn/collection-tier-service:latest
+    pull_policy: if_not_present
+    container_name: producer-service-container
+    ports:
+      - "3001:3001"
+    restart: unless-stopped
+    env_file:
+      - ./producer-service/.env
+    environment:
+      DATA_SOURCE_SERVICE_PORT: 3000
+      DATA_SOURCE_SERVICE_DOMAIN: data-source-service
+      DATA_SOURCE_SERVICE_URL: data-source-service:3000
+
+      PRODUCER_SERVICE_PORT: 3001
+      PRODUCER_SERVICE_DOMAIN: collection-tier-service
+      PRODUCER_SERVICE_URL: http://collection-tier-service:3001
+
+      CRON_TIME_CONSUMER_HOUSEHOLD: '*/2 * * * * *'
+      CRON_CONSUMER_HOUSEHOLD_ENABLED: 
+
+      CRON_TIME_CONSUMER_AREA: '*/2 * * * * *'
+      CRON_CONSUMER_AREA_ENABLED: 0
+
+      CRON_TIME_CONSUMER_ANOMALY: '*/2 * * * * *'
+      CRON_CONSUMER_ANOMALY_ENABLED: 0
+
+      CONSUMER_HOUSEHOLD_ENABLED: 1
+      CONSUMER_AREA_ENABLED: 1
+      CONSUMER_ANOMALY_ENABLED: 1
+
+      KAFKA_CLIENT_ID: collection-tier-district-9
+      BOOTSTRAP_SERVER: kafka:29092
+      KAFKA_API_KEY: admin
+      KAFKA_API_SECRET: admin-secret
+      REQUEST_TIMEOUT: 30000
+      CONNECTION_TIMEOUT: 10000
+      ALLOW_AUTO_TOPIC_CREATION: 1
+      TRANSACTION_TIMEOUT: 60000
+
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+      INACTIVE_TIME: 10000
+
+
 volumes:
   redis_data:
   kafka_data:
@@ -68,3 +137,4 @@ volumes:
   zookeeper_data:
   zookeeper_log:
   zookeeper_secrets:
+
