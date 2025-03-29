@@ -13,7 +13,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "{{schema}}://{{host}}:{{port2}}/data/household?batch_size=1&city_id=HCMC&district_id=Q1&display_data=true",
+					"raw": "{{schema}}://{{host}}:{{port2}}/data/household?batch_size=1&city_id=HCMC&district_id=Q1&display_data=true&id=0",
 					"protocol": "{{schema}}",
 					"host": [
 						"{{host}}"
@@ -43,6 +43,10 @@
 							"key": "display_data",
 							"value": "true",
 							"description": "true: display sent events; others: no display sent events"
+						},
+						{
+							"key": "id",
+							"value": "0"
 						}
 					]
 				}
@@ -97,7 +101,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "{{schema}}://{{host}}:{{port2}}/data/anomaly?batch_size=1&city_id=HCMC&district_id=Q3&display_data=true",
+					"raw": "{{schema}}://{{host}}:{{port2}}/data/anomaly?batch_size=1&city_id=HCMC&district_id=Q1&display_data=true&id=0",
 					"protocol": "{{schema}}",
 					"host": [
 						"{{host}}"
@@ -120,13 +124,17 @@
 						},
 						{
 							"key": "district_id",
-							"value": "Q3",
+							"value": "Q1",
 							"description": "Default if null is null"
 						},
 						{
 							"key": "display_data",
 							"value": "true",
 							"description": "true: display sent events; others: no display sent events"
+						},
+						{
+							"key": "id",
+							"value": "0"
 						}
 					]
 				}

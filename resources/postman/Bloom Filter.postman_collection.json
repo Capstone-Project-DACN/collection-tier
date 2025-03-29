@@ -14,7 +14,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"deviceId\": \"household-HCMC-Q1-0\"\r\n}",
+					"raw": "{\r\n    \"deviceId\": \"area-HCMC-Q1\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -50,12 +50,12 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:3001/devices/add",
-							"protocol": "http",
+							"raw": "{{schema}}://{{host}}:{{port}}/devices/add",
+							"protocol": "{{schema}}",
 							"host": [
-								"localhost"
+								"{{host}}"
 							],
-							"port": "3001",
+							"port": "{{port}}",
 							"path": [
 								"devices",
 								"add"
@@ -136,7 +136,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"deviceId\": \"household-HCMC-Q1-24\"\r\n}",
+					"raw": "{\r\n    \"deviceId\": \"area-HCMC-Q1\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -172,12 +172,12 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:3001/devices/check",
-							"protocol": "http",
+							"raw": "{{schema}}://{{host}}:{{port}}/devices/check",
+							"protocol": "{{schema}}",
 							"host": [
-								"localhost"
+								"{{host}}"
 							],
-							"port": "3001",
+							"port": "{{port}}",
 							"path": [
 								"devices",
 								"check"
@@ -229,7 +229,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"deviceId\": \"id-0\"\r\n}",
+					"raw": "{\r\n    \"deviceId\": \"area-HCMC-Q4\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -265,12 +265,12 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:3001/devices/remove",
-							"protocol": "http",
+							"raw": "{{schema}}://{{host}}:{{port}}/devices/remove",
+							"protocol": "{{schema}}",
 							"host": [
-								"localhost"
+								"{{host}}"
 							],
-							"port": "3001",
+							"port": "{{port}}",
 							"path": [
 								"devices",
 								"remove"
@@ -377,12 +377,12 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:3001/devices/inactive?pageNumber=1&pageSize=10&dateTime=false",
-							"protocol": "http",
+							"raw": "{{schema}}://{{host}}:{{port}}/devices/inactive?pageNumber=1&pageSize=10&dateTime=false",
+							"protocol": "{{schema}}",
 							"host": [
-								"localhost"
+								"{{host}}"
 							],
-							"port": "3001",
+							"port": "{{port}}",
 							"path": [
 								"devices",
 								"inactive"
@@ -550,6 +550,268 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "/devices/detail/{deviceId}",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{schema}}://{{host}}:{{port}}/devices/detail/household-HCMC-Q1-0",
+					"protocol": "{{schema}}",
+					"host": [
+						"{{host}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"devices",
+						"detail",
+						"household-HCMC-Q1-0"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Example 1",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{schema}}://{{host}}:{{port}}/devices/detail/household-HCMC-Q1-29",
+							"protocol": "{{schema}}",
+							"host": [
+								"{{host}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"devices",
+								"detail",
+								"household-HCMC-Q1-29"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "30"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"1e-gzuEeVHd3AAxsrq0nKg31nnuwqk\""
+						},
+						{
+							"key": "Date",
+							"value": "Sat, 29 Mar 2025 18:52:15 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"created_at\": \"1743098696799\"\n}"
+				},
+				{
+					"name": "Example 2",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{schema}}://{{host}}:{{port}}/devices/detail/household-HCMC-Q1-290",
+							"protocol": "{{schema}}",
+							"host": [
+								"{{host}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"devices",
+								"detail",
+								"household-HCMC-Q1-290"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "127"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"7f-XMNefr0sXhkOoCfLzT5Zi1iD2wY\""
+						},
+						{
+							"key": "Date",
+							"value": "Sat, 29 Mar 2025 18:52:32 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"created_at\": \"1743098696813\",\n    \"electricity_usage_kwh\": \"6206.73\",\n    \"voltage\": \"464\",\n    \"current\": \"416.78\",\n    \"last_seen\": \"1743272907607\"\n}"
+				},
+				{
+					"name": "Example 3",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{schema}}://{{host}}:{{port}}/devices/detail/area-HCMC-Q3",
+							"protocol": "{{schema}}",
+							"host": [
+								"{{host}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"devices",
+								"detail",
+								"area-HCMC-Q3"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "98"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"62-qhKWu0MN7kLFGDafvE9wZjKcpJ8\""
+						},
+						{
+							"key": "Date",
+							"value": "Sat, 29 Mar 2025 19:09:15 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"created_at\": \"1743275330373\",\n    \"total_electricity_usage_kwh\": \"9959.59\",\n    \"last_seen\": \"1743275335669\"\n}"
+				}
+			]
+		},
+		{
+			"name": "/devices/false-positive",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{schema}}://{{host}}:{{port}}/devices/false-positive",
+					"protocol": "{{schema}}",
+					"host": [
+						"{{host}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"devices",
+						"false-positive"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Example",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{schema}}://{{host}}:{{port}}/devices/false-positive",
+							"protocol": "{{schema}}",
+							"host": [
+								"{{host}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"devices",
+								"false-positive"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "26"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"1a-24bUahQopZHw9YjaqeLt1uSyO3c\""
+						},
+						{
+							"key": "Date",
+							"value": "Sat, 29 Mar 2025 18:52:08 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"false_positive_count\": 0\n}"
+				}
+			]
 		}
 	]
 }
