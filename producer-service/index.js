@@ -32,6 +32,8 @@ app.post('/devices/remove', deviceCtrl.removeDevice)
 app.post('/devices/update-status', deviceCtrl.updateStatus)
 app.post('/devices/add-multiple', deviceCtrl.addMultipleDevices)
 app.get('/devices/inactive', deviceCtrl.getInactiveDevices)
+app.get('/devices/false-positive', deviceCtrl.getFalsePositiveCount)
+app.get('/devices/detail/:deviceId', deviceCtrl.getDeviceDetail)
 
 // Start Kafka Consumers
 consumerHouseHoldHandler.init()

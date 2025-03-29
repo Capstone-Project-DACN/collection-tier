@@ -91,11 +91,39 @@ const getInactiveDevices = async (req, res) => {
     }
 }
 
+const getFalsePositiveCount = async (req, res) => {
+    try {
+        const count = await bloomService.getFalsePositiveCount()
+        res.json({ false_positive_count: count })
+    } catch (error) {
+        console.error(`[${debugTag}] getFalsePositive error:`, error)
+        res.status(500).json({ error: 'Failed to get false positive count'})
+    }
+}
+
+const getDeviceDetail = async (req, res) => {
+    try {
+        const { deviceId } = req.params
+        const detail = await bloomService.getDeviceDetail(deviceId)
+        
+        if (!detail) {
+            return res.status(404).json({ error: 'Device not found' })
+        }
+
+        res.json(detail)
+    } catch (error) {
+        console.error(`[${debugTag}] getDeviceDetail error:`, error)
+        res.status(500).json({ error: 'Failed to get device detail' })
+    }
+}
+
 module.exports = {
     addDevice,
     checkDevice,
     removeDevice,
     updateStatus,
     addMultipleDevices,
-    getInactiveDevices
+    getInactiveDevices,
+    getFalsePositiveCount,
+    getDeviceDetail
 }

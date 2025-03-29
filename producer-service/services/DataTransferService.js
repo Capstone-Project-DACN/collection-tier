@@ -62,7 +62,17 @@ class DataTransferService {
             const deviceId = item?.device_id
             if (!deviceId) return null
 
-            await bloomService.updateLastSeen(deviceId)
+            const metadata = {}
+
+            if (item?.electricity_usage_kwh) { metadata.electricity_usage_kwh = item.electricity_usage_kwh }
+            if (item?.voltage) { metadata.voltage = item.voltage }
+            if (item?.current) { metadata.current = item.current }
+
+            // For AreaData
+            if (item?.total_electricity_usage_kwh) { metadata.total_electricity_usage_kwh = item.total_electricity_usage_kwh }
+
+            await bloomService.updateLastSeen(deviceId, metadata)
+            
             return item
         })
 

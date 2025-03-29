@@ -58,9 +58,9 @@ async function checkDevice(deviceId) {
         const exists = await redisClient.call(CUCKOO_FILTER_OPS.EXISTS, CUCKOO_FILTER_TAG.VALID_DEVICES, deviceId)
         if (!exists) return false
 
-        const createdAt = await redisClient.hget(`${REDIS_TAG.DEVICE}:${deviceId}`, 'created_at')
+        const isExist = await redisClient.exists(`${REDIS_TAG.DEVICE}:${deviceId}`)
         
-        if (createdAt === null) {
+        if (!isExist) {
             console.warn(`[${debugTag}] checkDevice: False positive detected for device ${deviceId}`)
             await redisClient.incr(FALSE_POSITIVE_COUNTER)
             return false
@@ -73,12 +73,21 @@ async function checkDevice(deviceId) {
     }
 }
 
-async function updateLastSeen(deviceId) {
+async function updateLastSeen(deviceId, metadata = {}) {
     try {
-        const timestamp = Date.now()
-        await redisClient.zadd(REDIS_TAG.LAST_SEEN, timestamp, deviceId)
+        const timestamp = Date.now();
+        const pipeline = redisClient.pipeline();
+
+        pipeline.zadd(REDIS_TAG.LAST_SEEN, timestamp, deviceId)
+
+        if (Object.keys(metadata).length > 0) {
+            metadata.last_seen = timestamp
+            pipeline.hset(`${REDIS_TAG.DEVICE}:${deviceId}`, ...Object.entries(metadata).flat())
+        }
+
+        await pipeline.exec()
     } catch (error) {
-        console.error(`[${debugTag}] updateLastSeen: Error updating last seen for device ${deviceId}:`, error?.message || error)
+        console.error(`[${debugTag}] updateLastSeen: Error updating last seen for device ${deviceId}:`, error)
         throw error
     }
 }
@@ -145,11 +154,40 @@ async function removeDevice(deviceId) {
     }
 }
 
+async function getFalsePositiveCount() {
+    try {
+        const count = await redisClient.get(FALSE_POSITIVE_COUNTER)
+        return Number(count) || 0
+    } catch (error) {
+        console.error(`[${debugTag}] getFalsePositiveCount: Error getting false positive count:`, error)
+        throw error
+    }
+}
+
+async function getDeviceDetail(deviceId) {
+    try {
+        const deviceKey = `${REDIS_TAG.DEVICE}:${deviceId}`
+        const exists = await redisClient.exists(deviceKey)
+
+        if (!exists) {
+            return null
+        }
+
+        const detail = await redisClient.hgetall(deviceKey)
+        return detail
+    } catch (error) {
+        console.error(`[${debugTag}] getDeviceDetail: Error getting device detail for ${deviceId}:`, error)
+        throw error
+    }
+}
+
 module.exports = {
     addDevice,
     addMultipleDevices,
     checkDevice,
     updateLastSeen,
     getInactiveDevices,
-    removeDevice
+    removeDevice,
+    getFalsePositiveCount,
+    getDeviceDetail
 }
