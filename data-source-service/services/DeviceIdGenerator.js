@@ -8,7 +8,7 @@ const randomHelper = require('../utils/RandomUtils')
  */
 function generateRandomDeviceId(cityId, districtId, type = DATA_TYPE.household, id = null) {
     if (type === DATA_TYPE.household) {
-        return `household-${cityId? cityId: 'undefined'}-${districtId? districtId: 'undefined'}-${ id? id: randomHelper.getRandomInt(ALLOWED_DEVICE_ID.START, ALLOWED_DEVICE_ID.END)}`
+        return `household-${cityId? cityId: 'undefined'}-${districtId? districtId: 'undefined'}-${ isIdValid(id)? id: randomHelper.getRandomInt(ALLOWED_DEVICE_ID.START, ALLOWED_DEVICE_ID.END)}`
     } else if (type === DATA_TYPE.area) {
         return `area-${cityId? cityId: 'undefined'}-${districtId? districtId: 'undefined'}`
     } else {

@@ -57,19 +57,36 @@ class DataTransferService {
         return results.filter(Boolean)
     }
 
+    async #updateTotalElectricityUsage(item) {
+        const cityId = item?.device_id?.split('-')[1]
+        const districtId = item?.device_id?.split('-')[2]
+
+        if (!cityId || !districtId) return
+
+        const areaDeviceId = `area-${cityId}-${districtId}`
+        await bloomService.updateTotalElectricityUsage(areaDeviceId, parseFloat(item?.electricity_usage_kwh) || 0.0)
+    }
+
     async #updateValidDevices(data) {
         const updatePromises = data.map(async item => {
             const deviceId = item?.device_id
             if (!deviceId) return null
 
-            const metadata = {}
+            const metadata = { type: item?.type || 'unknown' }
 
-            if (item?.electricity_usage_kwh) { metadata.electricity_usage_kwh = item.electricity_usage_kwh }
-            if (item?.voltage) { metadata.voltage = item.voltage }
-            if (item?.current) { metadata.current = item.current }
+            if (metadata.type === DATA_TYPE.household) {
+                metadata.electricity_usage_kwh = item?.electricity_usage_kwh
+                metadata.voltage = item?.voltage
+                metadata.current = item?.current
 
-            // For AreaData
-            if (item?.total_electricity_usage_kwh) { metadata.total_electricity_usage_kwh = item.total_electricity_usage_kwh }
+                // Update total area usage
+                await this.#updateTotalElectricityUsage(item)
+
+            } else if (metadata.type === DATA_TYPE.anomaly) {
+                metadata.anomaly_electricity_usage_kwh = item?.electricity_usage_kwh
+                metadata.anomaly_voltage = item?.voltage
+                metadata.anomaly_current = item?.current
+            }
 
             await bloomService.updateLastSeen(deviceId, metadata)
             

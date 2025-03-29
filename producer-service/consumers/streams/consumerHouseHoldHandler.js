@@ -71,6 +71,7 @@ class ConsumerHouseHoldHandler extends BaseConsumer {
 
         } catch (error) {
             this.logger.error('Error processing message:', error)
+            console.error(error)
         }
     }
 

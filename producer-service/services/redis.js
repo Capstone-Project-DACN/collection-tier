@@ -181,6 +181,15 @@ async function getDeviceDetail(deviceId) {
     }
 }
 
+async function updateTotalElectricityUsage(deviceId, electricityUsage) {
+    try {
+        await redisClient.hincrbyfloat(`${REDIS_TAG.DEVICE}:${deviceId}`, 'total_electricity_usage_kwh', electricityUsage)
+    } catch (error) {
+        console.error(`[${debugTag}] updateTotalElectricityUsage: Error updating total electricity usage for device ${deviceId}:`, error)
+        throw error
+    }
+}
+
 module.exports = {
     addDevice,
     addMultipleDevices,
@@ -189,5 +198,6 @@ module.exports = {
     getInactiveDevices,
     removeDevice,
     getFalsePositiveCount,
-    getDeviceDetail
+    getDeviceDetail,
+    updateTotalElectricityUsage
 }

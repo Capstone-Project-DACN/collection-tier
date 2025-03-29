@@ -81,8 +81,12 @@ services:
       CONNECTION_TIMEOUT: 10000
       ALLOW_AUTO_TOPIC_CREATION: 1
       TRANSACTION_TIMEOUT: 60000
+
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
     depends_on:
       - kafka
+      - redis
 
   
   collection-tier-service:
