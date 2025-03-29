@@ -1,6 +1,7 @@
 const { generateRandomHouseholdData } = require('../models/household')
 const { generateRandomAreaData } = require('../models/area')
 const { generateRandomAnomalyData } = require('../models/anomaly')
+const { isIdValid, getValidDeviceIdFormat } = require('../services/DeviceIdGenerator')
 const { destinationTopic, topicExists } = require('../services/DestinationDeterminer')
 const { DATA_TYPE } = require('../configs/DataConfig')
 const { TOPIC, PRODUCER_IDS } = require('../configs/KafkaConfig')
@@ -10,11 +11,17 @@ const TAG = 'dataController'
 
 const createHouseholdData = async (req, res) => {
     const batchSize = Number(req.query.batch_size) || 1
-    const { city_id: cityId, district_id: districtId, display_data: displayData } = req.query
+    const { city_id: cityId, district_id: districtId, display_data: displayData, id } = req.query
     
+    if (id !== undefined && !isIdValid(id)) {
+        return res.status(403).json({
+            error: `Invalid id. ${getValidDeviceIdFormat()}`
+        })
+    }
+
     const batchData = []
     for (let i = 0; i < batchSize; i++) {
-        batchData.push(generateRandomHouseholdData(cityId, districtId))
+        batchData.push(generateRandomHouseholdData(cityId, districtId, Number(id)))
     }
     const batchResult = await Promise.all(batchData)
     console.info(`[${TAG}] Generated Household Data:`, batchResult.length)
@@ -72,10 +79,17 @@ const createAreaData = async (req, res) => {
 
 const createAnomalyData = async (req, res) => {
     const batchSize = Number(req.query.batch_size) || 1
-    const { city_id: cityId, district_id: districtId, display_data: displayData } = req.query
+    const { city_id: cityId, district_id: districtId, display_data: displayData, id } = req.query
+
+    if (id !== undefined && !isIdValid(id)) {
+        return res.status(403).json({
+            error: `Invalid id. ${getValidDeviceIdFormat()}`
+        })
+    }
+
     const batchData = []
     for (let i = 0; i < batchSize; i++) {
-        batchData.push(generateRandomAnomalyData(cityId, districtId))
+        batchData.push(generateRandomAnomalyData(cityId, districtId, Number(id)))
     }
     const batchResult = await Promise.all(batchData)
     console.log(`[${TAG}] Generated Anomaly Data:`, batchResult.length)

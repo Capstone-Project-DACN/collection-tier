@@ -3,8 +3,8 @@ const { generateRandomDeviceId } = require('../services/DeviceIdGenerator')
 const locationGenerator = require('../services/LocationGenerator')
 const { DATA_TYPE } = require('../configs/DataConfig')
 
-const generateRandomHouseholdData = (cityId, districtId) => {
-    const device_id = generateRandomDeviceId(cityId, districtId, DATA_TYPE.household)
+const generateRandomHouseholdData = (cityId, districtId, id = null) => {
+    const device_id = generateRandomDeviceId(cityId, districtId, DATA_TYPE.household, id)
     const household_id = device_id
     const timestamp = new Date().toISOString()
     const electricity_usage_kwh = parseFloat(faker.finance.amount(0, 500, 2))
