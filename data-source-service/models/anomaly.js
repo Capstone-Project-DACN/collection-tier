@@ -2,12 +2,12 @@ const faker = require('faker')
 const { generateRandomDeviceId } = require('../services/DeviceIdGenerator')
 const locationGenerator = require('../services/LocationGenerator')
 const { DATA_TYPE } = require('../configs/DataConfig')
+const RedisService = require('../services/RedisService')
 
-const generateRandomAnomalyData = (cityId, districtId, id = null) => {
+const generateRandomAnomalyData = async (cityId, districtId, id = null) => {
     const device_id = generateRandomDeviceId(cityId, districtId, DATA_TYPE.household, id)
     const household_id = device_id
     const timestamp = new Date().toISOString()
-    const electricity_usage_kwh = parseFloat(faker.finance.amount(5000, 10000, 2)) // Extremely high usage
     const voltage = faker.datatype.number({ min: 400, max: 500 }) // Dangerously high voltage
     const current = parseFloat(faker.finance.amount(300, 500, 2)) // Dangerously high current
     const { city, district, ward } = locationGenerator.generateRandomLocation(cityId, districtId)
@@ -18,6 +18,11 @@ const generateRandomAnomalyData = (cityId, districtId, id = null) => {
         city: city
     }
 
+    const previousElectricityUsage = await RedisService.getElectricityUsage(device_id)
+
+    const increased_electricity_usage_kwh = parseFloat(faker.finance.amount(previousElectricityUsage ? 200 : 5000, previousElectricityUsage ? 500 : 10000, 2))
+    const electricity_usage_kwh = parseFloat((previousElectricityUsage ? parseFloat(previousElectricityUsage) : 0) + increased_electricity_usage_kwh)
+
     const price_per_kwh = faker.datatype.number({ min: 1000, max: 5000 })
     const total_cost = Math.floor(electricity_usage_kwh * price_per_kwh)
 
@@ -27,6 +32,7 @@ const generateRandomAnomalyData = (cityId, districtId, id = null) => {
         household_id,
         timestamp,
         electricity_usage_kwh,
+        increased_electricity_usage_kwh,
         voltage,
         current,
         location,

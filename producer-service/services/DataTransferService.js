@@ -64,7 +64,7 @@ class DataTransferService {
         if (!cityId || !districtId) return
 
         const areaDeviceId = `area-${cityId}-${districtId}`
-        await bloomService.updateTotalElectricityUsage(areaDeviceId, parseFloat(item?.electricity_usage_kwh) || 0.0)
+        await bloomService.updateTotalElectricityUsage(areaDeviceId, parseFloat(item?.increased_electricity_usage_kwh) || 0.0)
     }
 
     async #updateValidDevices(data) {
@@ -78,6 +78,7 @@ class DataTransferService {
                 metadata.electricity_usage_kwh = item?.electricity_usage_kwh
                 metadata.voltage = item?.voltage
                 metadata.current = item?.current
+                metadata.increased_electricity_usage_kwh = item?.increased_electricity_usage_kwh
 
                 // Update total area usage
                 await this.#updateTotalElectricityUsage(item)
@@ -89,6 +90,8 @@ class DataTransferService {
             }
 
             await bloomService.updateLastSeen(deviceId, metadata)
+
+            delete item.increased_electricity_usage_kwh
             
             return item
         })
