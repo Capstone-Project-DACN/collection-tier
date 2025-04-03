@@ -2,6 +2,7 @@ const express = require('express')
 require('dotenv').config()
 
 const dataCtrl = require('./controllers/dataController')
+const cronCtrl = require('./controllers/cronController')
 
 const app = express()
 const port = +process.env.DATA_SOURCE_SERVICE_PORT || 3000
@@ -10,6 +11,9 @@ const port = +process.env.DATA_SOURCE_SERVICE_PORT || 3000
 app.get('/data/household', dataCtrl.createHouseholdData)
 app.get('/data/area', dataCtrl.createAreaData)
 app.get('/data/anomaly', dataCtrl.createAnomalyData)
+
+// Route to control cron creating electric data
+app.post('/cron/household', cronCtrl.cronControlHouseHold)
 
 // Start the server
 app.listen(port, () => {
