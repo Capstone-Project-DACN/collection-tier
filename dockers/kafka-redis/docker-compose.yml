@@ -72,6 +72,8 @@ services:
       DATA_SOURCE_SERVICE_PORT: 3000
       DATA_SOURCE_SERVICE_DOMAIN: data-source-service
       DATA_SOURCE_SERVICE_URL: http://data-source-service:3000
+
+      DEFAULT_CRON_TIME: '*/2 * * * * *'
       
       KAFKA_CLIENT_ID: data-source-district-9
       BOOTSTRAP_SERVER: kafka:29092
