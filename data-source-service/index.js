@@ -13,7 +13,11 @@ app.get('/data/area', dataCtrl.createAreaData)
 app.get('/data/anomaly', dataCtrl.createAnomalyData)
 
 // Route to control cron creating electric data
-app.post('/cron/household', cronCtrl.cronControlHouseHold)
+app.post('/jobs/update', cronCtrl.updateCronInfo)
+app.post('/jobs/trigger', cronCtrl.triggerCronStatus)
+app.get('/jobs/all', cronCtrl.getJobs)
+app.get('/jobs/detail', cronCtrl.getJobDetail)
+
 
 // Start the server
 app.listen(port, () => {

@@ -5,16 +5,16 @@ const { BatchSizeManager } = require('../../services/BatchSizeManager')
 const { ALLOWED_DEVICE_ID, DATA_TYPE } = require('../../configs/DataConfig')
 const { TIME } = require('../../configs/DistributionConfig')
 
-class HouseholdCronProducer {
+class AnomalyCronProducer {
     constructor(cityId, districtId, distributionType, randomOrder, cronTime) {
-        this.cronType = DATA_TYPE.household
+        this.cronType = DATA_TYPE.anomaly
         this.cityId = cityId
         this.districtId = districtId
         this.distributionType = distributionType
         this.randomOrder = randomOrder
         this.isRunning = false
         this.batchManager = new BatchSizeManager(ALLOWED_DEVICE_ID.START, ALLOWED_DEVICE_ID.END)
-        this.CRON_TAG = `CRON_JOB_PRODUCER_HOUSEHOLD_${this.cityId}_${this.districtId}`
+        this.CRON_TAG = `CRON_JOB_PRODUCER_ANOMALY_${this.cityId}_${this.districtId}`
 
         this.job = new CronJob(cronTime, async () => {            
             await this.#handler()
@@ -29,7 +29,7 @@ class HouseholdCronProducer {
         try {
             console.info(`${this.CRON_TAG} ------Info: batch_size=${this.batchManager.getCurrentBatchSize()}, current_slot=${this.batchManager.getCurrentSlot()}`)
 
-            await dataService.createAndSendHouseholdData(this.cityId, this.districtId, this.batchManager)
+            await dataService.createAndSendAnomalyData(this.cityId, this.districtId, this.batchManager)
 
         } catch (error) {
             console.error(`${this.CRON_TAG} ------Error during process:`, error)
@@ -58,4 +58,4 @@ class HouseholdCronProducer {
     }
 }
 
-module.exports = HouseholdCronProducer
+module.exports = AnomalyCronProducer
