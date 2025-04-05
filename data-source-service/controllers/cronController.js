@@ -110,6 +110,17 @@ const getJobDetail = (req, res) => {
     }
 }
 
+const getAvailableDistributionType = (req, res) => {
+    try {
+        const result = cronProducerManager.getAvailableDistributionType()
+
+        return res.status(result.status).json({ total: result.total, data: result.data })
+
+    } catch (error) {
+        return res.status(error.status || 500).json({ error: error.customMessage || 'Internal Server Error' })
+    }
+}
+
 /**
  * HELPER FUNCTIONS, CLASSES
  * commonValidation
@@ -187,6 +198,7 @@ module.exports = {
     updateCronInfo,
     triggerCronStatus,
     getJobs,
-    getJobDetail
+    getJobDetail,
+    getAvailableDistributionType
 }
 

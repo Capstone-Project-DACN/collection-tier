@@ -191,6 +191,17 @@ class CronProducerManager {
             }
         }
     }
+
+    getAvailableDistributionType() {
+
+        const distributionTypeList = Object.values(DISTRIBUTIONS)
+
+        return {
+            status: 200,
+            data: distributionTypeList,
+            total: distributionTypeList.length
+        }
+    }
 }
 
 module.exports = new CronProducerManager()

@@ -17,7 +17,7 @@ app.post('/jobs/update', cronCtrl.updateCronInfo)
 app.post('/jobs/trigger', cronCtrl.triggerCronStatus)
 app.get('/jobs/all', cronCtrl.getJobs)
 app.get('/jobs/detail', cronCtrl.getJobDetail)
-
+app.get('/jobs/distribution-types/all', cronCtrl.getAvailableDistributionType)
 
 // Start the server
 app.listen(port, () => {
