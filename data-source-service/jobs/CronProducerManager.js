@@ -37,9 +37,12 @@ class CronProducerManager {
                     }
 
                     this.jobs.set(key, producer)
+                    console.info(`[${TAG}] Init job for ${key}`)
                 })
             })
         })
+
+        console.info(`[${TAG}] Init ${this.jobs.size} jobs`)
     }
 
     update(cronType, cityId, districtId, distributionType, randomOrder, cronTime) {
@@ -186,7 +189,7 @@ class CronProducerManager {
                 district_id: producer.districtId,
                 distribution_type: producer.distributionType,
                 random_order: producer.randomOrder === true ? 'true' : 'false',
-                cron_time: producer.job.cronTime.toString(),
+                cron_time: producer.job.cronTime.source.toString(),
                 status: producer.isRunning ? 'running' : 'stopped'
             }
         }
