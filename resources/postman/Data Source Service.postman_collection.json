@@ -8,6 +8,1230 @@
 	},
 	"item": [
 		{
+			"name": "Job Manager",
+			"item": [
+				{
+					"name": "/jobs/all",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{schema}}://{{host}}:{{port2}}/jobs/all",
+							"protocol": "{{schema}}",
+							"host": [
+								"{{host}}"
+							],
+							"port": "{{port2}}",
+							"path": [
+								"jobs",
+								"all"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Example 200 OK",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{schema}}://{{host}}:{{port2}}/jobs/all",
+									"protocol": "{{schema}}",
+									"host": [
+										"{{host}}"
+									],
+									"port": "{{port2}}",
+									"path": [
+										"jobs",
+										"all"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "4530"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"11b2-ItdfGlp6Dq3pha+kuQQ+8WsayKM\""
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 05 Apr 2025 21:48:09 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"total\": 54,\n    \"data\": [\n        {\n            \"cron_type\": \"HouseholdData\",\n            \"city_id\": \"HCMC\",\n            \"district_id\": \"Q1\",\n            \"status\": \"stopped\"\n        },\n        {\n            \"cron_type\": \"HouseholdData\",\n            \"city_id\": \"HCMC\",\n            \"district_id\": \"Q3\",\n            \"status\": \"stopped\"\n        },\n        {\n            \"cron_type\": \"HouseholdData\",\n            \"city_id\": \"HCMC\",\n            \"district_id\": \"Q4\",\n            \"status\": \"stopped\"\n        },\n        {\n            \"cron_type\": \"HouseholdData\",\n            \"city_id\": \"HCMC\",\n            \"district_id\": \"Q5\",\n            \"status\": \"stopped\"\n        },\n        {\n            \"cron_type\": \"HouseholdData\",\n            \"city_id\": \"HCMC\",\n            \"district_id\": \"Q6\",\n            \"status\": \"stopped\"\n        },\n        {\n            \"cron_type\": \"HouseholdData\",\n            \"city_id\": \"HCMC\",\n            \"district_id\": \"Q7\",\n            \"status\": \"stopped\"\n        },\n        {\n            \"cron_type\": \"HouseholdData\",\n            \"city_id\": \"HCMC\",\n            \"district_id\": \"Q8\",\n            \"status\": \"stopped\"\n        },\n        {\n            \"cron_type\": \"HouseholdData\",\n            \"city_id\": \"HCMC\",\n            \"district_id\": \"Q10\",\n            \"status\": \"stopped\"\n        },\n        {\n            \"cron_type\": \"HouseholdData\",\n            \"city_id\": \"HCMC\",\n            \"district_id\": \"Q11\",\n            \"status\": \"stopped\"\n        },\n        {\n            \"cron_type\": \"HouseholdData\",\n            \"city_id\": \"HCMC\",\n            \"district_id\": \"Q12\",\n            \"status\": \"stopped\"\n        },\n        {\n            \"cron_type\": \"HouseholdData\",\n            \"city_id\": \"HCMC\",\n            \"district_id\": \"QGV\",\n            \"status\": \"stopped\"\n        },\n        {\n            \"cron_type\": \"HouseholdData\",\n            \"city_id\": \"HCMC\",\n            \"district_id\": \"QTB\",\n            \"status\": \"stopped\"\n        },\n        {\n            \"cron_type\": \"HouseholdData\",\n            \"city_id\": \"HCMC\",\n            \"district_id\": \"QBTAN\",\n            \"status\": \"stopped\"\n        },\n        {\n            \"cron_type\": \"HouseholdData\",\n            \"city_id\": \"HCMC\",\n            \"district_id\": \"QBTHANH\",\n            \"status\": \"stopped\"\n        },\n        {\n            \"cron_type\": \"HouseholdData\",\n            \"city_id\": \"HCMC\",\n            \"district_id\": \"QTP\",\n            \"status\": \"stopped\"\n        },\n        {\n            \"cron_type\": \"HouseholdData\",\n            \"city_id\": \"HCMC\",\n            \"district_id\": \"QPN\",\n            \"status\": \"stopped\"\n        },\n        {\n            \"cron_type\": \"HouseholdData\",\n            \"city_id\": \"TDUC\",\n            \"district_id\": \"Q2\",\n            \"status\": \"stopped\"\n        },\n        {\n            \"cron_type\": \"HouseholdData\",\n            \"city_id\": \"TDUC\",\n            \"district_id\": \"Q9\",\n            \"status\": \"stopped\"\n        },\n        {\n            \"cron_type\": \"AreaData\",\n            \"city_id\": \"HCMC\",\n            \"district_id\": \"Q1\",\n            \"status\": \"stopped\"\n        },\n        {\n            \"cron_type\": \"AreaData\",\n            \"city_id\": \"HCMC\",\n            \"district_id\": \"Q3\",\n            \"status\": \"stopped\"\n        },\n        {\n            \"cron_type\": \"AreaData\",\n            \"city_id\": \"HCMC\",\n            \"district_id\": \"Q4\",\n            \"status\": \"stopped\"\n        },\n        {\n            \"cron_type\": \"AreaData\",\n            \"city_id\": \"HCMC\",\n            \"district_id\": \"Q5\",\n            \"status\": \"stopped\"\n        },\n        {\n            \"cron_type\": \"AreaData\",\n            \"city_id\": \"HCMC\",\n            \"district_id\": \"Q6\",\n            \"status\": \"stopped\"\n        },\n        {\n            \"cron_type\": \"AreaData\",\n            \"city_id\": \"HCMC\",\n            \"district_id\": \"Q7\",\n            \"status\": \"stopped\"\n        },\n        {\n            \"cron_type\": \"AreaData\",\n            \"city_id\": \"HCMC\",\n            \"district_id\": \"Q8\",\n            \"status\": \"stopped\"\n        },\n        {\n            \"cron_type\": \"AreaData\",\n            \"city_id\": \"HCMC\",\n            \"district_id\": \"Q10\",\n            \"status\": \"stopped\"\n        },\n        {\n            \"cron_type\": \"AreaData\",\n            \"city_id\": \"HCMC\",\n            \"district_id\": \"Q11\",\n            \"status\": \"stopped\"\n        },\n        {\n            \"cron_type\": \"AreaData\",\n            \"city_id\": \"HCMC\",\n            \"district_id\": \"Q12\",\n            \"status\": \"stopped\"\n        },\n        {\n            \"cron_type\": \"AreaData\",\n            \"city_id\": \"HCMC\",\n            \"district_id\": \"QGV\",\n            \"status\": \"stopped\"\n        },\n        {\n            \"cron_type\": \"AreaData\",\n            \"city_id\": \"HCMC\",\n            \"district_id\": \"QTB\",\n            \"status\": \"stopped\"\n        },\n        {\n            \"cron_type\": \"AreaData\",\n            \"city_id\": \"HCMC\",\n            \"district_id\": \"QBTAN\",\n            \"status\": \"stopped\"\n        },\n        {\n            \"cron_type\": \"AreaData\",\n            \"city_id\": \"HCMC\",\n            \"district_id\": \"QBTHANH\",\n            \"status\": \"stopped\"\n        },\n        {\n            \"cron_type\": \"AreaData\",\n            \"city_id\": \"HCMC\",\n            \"district_id\": \"QTP\",\n            \"status\": \"stopped\"\n        },\n        {\n            \"cron_type\": \"AreaData\",\n            \"city_id\": \"HCMC\",\n            \"district_id\": \"QPN\",\n            \"status\": \"stopped\"\n        },\n        {\n            \"cron_type\": \"AreaData\",\n            \"city_id\": \"TDUC\",\n            \"district_id\": \"Q2\",\n            \"status\": \"stopped\"\n        },\n        {\n            \"cron_type\": \"AreaData\",\n            \"city_id\": \"TDUC\",\n            \"district_id\": \"Q9\",\n            \"status\": \"stopped\"\n        },\n        {\n            \"cron_type\": \"AnomalyData\",\n            \"city_id\": \"HCMC\",\n            \"district_id\": \"Q1\",\n            \"status\": \"stopped\"\n        },\n        {\n            \"cron_type\": \"AnomalyData\",\n            \"city_id\": \"HCMC\",\n            \"district_id\": \"Q3\",\n            \"status\": \"stopped\"\n        },\n        {\n            \"cron_type\": \"AnomalyData\",\n            \"city_id\": \"HCMC\",\n            \"district_id\": \"Q4\",\n            \"status\": \"stopped\"\n        },\n        {\n            \"cron_type\": \"AnomalyData\",\n            \"city_id\": \"HCMC\",\n            \"district_id\": \"Q5\",\n            \"status\": \"stopped\"\n        },\n        {\n            \"cron_type\": \"AnomalyData\",\n            \"city_id\": \"HCMC\",\n            \"district_id\": \"Q6\",\n            \"status\": \"stopped\"\n        },\n        {\n            \"cron_type\": \"AnomalyData\",\n            \"city_id\": \"HCMC\",\n            \"district_id\": \"Q7\",\n            \"status\": \"stopped\"\n        },\n        {\n            \"cron_type\": \"AnomalyData\",\n            \"city_id\": \"HCMC\",\n            \"district_id\": \"Q8\",\n            \"status\": \"stopped\"\n        },\n        {\n            \"cron_type\": \"AnomalyData\",\n            \"city_id\": \"HCMC\",\n            \"district_id\": \"Q10\",\n            \"status\": \"stopped\"\n        },\n        {\n            \"cron_type\": \"AnomalyData\",\n            \"city_id\": \"HCMC\",\n            \"district_id\": \"Q11\",\n            \"status\": \"stopped\"\n        },\n        {\n            \"cron_type\": \"AnomalyData\",\n            \"city_id\": \"HCMC\",\n            \"district_id\": \"Q12\",\n            \"status\": \"stopped\"\n        },\n        {\n            \"cron_type\": \"AnomalyData\",\n            \"city_id\": \"HCMC\",\n            \"district_id\": \"QGV\",\n            \"status\": \"stopped\"\n        },\n        {\n            \"cron_type\": \"AnomalyData\",\n            \"city_id\": \"HCMC\",\n            \"district_id\": \"QTB\",\n            \"status\": \"stopped\"\n        },\n        {\n            \"cron_type\": \"AnomalyData\",\n            \"city_id\": \"HCMC\",\n            \"district_id\": \"QBTAN\",\n            \"status\": \"stopped\"\n        },\n        {\n            \"cron_type\": \"AnomalyData\",\n            \"city_id\": \"HCMC\",\n            \"district_id\": \"QBTHANH\",\n            \"status\": \"stopped\"\n        },\n        {\n            \"cron_type\": \"AnomalyData\",\n            \"city_id\": \"HCMC\",\n            \"district_id\": \"QTP\",\n            \"status\": \"stopped\"\n        },\n        {\n            \"cron_type\": \"AnomalyData\",\n            \"city_id\": \"HCMC\",\n            \"district_id\": \"QPN\",\n            \"status\": \"stopped\"\n        },\n        {\n            \"cron_type\": \"AnomalyData\",\n            \"city_id\": \"TDUC\",\n            \"district_id\": \"Q2\",\n            \"status\": \"stopped\"\n        },\n        {\n            \"cron_type\": \"AnomalyData\",\n            \"city_id\": \"TDUC\",\n            \"district_id\": \"Q9\",\n            \"status\": \"stopped\"\n        }\n    ]\n}"
+						}
+					]
+				},
+				{
+					"name": "/jobs/detail",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{schema}}://{{host}}:{{port2}}/jobs/detail?cron_type=HouseholdData&city_id=HCMC&district_id=Q1",
+							"protocol": "{{schema}}",
+							"host": [
+								"{{host}}"
+							],
+							"port": "{{port2}}",
+							"path": [
+								"jobs",
+								"detail"
+							],
+							"query": [
+								{
+									"key": "cron_type",
+									"value": "HouseholdData",
+									"description": "Required. Available types: HouseholdData, AreaData, AnomalyData"
+								},
+								{
+									"key": "city_id",
+									"value": "HCMC",
+									"description": "Required"
+								},
+								{
+									"key": "district_id",
+									"value": "Q1",
+									"description": "Required"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Every 2 hour",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{schema}}://{{host}}:{{port2}}/jobs/detail?cron_type=HouseholdData&city_id=HCMC&district_id=Q1",
+									"protocol": "{{schema}}",
+									"host": [
+										"{{host}}"
+									],
+									"port": "{{port2}}",
+									"path": [
+										"jobs",
+										"detail"
+									],
+									"query": [
+										{
+											"key": "cron_type",
+											"value": "HouseholdData",
+											"description": "Required. Available types: HouseholdData, AreaData, AnomalyData"
+										},
+										{
+											"key": "city_id",
+											"value": "HCMC",
+											"description": "Required"
+										},
+										{
+											"key": "district_id",
+											"value": "Q1",
+											"description": "Required"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "177"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"b1-GdW0p/nEPR88MnnaUyNs5jgGmJU\""
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 05 Apr 2025 22:49:13 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"data\": {\n        \"cron_type\": \"HouseholdData\",\n        \"city_id\": \"HCMC\",\n        \"district_id\": \"Q1\",\n        \"distribution_type\": \"Bell Curve\",\n        \"random_order\": \"false\",\n        \"cron_time\": \"0 0 */2 * * *\",\n        \"status\": \"stopped\"\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "/jobs/chart",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{schema}}://{{host}}:{{port2}}/jobs/chart?cron_type=HouseholdData&city_id=HCMC&district_id=Q1",
+							"protocol": "{{schema}}",
+							"host": [
+								"{{host}}"
+							],
+							"port": "{{port2}}",
+							"path": [
+								"jobs",
+								"chart"
+							],
+							"query": [
+								{
+									"key": "cron_type",
+									"value": "HouseholdData",
+									"description": "Required. Available types: HouseholdData, AreaData, AnomalyData"
+								},
+								{
+									"key": "city_id",
+									"value": "HCMC",
+									"description": "Required"
+								},
+								{
+									"key": "district_id",
+									"value": "Q1",
+									"description": "Required"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Example",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{schema}}://{{host}}:{{port2}}/jobs/chart?cron_type=HouseholdData&city_id=HCMC&district_id=Q1",
+									"protocol": "{{schema}}",
+									"host": [
+										"{{host}}"
+									],
+									"port": "{{port2}}",
+									"path": [
+										"jobs",
+										"chart"
+									],
+									"query": [
+										{
+											"key": "cron_type",
+											"value": "HouseholdData",
+											"description": "Required. Available types: HouseholdData, AreaData, AnomalyData"
+										},
+										{
+											"key": "city_id",
+											"value": "HCMC",
+											"description": "Required"
+										},
+										{
+											"key": "district_id",
+											"value": "Q1",
+											"description": "Required"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "270"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"10e-bhTgSID8Eh0dxy1utiSdPIlObPo\""
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 06 Apr 2025 07:04:39 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"data\": {\n        \"chart_title\": \"Bell Curve\",\n        \"chart_data\": [\n            8,\n            10,\n            13,\n            15,\n            19,\n            23,\n            28,\n            34,\n            42,\n            50,\n            60,\n            71,\n            85,\n            100,\n            118,\n            138,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0,\n            0\n        ]\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "/jobs/distribution-types/all",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{schema}}://{{host}}:{{port2}}/jobs/distribution-types/all",
+							"protocol": "{{schema}}",
+							"host": [
+								"{{host}}"
+							],
+							"port": "{{port2}}",
+							"path": [
+								"jobs",
+								"distribution-types",
+								"all"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Example OK",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{schema}}://{{host}}:{{port2}}/jobs/distribution-types/all",
+									"protocol": "{{schema}}",
+									"host": [
+										"{{host}}"
+									],
+									"port": "{{port2}}",
+									"path": [
+										"jobs",
+										"distribution-types",
+										"all"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "89"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"59-mlfEa9zDonEheoKDlAQrFLE+S1I\""
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 06 Apr 2025 07:33:41 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"total\": 6,\n    \"data\": [\n        \"Bell Curve\",\n        \"Uniform\",\n        \"Linear\",\n        \"Bimodal\",\n        \"Multimodal\",\n        \"Exponential\"\n    ]\n}"
+						}
+					]
+				},
+				{
+					"name": "/jobs/update",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{schema}}://{{host}}:{{port2}}/jobs/update?cron_type=HouseholdData&city_id=HCMC&district_id=Q1&distribution_type=Bell Curve&random_order=false&cron_time=2s",
+							"protocol": "{{schema}}",
+							"host": [
+								"{{host}}"
+							],
+							"port": "{{port2}}",
+							"path": [
+								"jobs",
+								"update"
+							],
+							"query": [
+								{
+									"key": "cron_type",
+									"value": "HouseholdData",
+									"description": "Required. Available types: HouseholdData, AreaData, AnomalyData"
+								},
+								{
+									"key": "city_id",
+									"value": "HCMC",
+									"description": "Required"
+								},
+								{
+									"key": "district_id",
+									"value": "Q1",
+									"description": "Required"
+								},
+								{
+									"key": "distribution_type",
+									"value": "Bell Curve",
+									"description": "default 'Bell Curve'. Use API to get list of available distribution types"
+								},
+								{
+									"key": "random_order",
+									"value": "false",
+									"description": "default 'false', use 'true' if need"
+								},
+								{
+									"key": "cron_time",
+									"value": "2s",
+									"description": "default 2s. Example format:  5s, 10m, or 1h"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "No changes made",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "{{schema}}://{{host}}:{{port2}}/jobs/update?cron_type=HouseholdData&city_id=HCMC&district_id=Q1",
+									"protocol": "{{schema}}",
+									"host": [
+										"{{host}}"
+									],
+									"port": "{{port2}}",
+									"path": [
+										"jobs",
+										"update"
+									],
+									"query": [
+										{
+											"key": "cron_type",
+											"value": "HouseholdData",
+											"description": "Required. Available types: HouseholdData, AreaData, AnomalyData"
+										},
+										{
+											"key": "city_id",
+											"value": "HCMC",
+											"description": "Required"
+										},
+										{
+											"key": "district_id",
+											"value": "Q1",
+											"description": "Required"
+										},
+										{
+											"key": "distribution_type",
+											"value": "Bell Curve",
+											"description": "default 'Bell Curve'. Use API to get list of available distribution types",
+											"disabled": true
+										},
+										{
+											"key": "random_order",
+											"value": "false",
+											"description": "default 'false', use 'true' if need",
+											"disabled": true
+										},
+										{
+											"key": "cron_time",
+											"value": "2s",
+											"description": "default 2s. Example format:  5s, 10m, or 1h",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "29"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"1d-uQMm6zbv/EGBlMfABekOL97Ixzg\""
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 05 Apr 2025 21:54:14 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"No changes made\"\n}"
+						},
+						{
+							"name": "Invalid 1",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "{{schema}}://{{host}}:{{port2}}/jobs/update?cron_type=HouseholdData&city_id=HCMC&district_id=Q1&distribution_type=Bell CurveLe",
+									"protocol": "{{schema}}",
+									"host": [
+										"{{host}}"
+									],
+									"port": "{{port2}}",
+									"path": [
+										"jobs",
+										"update"
+									],
+									"query": [
+										{
+											"key": "cron_type",
+											"value": "HouseholdData",
+											"description": "Required. Available types: HouseholdData, AreaData, AnomalyData"
+										},
+										{
+											"key": "city_id",
+											"value": "HCMC",
+											"description": "Required"
+										},
+										{
+											"key": "district_id",
+											"value": "Q1",
+											"description": "Required"
+										},
+										{
+											"key": "distribution_type",
+											"value": "Bell CurveLe",
+											"description": "default 'Bell Curve'. Use API to get list of available distribution types"
+										},
+										{
+											"key": "random_order",
+											"value": "false",
+											"description": "default 'false', use 'true' if need",
+											"disabled": true
+										},
+										{
+											"key": "cron_time",
+											"value": "2s",
+											"description": "default 2s. Example format:  5s, 10m, or 1h",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "117"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"75-FhewPIgIsm3N4Pwn38Y9OLAiztQ\""
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 05 Apr 2025 21:54:38 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"error\": \"Invalid distribution_type. Available types: Bell Curve, Uniform, Linear, Bimodal, Multimodal, Exponential\"\n}"
+						},
+						{
+							"name": "Invalid 2",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "{{schema}}://{{host}}:{{port2}}/jobs/update?cron_type=HouseholdData&city_id=HCMC&district_id=Q1&random_order=falsety",
+									"protocol": "{{schema}}",
+									"host": [
+										"{{host}}"
+									],
+									"port": "{{port2}}",
+									"path": [
+										"jobs",
+										"update"
+									],
+									"query": [
+										{
+											"key": "cron_type",
+											"value": "HouseholdData",
+											"description": "Required. Available types: HouseholdData, AreaData, AnomalyData"
+										},
+										{
+											"key": "city_id",
+											"value": "HCMC",
+											"description": "Required"
+										},
+										{
+											"key": "district_id",
+											"value": "Q1",
+											"description": "Required"
+										},
+										{
+											"key": "distribution_type",
+											"value": "Bell Curve",
+											"description": "default 'Bell Curve'. Use API to get list of available distribution types",
+											"disabled": true
+										},
+										{
+											"key": "random_order",
+											"value": "falsety",
+											"description": "default 'false', use 'true' if need"
+										},
+										{
+											"key": "cron_time",
+											"value": "2s",
+											"description": "default 2s. Example format:  5s, 10m, or 1h",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "55"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"37-7jNubSMyHge4KbS4jIxlEcp8r1k\""
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 05 Apr 2025 21:56:02 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"error\": \"Invalid random_order. Must be true or false\"\n}"
+						},
+						{
+							"name": "Invalid 3",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "{{schema}}://{{host}}:{{port2}}/jobs/update?cron_type=HouseholdData&city_id=HCMC&district_id=Q1&cron_time=-59ss",
+									"protocol": "{{schema}}",
+									"host": [
+										"{{host}}"
+									],
+									"port": "{{port2}}",
+									"path": [
+										"jobs",
+										"update"
+									],
+									"query": [
+										{
+											"key": "cron_type",
+											"value": "HouseholdData",
+											"description": "Required. Available types: HouseholdData, AreaData, AnomalyData"
+										},
+										{
+											"key": "city_id",
+											"value": "HCMC",
+											"description": "Required"
+										},
+										{
+											"key": "district_id",
+											"value": "Q1",
+											"description": "Required"
+										},
+										{
+											"key": "distribution_type",
+											"value": "Bell Curve",
+											"description": "default 'Bell Curve'. Use API to get list of available distribution types",
+											"disabled": true
+										},
+										{
+											"key": "random_order",
+											"value": "false",
+											"description": "default 'false', use 'true' if need",
+											"disabled": true
+										},
+										{
+											"key": "cron_time",
+											"value": "-59ss",
+											"description": "default 2s. Example format:  5s, 10m, or 1h"
+										}
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "71"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"47-BBihZlwZzPIxsYns2SeMjDs+TXc\""
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 05 Apr 2025 21:56:36 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"error\": \"Invalid cron_time format. Use something like 5s, 10m, or 1h\"\n}"
+						},
+						{
+							"name": "200 OK",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "{{schema}}://{{host}}:{{port2}}/jobs/update?cron_type=HouseholdData&city_id=HCMC&district_id=Q1&distribution_type=Bell Curve&random_order=false&cron_time=2s",
+									"protocol": "{{schema}}",
+									"host": [
+										"{{host}}"
+									],
+									"port": "{{port2}}",
+									"path": [
+										"jobs",
+										"update"
+									],
+									"query": [
+										{
+											"key": "cron_type",
+											"value": "HouseholdData",
+											"description": "Required. Available types: HouseholdData, AreaData, AnomalyData"
+										},
+										{
+											"key": "city_id",
+											"value": "HCMC",
+											"description": "Required"
+										},
+										{
+											"key": "district_id",
+											"value": "Q1",
+											"description": "Required"
+										},
+										{
+											"key": "distribution_type",
+											"value": "Bell Curve",
+											"description": "default 'Bell Curve'. Use API to get list of available distribution types"
+										},
+										{
+											"key": "random_order",
+											"value": "false",
+											"description": "default 'false', use 'true' if need"
+										},
+										{
+											"key": "cron_time",
+											"value": "2s",
+											"description": "default 2s. Example format:  5s, 10m, or 1h"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "51"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"33-D7iPPMjVjcQRA5g0ul6wMLBN9ys\""
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 05 Apr 2025 21:58:28 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Updated job for HouseholdData-HCMC-Q1\"\n}"
+						},
+						{
+							"name": "Cannot update if job already running",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "{{schema}}://{{host}}:{{port2}}/jobs/update?cron_type=HouseholdData&city_id=HCMC&district_id=Q1&distribution_type=Bell Curve&random_order=false&cron_time=2s",
+									"protocol": "{{schema}}",
+									"host": [
+										"{{host}}"
+									],
+									"port": "{{port2}}",
+									"path": [
+										"jobs",
+										"update"
+									],
+									"query": [
+										{
+											"key": "cron_type",
+											"value": "HouseholdData",
+											"description": "Required. Available types: HouseholdData, AreaData, AnomalyData"
+										},
+										{
+											"key": "city_id",
+											"value": "HCMC",
+											"description": "Required"
+										},
+										{
+											"key": "district_id",
+											"value": "Q1",
+											"description": "Required"
+										},
+										{
+											"key": "distribution_type",
+											"value": "Bell Curve",
+											"description": "default 'Bell Curve'. Use API to get list of available distribution types"
+										},
+										{
+											"key": "random_order",
+											"value": "false",
+											"description": "default 'false', use 'true' if need"
+										},
+										{
+											"key": "cron_time",
+											"value": "2s",
+											"description": "default 2s. Example format:  5s, 10m, or 1h"
+										}
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "84"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"54-OembwcQ5RNyWKN1uxcC3P87dEZw\""
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 05 Apr 2025 22:03:02 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"error\": \"Job already running for HouseholdData-HCMC-Q1. Stop before updating job.\"\n}"
+						}
+					]
+				},
+				{
+					"name": "/jobs/trigger",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{schema}}://{{host}}:{{port2}}/jobs/trigger?cron_type=HouseholdData&city_id=HCMC&district_id=Q1&enable=false",
+							"protocol": "{{schema}}",
+							"host": [
+								"{{host}}"
+							],
+							"port": "{{port2}}",
+							"path": [
+								"jobs",
+								"trigger"
+							],
+							"query": [
+								{
+									"key": "cron_type",
+									"value": "HouseholdData",
+									"description": "Required. Available types: HouseholdData, AreaData, AnomalyData"
+								},
+								{
+									"key": "city_id",
+									"value": "HCMC",
+									"description": "Required"
+								},
+								{
+									"key": "district_id",
+									"value": "Q1",
+									"description": "Required"
+								},
+								{
+									"key": "enable",
+									"value": "false",
+									"description": "Required. Available values: 'true', 'false'"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Already Stopped",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "{{schema}}://{{host}}:{{port2}}/jobs/trigger?cron_type=HouseholdData&city_id=HCMC&district_id=Q1&enable=false",
+									"protocol": "{{schema}}",
+									"host": [
+										"{{host}}"
+									],
+									"port": "{{port2}}",
+									"path": [
+										"jobs",
+										"trigger"
+									],
+									"query": [
+										{
+											"key": "cron_type",
+											"value": "HouseholdData",
+											"description": "Required. Available types: HouseholdData, AreaData, AnomalyData"
+										},
+										{
+											"key": "city_id",
+											"value": "HCMC",
+											"description": "Required"
+										},
+										{
+											"key": "district_id",
+											"value": "Q1",
+											"description": "Required"
+										},
+										{
+											"key": "enable",
+											"value": "false",
+											"description": "Required. Available values: 'true', 'false'"
+										}
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "57"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"39-Hna//zLc1uDg+UznSL5G0nKGZWk\""
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 05 Apr 2025 21:59:00 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"error\": \"Job already stopped for HouseholdData-HCMC-Q1\"\n}"
+						},
+						{
+							"name": "Started OK",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "{{schema}}://{{host}}:{{port2}}/jobs/trigger?cron_type=HouseholdData&city_id=HCMC&district_id=Q1&enable=true",
+									"protocol": "{{schema}}",
+									"host": [
+										"{{host}}"
+									],
+									"port": "{{port2}}",
+									"path": [
+										"jobs",
+										"trigger"
+									],
+									"query": [
+										{
+											"key": "cron_type",
+											"value": "HouseholdData",
+											"description": "Required. Available types: HouseholdData, AreaData, AnomalyData"
+										},
+										{
+											"key": "city_id",
+											"value": "HCMC",
+											"description": "Required"
+										},
+										{
+											"key": "district_id",
+											"value": "Q1",
+											"description": "Required"
+										},
+										{
+											"key": "enable",
+											"value": "true",
+											"description": "Required. Available values: 'true', 'false'"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "51"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"33-qHiYwv5gbPWW0J/hsNeSou/EhK0\""
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 05 Apr 2025 22:02:30 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Started job for HouseholdData-HCMC-Q1\"\n}"
+						},
+						{
+							"name": "Stopped OK",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "{{schema}}://{{host}}:{{port2}}/jobs/trigger?cron_type=HouseholdData&city_id=HCMC&district_id=Q1&enable=false",
+									"protocol": "{{schema}}",
+									"host": [
+										"{{host}}"
+									],
+									"port": "{{port2}}",
+									"path": [
+										"jobs",
+										"trigger"
+									],
+									"query": [
+										{
+											"key": "cron_type",
+											"value": "HouseholdData",
+											"description": "Required. Available types: HouseholdData, AreaData, AnomalyData"
+										},
+										{
+											"key": "city_id",
+											"value": "HCMC",
+											"description": "Required"
+										},
+										{
+											"key": "district_id",
+											"value": "Q1",
+											"description": "Required"
+										},
+										{
+											"key": "enable",
+											"value": "false",
+											"description": "Required. Available values: 'true', 'false'"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "51"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"33-kO+ifkd/UoM6kO+5E0wAnIl7d+k\""
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 05 Apr 2025 22:03:58 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Stopped job for HouseholdData-HCMC-Q1\"\n}"
+						}
+					]
+				}
+			]
+		},
+		{
 			"name": "/data/household",
 			"request": {
 				"method": "GET",
