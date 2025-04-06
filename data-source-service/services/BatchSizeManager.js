@@ -14,6 +14,9 @@ class BatchSizeManager {
         this.TAG = ''
         this.generateBatchSizes = null
         this.args = []
+
+        // Chart data
+        this.chartData = []
     }
 
     initTimeSlot = (TAG, generateBatchSizes, args = [], distribution = '') => {
@@ -26,10 +29,13 @@ class BatchSizeManager {
         this.generateBatchSizes = generateBatchSizes
         this.args = args
 
+        this.chartData = Array(this.batchSizes.length).fill(0)
+
         console.log(`${TAG} Start sending all batches`)
     }
 
     updateTimeSlot = () => {
+        this.chartData[this.currentSlot] = this.getCurrentBatchSize()
         this.currentSlot = this.currentSlot + 1
     }
 
@@ -69,7 +75,7 @@ class BatchSizeManager {
     }
 
     getChartData = () => {
-        return this.batchSizes.map((batchSize, index) => (index <= this.currentSlot ? batchSize : 0))
+        return this.chartData
     }
 }
 
