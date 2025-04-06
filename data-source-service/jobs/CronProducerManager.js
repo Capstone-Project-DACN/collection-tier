@@ -36,6 +36,7 @@ class CronProducerManager {
                             console.error(`[${TAG}] Init job failed. Invalid job type: ${cronType}`)
                     }
 
+                    producer.init()
                     this.jobs.set(key, producer)
                     console.info(`[${TAG}] Init job for ${key}`)
                 })
@@ -83,8 +84,8 @@ class CronProducerManager {
                 }
         }
 
+        producer.init()
         this.jobs.set(key, producer)
-
         console.info(`[${TAG}] Updated job for ${key}`)
         
         return {

@@ -40,14 +40,16 @@ class AreaCronProducer {
         console.log(`${this.CRON_TAG} ------ended at: ${Date.now()}`)
     }
 
-    start() {
+    init() {
         this.batchManager.initTimeSlot(
             this.CRON_TAG,
             distributionService.generateBatchSizes,
             [TIME.TOTAL_SLOTS, this.distributionType, this.randomOrder],
             this.distributionType
         )
-        
+    }
+
+    start() {
         this.job.start()
         this.isRunning = true
     }
