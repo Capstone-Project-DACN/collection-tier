@@ -67,6 +67,10 @@ class BatchSizeManager {
             this.initTimeSlot(this.TAG, this.generateBatchSizes, this.args, this.distribution)
         }
     }
+
+    getChartData = () => {
+        return this.batchSizes.map((batchSize, index) => (index <= this.currentSlot ? batchSize : 0))
+    }
 }
 
 module.exports = {

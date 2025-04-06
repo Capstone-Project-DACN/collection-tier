@@ -121,6 +121,28 @@ const getAvailableDistributionType = (req, res) => {
     }
 }
 
+const getChartInfo = (req, res) => {
+    try {
+        const { 
+            cron_type: cronType,
+            city_id: cityId,
+            district_id: districtId
+        } = req.query
+
+        useCommonValidation(req, res)
+
+        const result = cronProducerManager.getChartInfo(cronType, cityId, districtId)
+
+        return res.status(result.status).json({ 
+            data: result.data,
+            error: result.error
+        })
+
+    } catch (error) {
+        return res.status(error.status || 500).json({ error: error.customMessage || 'Internal Server Error' })
+    }
+}
+
 /**
  * HELPER FUNCTIONS, CLASSES
  * commonValidation
@@ -199,6 +221,7 @@ module.exports = {
     triggerCronStatus,
     getJobs,
     getJobDetail,
-    getAvailableDistributionType
+    getAvailableDistributionType,
+    getChartInfo
 }
 

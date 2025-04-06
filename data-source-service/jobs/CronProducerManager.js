@@ -205,6 +205,26 @@ class CronProducerManager {
             total: distributionTypeList.length
         }
     }
+
+    getChartInfo(cronType, cityId, districtId) {
+        const key = `${cronType}-${cityId}-${districtId}`
+        const producer = this.jobs.get(key)
+        if (!producer) {
+            console.error(`[${TAG}] No active cron found for ${key}`)
+            return {
+                status: 404,
+                error: `No active cron found for ${key}`
+            }
+        }
+
+        return {
+            status: 200,
+            data: {
+                chart_title: producer.distributionType,
+                chart_data: producer.batchManager.getChartData()
+            }
+        }
+    }
 }
 
 module.exports = new CronProducerManager()
