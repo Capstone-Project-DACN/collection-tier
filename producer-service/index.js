@@ -34,6 +34,8 @@ app.post('/devices/add-multiple', deviceCtrl.addMultipleDevices)
 app.get('/devices/inactive', deviceCtrl.getInactiveDevices)
 app.get('/devices/false-positive', deviceCtrl.getFalsePositiveCount)
 app.get('/devices/detail/:deviceId', deviceCtrl.getDeviceDetail)
+app.get('/devices/get-by-topic/:topic', deviceCtrl.getDevicesByTopic)
+app.get('/devices/topics/all', deviceCtrl.getAllProducerTopics)
 
 // Start Kafka Consumers
 consumerHouseHoldHandler.init()

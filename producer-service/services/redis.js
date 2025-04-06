@@ -190,6 +190,59 @@ async function updateTotalElectricityUsage(deviceId, electricityUsage) {
     }
 }
 
+async function getDevicesByTopic(topic) {
+    try {
+        if (!topic.includes('_')) return []
+
+        const prefixId = topic.replaceAll('_', '-')
+        let cursor = '0'
+        const limit = 100
+        const results = []
+
+        do {
+            const [nextCursor, keys] = await redisClient.scan(cursor, 'MATCH', `${REDIS_TAG.DEVICE}:${prefixId}*`, 'COUNT', limit)
+            cursor = nextCursor
+
+            Promise.all(keys.map(async (key) => {
+                const deviceId = key.replace(`${REDIS_TAG.DEVICE}:`, '')
+                const detail = await redisClient.hgetall(key)
+
+                results.push({ device_id: deviceId, value: detail })
+            }))
+
+        } while (cursor !== '0')
+
+        return results
+
+    } catch (error) {
+        console.error(`[${debugTag}] getDevicesByTopic: Error getting devices by topic ${topic}:`, error)
+        throw error
+    }
+}
+
+async function countDevicesByTopic(topic) {
+    try {
+        if (!topic.includes('_')) return 0
+
+        const prefixId = topic.replaceAll('_', '-')
+        let cursor = '0'
+        const limit = 100
+        let count = 0
+
+        do {
+            const [nextCursor, keys] = await redisClient.scan(cursor, 'MATCH', `${REDIS_TAG.DEVICE}:${prefixId}*`, 'COUNT', limit)
+            cursor = nextCursor
+            count += keys.length
+
+        } while (cursor !== '0')
+
+        return count
+    } catch (error) {
+        console.error(`[${debugTag}] countDevicesByTopic: Error counting devices by topic ${topic}:`, error)
+        throw error
+    }
+}
+
 module.exports = {
     addDevice,
     addMultipleDevices,
@@ -199,5 +252,7 @@ module.exports = {
     removeDevice,
     getFalsePositiveCount,
     getDeviceDetail,
-    updateTotalElectricityUsage
+    updateTotalElectricityUsage,
+    getDevicesByTopic,
+    countDevicesByTopic
 }
