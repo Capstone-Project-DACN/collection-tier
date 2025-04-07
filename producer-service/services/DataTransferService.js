@@ -84,6 +84,11 @@ class DataTransferService {
                 await this.#updateTotalElectricityUsage(item)
 
             } else if (metadata.type === DATA_TYPE.anomaly) {
+                metadata.electricity_usage_kwh = item?.electricity_usage_kwh
+                metadata.voltage = item?.voltage
+                metadata.current = item?.current
+                metadata.increased_electricity_usage_kwh = item?.increased_electricity_usage_kwh
+                
                 metadata.anomaly_electricity_usage_kwh = item?.electricity_usage_kwh
                 metadata.anomaly_voltage = item?.voltage
                 metadata.anomaly_current = item?.current
@@ -142,6 +147,19 @@ class DataTransferService {
         const targetTopic = this.#defineTargetTopic(topic)
         await this.#publishAnomalyData(filteredData, targetTopic)
     }
+
+    async getAllProducerTopics() {
+
+        const result = Object.values(TOPIC_PRODUCER).map(async (topic) => {
+            const numberOfDevices = await bloomService.countDevicesByTopic(topic)
+            return {
+                topic,
+                number_of_devices: numberOfDevices
+            }
+        })
+
+        return Promise.all(result)
+    }    
 }
 
 const dataTransferService = new DataTransferService()

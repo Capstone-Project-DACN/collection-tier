@@ -14,7 +14,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"deviceId\": \"area-HCMC-Q1\"\r\n}",
+					"raw": "{\r\n    \"deviceId\": \"household-HCMC-Q1-0\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -550,6 +550,202 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "/devices/topics/all",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{schema}}://{{host}}:{{port}}/devices/topics/all",
+					"protocol": "{{schema}}",
+					"host": [
+						"{{host}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"devices",
+						"topics",
+						"all"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Example OK",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{schema}}://{{host}}:{{port}}/devices/topics/all",
+							"protocol": "{{schema}}",
+							"host": [
+								"{{host}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"devices",
+								"topics",
+								"all"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "1845"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"735-qhte6wZQGB9ISgEa8PjpxCjWiEc\""
+						},
+						{
+							"key": "Date",
+							"value": "Sun, 06 Apr 2025 17:38:17 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"data\": [\n        {\n            \"topic\": \"household\",\n            \"number_of_devices\": 0\n        },\n        {\n            \"topic\": \"area\",\n            \"number_of_devices\": 0\n        },\n        {\n            \"topic\": \"anomaly\",\n            \"number_of_devices\": 0\n        },\n        {\n            \"topic\": \"household_HCMC_Q1\",\n            \"number_of_devices\": 1001\n        },\n        {\n            \"topic\": \"household_HCMC_Q3\",\n            \"number_of_devices\": 0\n        },\n        {\n            \"topic\": \"household_HCMC_Q4\",\n            \"number_of_devices\": 0\n        },\n        {\n            \"topic\": \"household_HCMC_Q5\",\n            \"number_of_devices\": 0\n        },\n        {\n            \"topic\": \"household_HCMC_Q6\",\n            \"number_of_devices\": 0\n        },\n        {\n            \"topic\": \"household_HCMC_Q7\",\n            \"number_of_devices\": 0\n        },\n        {\n            \"topic\": \"household_HCMC_Q8\",\n            \"number_of_devices\": 0\n        },\n        {\n            \"topic\": \"household_HCMC_Q10\",\n            \"number_of_devices\": 0\n        },\n        {\n            \"topic\": \"household_HCMC_Q11\",\n            \"number_of_devices\": 0\n        },\n        {\n            \"topic\": \"household_HCMC_Q12\",\n            \"number_of_devices\": 0\n        },\n        {\n            \"topic\": \"household_HCMC_QGV\",\n            \"number_of_devices\": 0\n        },\n        {\n            \"topic\": \"household_HCMC_QTB\",\n            \"number_of_devices\": 0\n        },\n        {\n            \"topic\": \"household_HCMC_QBTHANH\",\n            \"number_of_devices\": 0\n        },\n        {\n            \"topic\": \"household_HCMC_QTP\",\n            \"number_of_devices\": 0\n        },\n        {\n            \"topic\": \"household_HCMC_QPN\",\n            \"number_of_devices\": 0\n        },\n        {\n            \"topic\": \"household_TDUC_Q2\",\n            \"number_of_devices\": 0\n        },\n        {\n            \"topic\": \"household_TDUC_Q9\",\n            \"number_of_devices\": 0\n        },\n        {\n            \"topic\": \"area_HCMC_Q1\",\n            \"number_of_devices\": 1\n        },\n        {\n            \"topic\": \"area_HCMC_Q3\",\n            \"number_of_devices\": 0\n        },\n        {\n            \"topic\": \"area_HCMC_Q4\",\n            \"number_of_devices\": 0\n        },\n        {\n            \"topic\": \"area_HCMC_Q5\",\n            \"number_of_devices\": 0\n        },\n        {\n            \"topic\": \"area_HCMC_Q6\",\n            \"number_of_devices\": 0\n        },\n        {\n            \"topic\": \"area_HCMC_Q7\",\n            \"number_of_devices\": 0\n        },\n        {\n            \"topic\": \"area_HCMC_Q8\",\n            \"number_of_devices\": 0\n        },\n        {\n            \"topic\": \"area_HCMC_Q10\",\n            \"number_of_devices\": 0\n        },\n        {\n            \"topic\": \"area_HCMC_Q11\",\n            \"number_of_devices\": 0\n        },\n        {\n            \"topic\": \"area_HCMC_Q12\",\n            \"number_of_devices\": 0\n        },\n        {\n            \"topic\": \"area_HCMC_QGV\",\n            \"number_of_devices\": 0\n        },\n        {\n            \"topic\": \"area_HCMC_QTB\",\n            \"number_of_devices\": 0\n        },\n        {\n            \"topic\": \"area_HCMC_QBTHANH\",\n            \"number_of_devices\": 0\n        },\n        {\n            \"topic\": \"area_HCMC_QTP\",\n            \"number_of_devices\": 0\n        },\n        {\n            \"topic\": \"area_HCMC_QPN\",\n            \"number_of_devices\": 0\n        },\n        {\n            \"topic\": \"area_TDUC_Q2\",\n            \"number_of_devices\": 0\n        },\n        {\n            \"topic\": \"area_TDUC_Q9\",\n            \"number_of_devices\": 0\n        }\n    ]\n}"
+				}
+			]
+		},
+		{
+			"name": "/devices/get-by-topic/{topic}",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{schema}}://{{host}}:{{port}}/devices/get-by-topic/household_HCMC_Q1",
+					"protocol": "{{schema}}",
+					"host": [
+						"{{host}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"devices",
+						"get-by-topic",
+						"household_HCMC_Q1"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Example OK",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{schema}}://{{host}}:{{port}}/devices/get-by-topic/household_HCMC_Q1",
+							"protocol": "{{schema}}",
+							"host": [
+								"{{host}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"devices",
+								"get-by-topic",
+								"household_HCMC_Q1"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "219652"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"35a04-F3569IGtqQxwslFsg6UVrcpNPGM\""
+						},
+						{
+							"key": "Date",
+							"value": "Sun, 06 Apr 2025 17:47:30 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"data\": [\n        {\n            \"device_id\": \"household-HCMC-Q1-629\",\n            \"value\": {\n                \"created_at\": \"1743285678823\",\n                \"type\": \"HouseholdData\",\n                \"electricity_usage_kwh\": \"273.45000000000005\",\n                \"voltage\": \"231\",\n                \"current\": \"44.95\",\n                \"increased_electricity_usage_kwh\": \"3.03\",\n                \"last_seen\": \"1743923068206\"\n            }\n        },\n        {\n            \"device_id\": \"household-HCMC-Q1-598\",\n            \"value\": {\n                \"created_at\": \"1743285678821\",\n                \"type\": \"HouseholdData\",\n                \"electricity_usage_kwh\": \"669.1199999999999\",\n                \"voltage\": \"237\",\n                \"current\": \"95.01\",\n                \"increased_electricity_usage_kwh\": \"15.1\",\n                \"last_seen\": \"1743923068151\"\n            }\n        }\n    ]\n}"
+				}
+			]
 		},
 		{
 			"name": "/devices/detail/{deviceId}",

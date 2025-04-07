@@ -1,3 +1,4 @@
+const dataTransferService = require('../services/DataTransferService')
 const bloomService = require('../services/redis')
 const validationUtil = require('../utils/validation')
 
@@ -117,6 +118,31 @@ const getDeviceDetail = async (req, res) => {
     }
 }
 
+const getDevicesByTopic = async (req, res) => {
+    try {
+        const { topic } = req.params
+        const result = await bloomService.getDevicesByTopic(topic)
+
+        res.json({ data: result })
+
+    } catch (error) {
+        console.error(`[${debugTag}] getDevicesByTopic error` , error)
+        res.status(500).json({ error: 'Failed to get devices by topic' })
+    }
+}
+
+const getAllProducerTopics = async (req, res) => {
+    try {
+        const result = await dataTransferService.getAllProducerTopics()
+
+        res.json({ data: result })
+
+    } catch (error) {
+        console.error(`[${debugTag}] getAllProducerTopics error` , error)
+        res.status(500).json({ error: 'Failed to get all producer topics' })
+    }
+}
+
 module.exports = {
     addDevice,
     checkDevice,
@@ -125,5 +151,7 @@ module.exports = {
     addMultipleDevices,
     getInactiveDevices,
     getFalsePositiveCount,
-    getDeviceDetail
+    getDeviceDetail,
+    getDevicesByTopic,
+    getAllProducerTopics
 }
