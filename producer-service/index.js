@@ -17,6 +17,9 @@ app.use(express.static(path.join(__dirname, 'public')))
 // Middleware
 app.use(express.json())
 
+// Enable CORS for all origins
+app.use(cors())
+
 // Define a simple route
 app.get('/', (req, res) => {
     res.send('Welcome to the Cron Job Express App!')

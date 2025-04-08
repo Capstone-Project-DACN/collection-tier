@@ -7,6 +7,9 @@ const cronCtrl = require('./controllers/cronController')
 const app = express()
 const port = +process.env.DATA_SOURCE_SERVICE_PORT || 3000
 
+// Enable CORS for all origins
+app.use(cors())
+
 // Route to generate and return electric data
 app.get('/data/household', dataCtrl.createHouseholdData)
 app.get('/data/area', dataCtrl.createAreaData)
