@@ -1,5 +1,6 @@
 require('dotenv').config()
 const express = require('express')
+const cors = require('cors')
 const dataViewerCtrl = require('./controllers/dataViewer')
 const deviceCtrl = require('./controllers/deviceController')
 const consumerHouseHoldHandler = require('./consumers/streams/consumerHouseHoldHandler')
