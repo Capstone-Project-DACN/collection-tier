@@ -174,6 +174,8 @@ async function getDeviceDetail(deviceId) {
         }
 
         const detail = await redisClient.hgetall(deviceKey)
+        enhanceData(detail)
+
         return detail
     } catch (error) {
         console.error(`[${debugTag}] getDeviceDetail: Error getting device detail for ${deviceId}:`, error)
@@ -206,7 +208,8 @@ async function getDevicesByTopic(topic) {
             Promise.all(keys.map(async (key) => {
                 const deviceId = key.replace(`${REDIS_TAG.DEVICE}:`, '')
                 const detail = await redisClient.hgetall(key)
-
+                enhanceData(detail)
+                
                 results.push({ device_id: deviceId, value: detail })
             }))
 
@@ -241,6 +244,14 @@ async function countDevicesByTopic(topic) {
         console.error(`[${debugTag}] countDevicesByTopic: Error counting devices by topic ${topic}:`, error)
         throw error
     }
+}
+
+async function enhanceData(data) {
+    data.electricity_usage_kwh = data.total_electricity_usage_kwh || data.electricity_usage_kwh || "0"
+    data.voltage = data.voltage || "N/A"
+    data.current = data.current || "N/A"
+    data.increased_electricity_usage_kwh = data.increased_electricity_usage_kwh || "N/A"
+    data.last_seen = data.last_seen || "N/A"
 }
 
 module.exports = {
