@@ -9,7 +9,7 @@ const {
     FALSE_POSITIVE_COUNTER
 } = require('../configs/redisConfig')
 const timeUtils = require('../utils/timeUtils')
-const { DATA_TYPE } = require('../configs/dataConfig')
+const { DATA_TYPE, DATA_TYPE_API } = require('../configs/dataConfig')
 
 const redisClient = Redis.createClient({
     host: REDIS_HOST,
@@ -202,13 +202,13 @@ async function getDevicesByTopic(topic) {
     try {
         if (!topic.includes('_')) return []
 
-        const prefixId = topic.replaceAll('_', '-')
+        const matchPatten = getMatchPattern(topic)
         let cursor = '0'
         const limit = 100
         const results = []
 
         do {
-            const [nextCursor, keys] = await redisClient.scan(cursor, 'MATCH', `${REDIS_TAG.DEVICE}:${prefixId}*`, 'COUNT', limit)
+            const [nextCursor, keys] = await redisClient.scan(cursor, 'MATCH', matchPatten, 'COUNT', limit)
             cursor = nextCursor
 
             Promise.all(keys.map(async (key) => {
@@ -233,13 +233,13 @@ async function countDevicesByTopic(topic) {
     try {
         if (!topic.includes('_')) return 0
 
-        const prefixId = topic.replaceAll('_', '-')
+        const matchPatten = getMatchPattern(topic)
         let cursor = '0'
         const limit = 100
         let count = 0
 
         do {
-            const [nextCursor, keys] = await redisClient.scan(cursor, 'MATCH', `${REDIS_TAG.DEVICE}:${prefixId}*`, 'COUNT', limit)
+            const [nextCursor, keys] = await redisClient.scan(cursor, 'MATCH', matchPatten, 'COUNT', limit)
             cursor = nextCursor
             count += keys.length
 
@@ -252,7 +252,24 @@ async function countDevicesByTopic(topic) {
     }
 }
 
-async function enhanceData(data) {
+function getMatchPattern(topic) {
+    if (!topic.includes('_')) return ''
+
+    const prefixId = topic.replaceAll('_', '-')
+    let matchPatten = ''
+
+    if (prefixId.split('-')[0] === DATA_TYPE_API.household) {
+        matchPatten = `${REDIS_TAG.DEVICE}:${prefixId}-*`
+    } else if (prefixId.split('-')[0] === DATA_TYPE_API.area) {
+        matchPatten = `${REDIS_TAG.DEVICE}:${prefixId}`
+    } else {
+        return ''
+    }
+
+    return matchPatten
+}
+
+function enhanceData(data) {
     data.electricity_usage_kwh = data.total_electricity_usage_kwh || data.electricity_usage_kwh || "0"
     data.voltage = data.voltage || "N/A"
     data.current = data.current || "N/A"
