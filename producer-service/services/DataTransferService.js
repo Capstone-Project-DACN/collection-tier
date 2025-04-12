@@ -1,4 +1,4 @@
-const { PRODUCER_IDS, TOPIC_PRODUCER, TOPIC_CONSUMER } = require("../configs/kafkaConfig")
+const { PRODUCER_IDS, TOPIC_PRODUCER, TOPIC_CONSUMER, TOPIC_PRODUCER_DEFAULT } = require("../configs/kafkaConfig")
 const { DATA_TYPE } = require("../configs/dataConfig")
 const kafkaProducerManager = require("./KafkaProducerManager")
 const bloomService = require('./redis')
@@ -150,7 +150,9 @@ class DataTransferService {
 
     async getAllProducerTopics() {
 
-        const result = Object.values(TOPIC_PRODUCER).map(async (topic) => {
+        const validTopics = Object.values(TOPIC_PRODUCER).filter(topic => !Object.values(TOPIC_PRODUCER_DEFAULT).includes(topic))
+
+        const result = Object.values(validTopics).map(async (topic) => {
             const numberOfDevices = await bloomService.countDevicesByTopic(topic)
             return {
                 topic,

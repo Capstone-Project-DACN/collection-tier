@@ -92,6 +92,12 @@ const TOPIC_PRODUCER = {
     AREA_TDUC_Q9: 'area_TDUC_Q9'
 }
 
+const TOPIC_PRODUCER_DEFAULT = {
+    HOUSEHOLD: 'household',
+    AREA: 'area',
+    ANOMALY: 'anomaly'
+}
+
 const PRODUCER_IDS = {
     HOUSEHOLD: 'household_producer',
     AREA: 'area_producer',
@@ -117,6 +123,7 @@ const TRANSACTION_TIMEOUT = +process.env.TRANSACTION_TIMEOUT
 module.exports = {
     TOPIC_CONSUMER,
     TOPIC_PRODUCER,
+    TOPIC_PRODUCER_DEFAULT,
     PRODUCER_IDS,
     CONSUMER_GROUP_IDS,
     KAFKA_CLIENT_ID,
