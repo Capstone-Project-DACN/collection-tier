@@ -6,14 +6,16 @@ const { ALLOWED_DEVICE_ID, DATA_TYPE } = require('../../configs/DataConfig')
 const { TIME } = require('../../configs/DistributionConfig')
 
 class HouseholdCronProducer {
-    constructor(cityId, districtId, distributionType, randomOrder, cronTime) {
+    constructor(cityId, districtId, distributionType, randomOrder, cronTime, startId = ALLOWED_DEVICE_ID.START, endId = ALLOWED_DEVICE_ID.END) {
         this.cronType = DATA_TYPE.household
         this.cityId = cityId
         this.districtId = districtId
         this.distributionType = distributionType
         this.randomOrder = randomOrder
         this.isRunning = false
-        this.batchManager = new BatchSizeManager(ALLOWED_DEVICE_ID.START, ALLOWED_DEVICE_ID.END)
+        this.startId = startId
+        this.endId = endId
+        this.batchManager = new BatchSizeManager(startId, endId)
         this.CRON_TAG = `CRON_JOB_PRODUCER_HOUSEHOLD_${this.cityId}_${this.districtId}`
 
         this.job = new CronJob(cronTime, async () => {            

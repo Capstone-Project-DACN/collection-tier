@@ -386,7 +386,7 @@
 						"method": "POST",
 						"header": [],
 						"url": {
-							"raw": "{{schema}}://{{host}}:{{port2}}/jobs/update?cron_type=HouseholdData&city_id=HCMC&district_id=Q1&distribution_type=Bell Curve&random_order=false&cron_time=2s",
+							"raw": "{{schema}}://{{host}}:{{port2}}/jobs/update?cron_type=HouseholdData&city_id=HCMC&district_id=Q1&distribution_type=Bell Curve&random_order=false&cron_time=2s&start_id=0&end_id=0",
 							"protocol": "{{schema}}",
 							"host": [
 								"{{host}}"
@@ -426,6 +426,16 @@
 									"key": "cron_time",
 									"value": "2s",
 									"description": "default 2s. Example format:  5s, 10m, or 1h"
+								},
+								{
+									"key": "start_id",
+									"value": "0",
+									"description": "Default 0. Required if start_id and end_id appear"
+								},
+								{
+									"key": "end_id",
+									"value": "0",
+									"description": "Default 0. Required if start_id and end_id appear"
 								}
 							]
 						}
@@ -955,6 +965,106 @@
 							],
 							"cookie": [],
 							"body": "{\n    \"error\": \"Job already running for HouseholdData-HCMC-Q1. Stop before updating job.\"\n}"
+						},
+						{
+							"name": "start_id and end_id",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "{{schema}}://{{host}}:{{port2}}/jobs/update?cron_type=HouseholdData&city_id=HCMC&district_id=Q1&distribution_type=Bell Curve&random_order=false&cron_time=2s&start_id=0&end_id=0",
+									"protocol": "{{schema}}",
+									"host": [
+										"{{host}}"
+									],
+									"port": "{{port2}}",
+									"path": [
+										"jobs",
+										"update"
+									],
+									"query": [
+										{
+											"key": "cron_type",
+											"value": "HouseholdData",
+											"description": "Required. Available types: HouseholdData, AreaData, AnomalyData"
+										},
+										{
+											"key": "city_id",
+											"value": "HCMC",
+											"description": "Required"
+										},
+										{
+											"key": "district_id",
+											"value": "Q1",
+											"description": "Required"
+										},
+										{
+											"key": "distribution_type",
+											"value": "Bell Curve",
+											"description": "default 'Bell Curve'. Use API to get list of available distribution types"
+										},
+										{
+											"key": "random_order",
+											"value": "false",
+											"description": "default 'false', use 'true' if need"
+										},
+										{
+											"key": "cron_time",
+											"value": "2s",
+											"description": "default 2s. Example format:  5s, 10m, or 1h"
+										},
+										{
+											"key": "start_id",
+											"value": "0",
+											"description": "Default 0. Required if start_id and end_id appear"
+										},
+										{
+											"key": "end_id",
+											"value": "0",
+											"description": "Default 0. Required if start_id and end_id appear"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "51"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"33-D7iPPMjVjcQRA5g0ul6wMLBN9ys\""
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 12 Apr 2025 11:11:06 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Updated job for HouseholdData-HCMC-Q1\"\n}"
 						}
 					]
 				},

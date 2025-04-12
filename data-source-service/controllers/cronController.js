@@ -1,6 +1,7 @@
 const cronProducerManager = require('../jobs/CronProducerManager')
 const { DISTRIBUTIONS } = require('../configs/DistributionConfig')
-const { DATA_TYPE, ALLOWED_LOCATIONS} = require('../configs/DataConfig')
+const { DATA_TYPE, ALLOWED_LOCATIONS, ALLOWED_DEVICE_ID } = require('../configs/DataConfig')
+const DeviceIdGenerator = require('../services/DeviceIdGenerator')
 
 const updateCronInfo = (req, res) => {
     try {
@@ -10,7 +11,9 @@ const updateCronInfo = (req, res) => {
             district_id: districtId,
             distribution_type: distributionType,
             random_order: randomOrder,
-            cron_time: cronTime
+            cron_time: cronTime,
+            start_id: startId,
+            end_id: endId
         } = req.query
 
         useCommonValidation(req, res)
@@ -31,13 +34,17 @@ const updateCronInfo = (req, res) => {
             return res.status(400).json({ error: 'Invalid cron_time format. Use something like 5s, 10m, or 1h' })
         }
 
+        useDeviceIdValidation(startId, endId)
+
         const result = cronProducerManager.update(
             cronType, 
             cityId, 
             districtId, 
             distributionType ? distributionType : DISTRIBUTIONS.BELL_CURVE, 
             randomOrder === 'true',
-            cronTime ? convertIntervalToCron(cronTime) : process.env.DEFAULT_CRON_TIME
+            cronTime ? convertIntervalToCron(cronTime) : process.env.DEFAULT_CRON_TIME,
+            startId && endId ? Number(startId) : ALLOWED_DEVICE_ID.START,
+            startId && endId ? Number(endId) : ALLOWED_DEVICE_ID.END
         )
         return res.status(result.status).json({ message: result.message, error: result.error })
 
@@ -145,7 +152,8 @@ const getChartInfo = (req, res) => {
 
 /**
  * HELPER FUNCTIONS, CLASSES
- * commonValidation
+ * useCommonValidation
+ * useDeviceIdValidation
  * convertIntervalToCron
  * isValidIntervalFormat
  * CustomError extends Error
@@ -159,21 +167,43 @@ function useCommonValidation(req, res) {
     } = req.query
 
     if (!cronType || !Object.values(DATA_TYPE).includes(cronType)) {
-        return res.status(400).json({ error: 'Missing cron_type' })
+        throw new CustomError('Missing cron_type' , 400)
     }
 
     if (!cityId || !districtId) {
-        return res.status(400).json({ error: 'Missing city_id or district_id' })
+        throw new CustomError('Missing city_id or district_id', 400)
     }
 
     const city = ALLOWED_LOCATIONS.find(city => city.city_id === cityId)
     if (!city) {
-        return res.status(400).json({ error: 'Invalid city_id' })
+        throw new CustomError('Invalid city_id', 400)
     }
 
     const district = city.districts.find(district => district.district_id === districtId)
     if (!district) {
-        return res.status(400).json({ error: 'Invalid district_id' })
+        throw new CustomError('Invalid district_id', 400)
+    }
+}
+
+function useDeviceIdValidation(startId, endId) {
+    if (startId && !endId) {
+        throw new CustomError('Having start_id but not end_id' , 400)
+    }
+
+    if (!startId && endId) {
+        throw new CustomError('Having end_id but not start_id' , 400)
+    }
+
+    if (startId && !DeviceIdGenerator.isIdValid(startId)) {
+        throw new CustomError(`Invalid start_id. start_id must in range ${ALLOWED_DEVICE_ID.START}-${ALLOWED_DEVICE_ID.END}` , 400)
+    }
+
+    if (endId && !DeviceIdGenerator.isIdValid(endId)) {
+        throw new CustomError(`Invalid end_id. end_id must in range ${ALLOWED_DEVICE_ID.START}-${ALLOWED_DEVICE_ID.END}` , 400)
+    }
+
+    if (startId && endId && Number(startId) > Number(endId)) {
+        throw new CustomError('Invalid start_id and end_id. start_id must be smaller than or equal to end_id' , 400)
     }
 }
 
