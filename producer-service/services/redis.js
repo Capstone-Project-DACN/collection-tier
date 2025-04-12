@@ -9,6 +9,7 @@ const {
     FALSE_POSITIVE_COUNTER
 } = require('../configs/redisConfig')
 const timeUtils = require('../utils/timeUtils')
+const { DATA_TYPE } = require('../configs/dataConfig')
 
 const redisClient = Redis.createClient({
     host: REDIS_HOST,
@@ -28,6 +29,7 @@ async function addDevice(deviceId) {
 
     pipeline.call(CUCKOO_FILTER_OPS.ADD, CUCKOO_FILTER_TAG.VALID_DEVICES, deviceId)
     pipeline.hset(`${REDIS_TAG.DEVICE}:${deviceId}`, 'created_at', createdAt)
+    pipeline.hset(`${REDIS_TAG.DEVICE}:${deviceId}`, 'type', DATA_TYPE[deviceId.split('-')[0]] || 'unknown')
     pipeline.zadd(REDIS_TAG.LAST_SEEN, createdAt, deviceId)
 
     try {
@@ -185,7 +187,11 @@ async function getDeviceDetail(deviceId) {
 
 async function updateTotalElectricityUsage(deviceId, electricityUsage) {
     try {
-        await redisClient.hincrbyfloat(`${REDIS_TAG.DEVICE}:${deviceId}`, 'total_electricity_usage_kwh', electricityUsage)
+        const pipeline = redisClient.pipeline()
+        pipeline.hincrbyfloat(`${REDIS_TAG.DEVICE}:${deviceId}`, 'total_electricity_usage_kwh', electricityUsage)
+        pipeline.hset(`${REDIS_TAG.DEVICE}:${deviceId}`, 'type', DATA_TYPE[deviceId.split('-')[0]] || 'unknown')
+        
+        await pipeline.exec()
     } catch (error) {
         console.error(`[${debugTag}] updateTotalElectricityUsage: Error updating total electricity usage for device ${deviceId}:`, error)
         throw error
