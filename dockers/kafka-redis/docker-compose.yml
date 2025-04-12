@@ -163,6 +163,20 @@ services:
     volumes:
       - minio_data:/data
 
+  data-access-tier:
+    image: thienphuc532266/data-access-tier:1.0
+    container_name: data-access-tier
+    ports:
+      - "3002:3002"
+    restart: unless-stopped
+    environment:
+      MINIO_ENDPOINT: minio
+      MINIO_PORT: 9000
+      MINIO_ACCESS_KEY: myminioadmin
+      MINIO_SECRET_KEY: myminioadmin
+    depends_on:
+      - minio
+
   anomaly-detection:
     image: tranminhhieu212/anomaly-detection:latest
     container_name: anomaly-detection
