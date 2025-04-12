@@ -94,6 +94,10 @@ class DataTransferService {
                 metadata.anomaly_current = item?.current
             }
 
+            if (metadata.type !== DATA_TYPE.area) {
+                delete metadata.type
+            }
+
             await bloomService.updateLastSeen(deviceId, metadata)
 
             delete item.increased_electricity_usage_kwh
