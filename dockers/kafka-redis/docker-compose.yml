@@ -187,6 +187,18 @@ services:
       DATASOURCE_SERVER: http://data-source-service/data
       WINDOWSIZE: 90000
       CRON_TIME: '*/1 * * * * *'
+      ANOMALY_THRESHOLD: 5
+      PORT: 4000
+      MINIO_ENDPOINT: minio
+      MINIO_PORT: 9000
+      MINIO_ACCESS_KEY: myminioadmin
+      MINIO_SECRET_KEY: myminioadmin
+      DISTRICT_ANOMALY_BUCKET: district-anomaly-data
+      DEVICE_ANOMALY_BUCKET: device-anomaly-data
+      KAFKA_GROUP_ID: anomaly-detector-group
+      MINIO_USE_SSL: false
+      DEVICE_ANOMALY_THRESHOLD: 50
+      MINIMUM_DELTA_CONSUMPTION: 100
     depends_on:
       - kafka
 
