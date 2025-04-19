@@ -386,7 +386,7 @@
 						"method": "POST",
 						"header": [],
 						"url": {
-							"raw": "{{schema}}://{{host}}:{{port2}}/jobs/update?cron_type=HouseholdData&city_id=HCMC&district_id=Q1&distribution_type=Bell Curve&random_order=false&cron_time=2s&start_id=0&end_id=0",
+							"raw": "{{schema}}://{{host}}:{{port2}}/jobs/update?cron_type=HouseholdData&city_id=HCMC&district_id=Q1&distribution_type=Bell Curve&random_order=false&cron_time=2s&start_id=0&end_id=0&custom_date=2025-04-10",
 							"protocol": "{{schema}}",
 							"host": [
 								"{{host}}"
@@ -436,6 +436,11 @@
 									"key": "end_id",
 									"value": "0",
 									"description": "Default 0. Required if start_id and end_id appear"
+								},
+								{
+									"key": "custom_date",
+									"value": "2025-04-10",
+									"description": "Default null. Format: yyyy-mm-dd"
 								}
 							]
 						}
@@ -1347,7 +1352,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "{{schema}}://{{host}}:{{port2}}/data/household?batch_size=1&city_id=HCMC&district_id=Q1&display_data=true&id=0",
+					"raw": "{{schema}}://{{host}}:{{port2}}/data/household?batch_size=1&city_id=HCMC&district_id=Q1&display_data=true&id=0&custom_date=2025-04-19",
 					"protocol": "{{schema}}",
 					"host": [
 						"{{host}}"
@@ -1381,6 +1386,11 @@
 						{
 							"key": "id",
 							"value": "0"
+						},
+						{
+							"key": "custom_date",
+							"value": "2025-04-19",
+							"description": "Default null. Format: yyyy-mm-dd"
 						}
 					]
 				}
@@ -1393,7 +1403,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "{{schema}}://{{host}}:{{port2}}/data/area?batch_size=1&city_id=HCMC&district_id=Q1&display_data=true",
+					"raw": "{{schema}}://{{host}}:{{port2}}/data/area?batch_size=1&city_id=HCMC&district_id=Q1&display_data=true&custom_date=2025-04-19",
 					"protocol": "{{schema}}",
 					"host": [
 						"{{host}}"
@@ -1423,6 +1433,11 @@
 							"key": "display_data",
 							"value": "true",
 							"description": "true: display sent events; others: no display sent events"
+						},
+						{
+							"key": "custom_date",
+							"value": "2025-04-19",
+							"description": "Default null. Format: yyyy-mm-dd"
 						}
 					]
 				}
@@ -1435,7 +1450,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "{{schema}}://{{host}}:{{port2}}/data/anomaly?batch_size=1&city_id=HCMC&district_id=Q1&display_data=true&id=0",
+					"raw": "{{schema}}://{{host}}:{{port2}}/data/anomaly?batch_size=1&city_id=HCMC&district_id=Q1&display_data=true&id=0&custom_date=2025-04-19",
 					"protocol": "{{schema}}",
 					"host": [
 						"{{host}}"
@@ -1469,6 +1484,11 @@
 						{
 							"key": "id",
 							"value": "0"
+						},
+						{
+							"key": "custom_date",
+							"value": "2025-04-19",
+							"description": "Default null. Format: yyyy-mm-dd"
 						}
 					]
 				}
