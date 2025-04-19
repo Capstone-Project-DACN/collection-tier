@@ -6,7 +6,7 @@ const { ALLOWED_DEVICE_ID, DATA_TYPE } = require('../../configs/DataConfig')
 const { TIME } = require('../../configs/DistributionConfig')
 
 class AnomalyCronProducer {
-    constructor(cityId, districtId, distributionType, randomOrder, cronTime, startId = ALLOWED_DEVICE_ID.START, endId = ALLOWED_DEVICE_ID.END) {
+    constructor(cityId, districtId, distributionType, randomOrder, cronTime, startId = ALLOWED_DEVICE_ID.START, endId = ALLOWED_DEVICE_ID.END, customDate = null) {
         this.cronType = DATA_TYPE.anomaly
         this.cityId = cityId
         this.districtId = districtId
@@ -15,6 +15,7 @@ class AnomalyCronProducer {
         this.isRunning = false
         this.startId = startId
         this.endId = endId
+        this.customDate = customDate
         this.batchManager = new BatchSizeManager(startId, endId)
         this.CRON_TAG = `CRON_JOB_PRODUCER_ANOMALY_${this.cityId}_${this.districtId}`
 
@@ -31,7 +32,7 @@ class AnomalyCronProducer {
         try {
             console.info(`${this.CRON_TAG} ------Info: batch_size=${this.batchManager.getCurrentBatchSize()}, current_slot=${this.batchManager.getCurrentSlot()}`)
 
-            await dataService.createAndSendAnomalyData(this.cityId, this.districtId, this.batchManager)
+            await dataService.createAndSendAnomalyData(this.cityId, this.districtId, this.batchManager, this.customDate)
 
         } catch (error) {
             console.error(`${this.CRON_TAG} ------Error during process:`, error)

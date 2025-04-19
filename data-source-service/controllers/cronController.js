@@ -2,6 +2,7 @@ const cronProducerManager = require('../jobs/CronProducerManager')
 const { DISTRIBUTIONS } = require('../configs/DistributionConfig')
 const { DATA_TYPE, ALLOWED_LOCATIONS, ALLOWED_DEVICE_ID } = require('../configs/DataConfig')
 const DeviceIdGenerator = require('../services/DeviceIdGenerator')
+const ValidationUtils = require('../utils/ValidationUtils')
 
 const updateCronInfo = (req, res) => {
     try {
@@ -13,7 +14,8 @@ const updateCronInfo = (req, res) => {
             random_order: randomOrder,
             cron_time: cronTime,
             start_id: startId,
-            end_id: endId
+            end_id: endId,
+            custom_date: customDate
         } = req.query
 
         useCommonValidation(req, res)
@@ -36,6 +38,10 @@ const updateCronInfo = (req, res) => {
 
         useDeviceIdValidation(startId, endId)
 
+        if (customDate && !ValidationUtils.isValidCustomDate(customDate)) {
+            return res.status(400).json({ error: 'Invalid custom_date format. The correct format is YYYY-MM-DD'})
+        }
+
         const result = cronProducerManager.update(
             cronType, 
             cityId, 
@@ -44,7 +50,8 @@ const updateCronInfo = (req, res) => {
             randomOrder === 'true',
             cronTime ? convertIntervalToCron(cronTime) : process.env.DEFAULT_CRON_TIME,
             startId && endId ? Number(startId) : ALLOWED_DEVICE_ID.START,
-            startId && endId ? Number(endId) : ALLOWED_DEVICE_ID.END
+            startId && endId ? Number(endId) : ALLOWED_DEVICE_ID.END,
+            customDate ? customDate : null
         )
         return res.status(result.status).json({ message: result.message, error: result.error })
 

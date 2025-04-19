@@ -6,13 +6,14 @@ const { ALLOWED_DEVICE_ID, DATA_TYPE } = require('../../configs/DataConfig')
 const { TIME } = require('../../configs/DistributionConfig')
 
 class AreaCronProducer {
-    constructor(cityId, districtId, distributionType, randomOrder, cronTime) {
+    constructor(cityId, districtId, distributionType, randomOrder, cronTime, customDate = null) {
         this.cronType = DATA_TYPE.area
         this.cityId = cityId
         this.districtId = districtId
         this.distributionType = distributionType
         this.randomOrder = randomOrder
         this.isRunning = false
+        this.customDate = customDate
         this.batchManager = new BatchSizeManager(ALLOWED_DEVICE_ID.START, ALLOWED_DEVICE_ID.END)
         this.CRON_TAG = `CRON_JOB_PRODUCER_AREA_${this.cityId}_${this.districtId}`
 
@@ -29,7 +30,7 @@ class AreaCronProducer {
         try {
             console.info(`${this.CRON_TAG} ------Info: batch_size=${this.batchManager.getCurrentBatchSize()}, current_slot=${this.batchManager.getCurrentSlot()}`)
 
-            await dataService.createAndSendAreaData(this.cityId, this.districtId, this.batchManager.getCurrentBatchSize())
+            await dataService.createAndSendAreaData(this.cityId, this.districtId, this.batchManager.getCurrentBatchSize(), this.customDate)
 
         } catch (error) {
             console.error(`${this.CRON_TAG} ------Error during process:`, error)

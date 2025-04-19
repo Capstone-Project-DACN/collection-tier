@@ -48,7 +48,7 @@ class CronProducerManager {
         console.info(`[${TAG}] Init ${this.jobs.size} jobs`)
     }
 
-    update(cronType, cityId, districtId, distributionType, randomOrder, cronTime, startId = ALLOWED_DEVICE_ID.START, endId = ALLOWED_DEVICE_ID.END) {
+    update(cronType, cityId, districtId, distributionType, randomOrder, cronTime, startId = ALLOWED_DEVICE_ID.START, endId = ALLOWED_DEVICE_ID.END, customDate = null) {
         const key = `${cronType}-${cityId}-${districtId}`
         let producer = this.jobs.get(key)
 
@@ -70,13 +70,13 @@ class CronProducerManager {
 
         switch (cronType) {
             case DATA_TYPE.household:
-                producer = new HouseholdCronProducer(cityId, districtId, distributionType, randomOrder, cronTime, startId, endId)
+                producer = new HouseholdCronProducer(cityId, districtId, distributionType, randomOrder, cronTime, startId, endId, customDate)
                 break
             case DATA_TYPE.area:
-                producer = new AreaCronProducer(cityId, districtId, distributionType, randomOrder, cronTime)
+                producer = new AreaCronProducer(cityId, districtId, distributionType, randomOrder, cronTime, customDate)
                 break
             case DATA_TYPE.anomaly:
-                producer = new AnomalyCronProducer(cityId, districtId, distributionType, randomOrder, cronTime, startId, endId)
+                producer = new AnomalyCronProducer(cityId, districtId, distributionType, randomOrder, cronTime, startId, endId, customDate)
                 break
             default:
                 console.error(`[${TAG}] Invalid cron type: ${cronType}`)

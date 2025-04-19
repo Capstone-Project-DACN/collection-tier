@@ -8,12 +8,12 @@ const { TOPIC, PRODUCER_IDS } = require('../configs/KafkaConfig')
 const kafkaProducerManager = require('./KafkaProducer')
 const { BatchSizeManager } = require('../services/BatchSizeManager')
 
-const createAndSendHouseholdData = async (cityId, districtId, batchManager = new BatchSizeManager()) => {
+const createAndSendHouseholdData = async (cityId, districtId, batchManager = new BatchSizeManager(), customDate = null) => {
 
     const batchData = []
     for (let i = 0; i < batchManager.getCurrentBatchSize(); i++) {
         const id = batchManager.getCurrentIndex()
-        batchData.push(generateRandomHouseholdData(cityId, districtId, Number(id)))
+        batchData.push(generateRandomHouseholdData(cityId, districtId, Number(id), customDate))
         batchManager.updateCurrentIndex()
     }
     const batchResult = await Promise.all(batchData)
@@ -29,11 +29,11 @@ const createAndSendHouseholdData = async (cityId, districtId, batchManager = new
     kafkaProducerManager.publishMsg(PRODUCER_IDS[TOPIC.HOUSEHOLD], targetTopic, batchResult, null)
 }
 
-const createAndSendAreaData = async (cityId, districtId, batchSize) => {
+const createAndSendAreaData = async (cityId, districtId, batchSize, customDate = null) => {
 
     const batchData = []
     for (let i = 0; i < batchSize; i++) {
-        batchData.push(generateRandomAreaData(cityId, districtId))
+        batchData.push(generateRandomAreaData(cityId, districtId, customDate))
     }
     const batchResult = await Promise.all(batchData)
 
@@ -48,12 +48,12 @@ const createAndSendAreaData = async (cityId, districtId, batchSize) => {
     kafkaProducerManager.publishMsg(PRODUCER_IDS[TOPIC.AREA], targetTopic, batchResult, null)
 }
 
-const createAndSendAnomalyData = async (cityId, districtId, batchManager = new BatchSizeManager()) => {
+const createAndSendAnomalyData = async (cityId, districtId, batchManager = new BatchSizeManager(), customDate = null) => {
 
     const batchData = []
     for (let i = 0; i < batchManager.getCurrentBatchSize(); i++) {
         const id = batchManager.getCurrentIndex()
-        batchData.push(generateRandomAnomalyData(cityId, districtId, Number(id)))
+        batchData.push(generateRandomAnomalyData(cityId, districtId, Number(id), customDate))
         batchManager.updateCurrentIndex()
     }
     const batchResult = await Promise.all(batchData)

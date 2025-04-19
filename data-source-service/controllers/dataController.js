@@ -6,12 +6,13 @@ const { destinationTopic, topicExists } = require('../services/DestinationDeterm
 const { DATA_TYPE } = require('../configs/DataConfig')
 const { TOPIC, PRODUCER_IDS } = require('../configs/KafkaConfig')
 const kafkaProducerManager = require('../services/KafkaProducer')
+const ValidationUtils = require('../utils/ValidationUtils')
 
 const TAG = 'dataController'
 
 const createHouseholdData = async (req, res) => {
     const batchSize = Number(req.query.batch_size) || 1
-    const { city_id: cityId, district_id: districtId, display_data: displayData, id } = req.query
+    const { city_id: cityId, district_id: districtId, display_data: displayData, id, custom_date: customDate } = req.query
     
     if (id !== undefined && !isIdValid(id)) {
         return res.status(403).json({
@@ -19,9 +20,13 @@ const createHouseholdData = async (req, res) => {
         })
     }
 
+    if (customDate && !ValidationUtils.isValidCustomDate(customDate)) {
+        return res.status(400).json({ error: 'Invalid custom_date format. The correct format is YYYY-MM-DD'})
+    }
+
     const batchData = []
     for (let i = 0; i < batchSize; i++) {
-        batchData.push(generateRandomHouseholdData(cityId, districtId, Number(id)))
+        batchData.push(generateRandomHouseholdData(cityId, districtId, Number(id), customDate))
     }
     const batchResult = await Promise.all(batchData)
     console.info(`[${TAG}] Generated Household Data:`, batchResult.length)
@@ -49,10 +54,15 @@ const createHouseholdData = async (req, res) => {
 
 const createAreaData = async (req, res) => {
     const batchSize = Number(req.query.batch_size) || 1
-    const { city_id: cityId, district_id: districtId, display_data: displayData } = req.query
+    const { city_id: cityId, district_id: districtId, display_data: displayData, custom_date: customDate } = req.query
+    
+    if (customDate && !ValidationUtils.isValidCustomDate(customDate)) {
+        return res.status(400).json({ error: 'Invalid custom_date format. The correct format is YYYY-MM-DD'})
+    }
+    
     const batchData = []
     for (let i = 0; i < batchSize; i++) {
-        batchData.push(generateRandomAreaData(cityId, districtId))
+        batchData.push(generateRandomAreaData(cityId, districtId, customDate))
     }
     const batchResult = await Promise.all(batchData)
     console.log(`[${TAG}] Generated Area Data:`, batchResult.length)
@@ -79,7 +89,7 @@ const createAreaData = async (req, res) => {
 
 const createAnomalyData = async (req, res) => {
     const batchSize = Number(req.query.batch_size) || 1
-    const { city_id: cityId, district_id: districtId, display_data: displayData, id } = req.query
+    const { city_id: cityId, district_id: districtId, display_data: displayData, id, custom_date: customDate } = req.query
 
     if (id !== undefined && !isIdValid(id)) {
         return res.status(403).json({
@@ -87,9 +97,13 @@ const createAnomalyData = async (req, res) => {
         })
     }
 
+    if (customDate && !ValidationUtils.isValidCustomDate(customDate)) {
+        return res.status(400).json({ error: 'Invalid custom_date format. The correct format is YYYY-MM-DD'})
+    }
+
     const batchData = []
     for (let i = 0; i < batchSize; i++) {
-        batchData.push(generateRandomAnomalyData(cityId, districtId, Number(id)))
+        batchData.push(generateRandomAnomalyData(cityId, districtId, Number(id), customDate))
     }
     const batchResult = await Promise.all(batchData)
     console.log(`[${TAG}] Generated Anomaly Data:`, batchResult.length)

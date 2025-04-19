@@ -4,10 +4,12 @@ const locationGenerator = require('../services/LocationGenerator')
 const { DATA_TYPE } = require('../configs/DataConfig')
 const RedisService = require('../services/RedisService')
 
-const generateRandomAnomalyData = async (cityId, districtId, id = null) => {
+const generateRandomAnomalyData = async (cityId, districtId, id = null, customDate = null) => {
     const device_id = generateRandomDeviceId(cityId, districtId, DATA_TYPE.household, id)
     const household_id = device_id
-    const timestamp = new Date().toISOString()
+    const timestamp = customDate
+                            ? new Date(`${customDate}T${new Date().toTimeString().split(' ')[0]}`).toISOString()
+                            : new Date().toISOString()
     const voltage = faker.datatype.number({ min: 400, max: 500 }) // Dangerously high voltage
     const current = parseFloat(faker.finance.amount(300, 500, 2)) // Dangerously high current
     const { city, district, ward } = locationGenerator.generateRandomLocation(cityId, districtId)
