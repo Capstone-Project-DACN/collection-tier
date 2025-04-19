@@ -195,6 +195,7 @@ class CronProducerManager {
                 cron_time: producer.job.cronTime.source.toString(),
                 start_id: producer.startId == null ? 'N/A' : producer.startId,
                 end_id: producer.endId == null ? 'N/A' : producer.endId,
+                custom_date: producer.customDate == null ? 'N/A' : producer.customDate,
                 status: producer.isRunning ? 'running' : 'stopped'
             }
         }
