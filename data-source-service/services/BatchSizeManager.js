@@ -68,7 +68,7 @@ class BatchSizeManager {
 
     resetIfEndofTimeSlot = () => {
         if (this.currentSlot >= this.batchSizes.length) {
-            console.log(`${TAG} Finished sending all batches`)
+            console.log(`${this.TAG} Finished sending all batches`)
     
             this.initTimeSlot(this.TAG, this.generateBatchSizes, this.args, this.distribution)
         }
