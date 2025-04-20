@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Batch Size Visualization</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        canvas {
+            width: 1000; /* Set the width */
+            height: 700px; /* Set the height */
+            margin: auto;
+        }
+    </style>
+</head>
+<body>
+    <h1><%= distribution %></h1>
+    <canvas id="batchSizeChart"></canvas>
+    <script>
+        // Use EJS to inject the batchSizes array into the JavaScript
+        const batchSizes = <%= JSON.stringify(batchSizes) %>; // Embed server data
+        const ctx = document.getElementById('batchSizeChart').getContext('2d');
+        const batchSizeChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: batchSizes.map((_, index) => `Batch ${index + 1}`),
+                datasets: [{
+                    label: 'Batch Sizes',
+                    data: batchSizes,
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    borderWidth: 2,
+                    fill: false
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>

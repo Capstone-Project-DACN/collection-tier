@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Batch Size Distribution</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-chart-histogram"></script>
+    <style>
+        canvas {
+            width: 1200px;
+            height: 800px;
+            margin: auto;
+        }
+    </style>
+</head>
+<body>
+    <h1><%= distribution %> (Histogram)</h1>
+    <canvas id="batchSizeHistogram"></canvas>
+    <script>
+        const binLabels = <%= JSON.stringify(binLabels) %>;
+        const bins = <%= JSON.stringify(bins) %>;
+
+        const ctx = document.getElementById('batchSizeHistogram').getContext('2d');
+        const histogramChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: binLabels.map(e => `${e[0]}-${e[1]}`),  // dữ liệu batchSizes sẽ được chia thành các nhóm
+                datasets: [{
+                    label: 'Frequency',
+                    data: bins,  // hiển thị số lần xuất hiện của kích thước batch
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    borderWidth: 1,
+                    backgroundColor: 'rgba(75, 192, 192, 0.5)',
+                    barPercentage: 1.0,
+                    categoryPercentage: 1.0
+                }]
+            },
+            options: {
+                scales: {
+                    x: {
+                        title: {
+                            display: true,
+                            text: 'Batch Size'
+                        }
+                    },
+                    y: {
+                        title: {
+                            display: true,
+                            text: 'Frequency'
+                        },
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
